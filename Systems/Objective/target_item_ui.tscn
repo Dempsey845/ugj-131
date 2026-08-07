@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bdrc405bmtnt1"]
+
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_tm2qb"]
+
+[sub_resource type="Animation" id="Animation_tm2qb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetPivot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p7hx8"]
+resource_name = "pop_in"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetPivot:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.15, 1.15), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uovuv"]
+_data = {
+&"RESET": SubResource("Animation_tm2qb"),
+&"pop_in": SubResource("Animation_p7hx8")
+}
+
+[node name="TargetItemUI" type="Control" unique_id=772257791]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TargetPivot" type="Control" parent="." unique_id=1109880953]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.0
+offset_top = -226.0
+offset_right = -506.0
+offset_bottom = -226.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="TargetPivot" unique_id=1419053526]
+anchors_preset = 0
+offset_left = -59.0
+offset_top = -85.0
+offset_right = 59.0
+offset_bottom = 85.0
+
+[node name="ColorRect" type="ColorRect" parent="TargetPivot/Control" unique_id=1897013616]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="TargetPivot/Control" unique_id=1928943059]
+custom_minimum_size = Vector2(109, 49)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.5
+offset_top = 6.0
+offset_right = 54.5
+offset_bottom = 55.0
+grow_horizontal = 2
+text = "Tungston cube!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TargetPivot/Control" unique_id=801795518]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -102.0
+offset_right = 51.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_tm2qb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1954020070]
+libraries/ = SubResource("AnimationLibrary_uovuv")
+autoplay = &"pop_in"
