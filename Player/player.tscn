@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b0ltpyuyjaqj4"]
 
 [ext_resource type="Script" uid="uid://bdfrsdlqar3ru" path="res://Player/player.gd" id="1_l8h54"]
+[ext_resource type="PackedScene" uid="uid://cegpc1pqifx1g" path="res://Player/player_item_pickup_area.tscn" id="2_4ntmi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
@@ -27,6 +28,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.7)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Visuals/SlideHitbox" unique_id=1423526048]
 shape = SubResource("SphereShape3D_xrivr")
 
+[node name="ItemHolder" type="Marker3D" parent="Visuals" unique_id=374173442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=486528121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
@@ -38,3 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]
+
+[node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player") instance=ExtResource("2_4ntmi")]
+item_holder = NodePath("../Visuals/ItemHolder")
+player = NodePath("..")

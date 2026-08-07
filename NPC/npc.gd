@@ -155,12 +155,11 @@ func collect_item(item: Item) -> void:
 	if carried_item != null:
 		return
 
-	carried_item = item
-	state = State.CARRYING
 
-	carried_item.collect(self, item_holder)
-
-	_choose_flee_point()
+	if item.collect(self, item_holder):
+		carried_item = item
+		state = State.CARRYING
+		_choose_flee_point()
 
 
 func _update_carrying(delta: float) -> void:
@@ -220,11 +219,9 @@ func drop_carried_item(direction: Vector3) -> void:
 
 	var item: Item = carried_item
 	carried_item = null
-
 	item.drop(direction)
 
 	item_dropped.emit(item)
-
 
 # Tackle reaction
 

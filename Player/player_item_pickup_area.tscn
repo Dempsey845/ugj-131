@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cegpc1pqifx1g"]
+
+[ext_resource type="Script" uid="uid://wuns6pt4gjg3" path="res://Player/player_item_pickup_area.gd" id="1_f1yg5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+radius = 1.1
+
+[node name="PlayerItemPickupArea" type="Area3D" unique_id=833010195]
+script = ExtResource("1_f1yg5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1974648521]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("SphereShape3D_13qdw")
+
+[node name="PickupDelayTimer" type="Timer" parent="." unique_id=2115542123]
+wait_time = 0.5
+one_shot = true

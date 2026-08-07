@@ -12,7 +12,7 @@ roughness = 0.5
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
-radius = 2.0
+radius = 1.1732446
 
 [node name="Item" type="RigidBody3D" unique_id=1963813499]
 script = ExtResource("1_gcssv")

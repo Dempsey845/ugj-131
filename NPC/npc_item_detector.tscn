@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://caw6vjaiootcl" path="res://NPC/item_detector.gd" id="1_s2hyv"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
-radius = 4.0
+radius = 1.3000001
 
 [node name="NPCItemDetector" type="Area3D" unique_id=696106035]
 script = ExtResource("1_s2hyv")
@@ -12,4 +12,5 @@ script = ExtResource("1_s2hyv")
 shape = SubResource("SphereShape3D_xrivr")
 
 [node name="SearchTimer" type="Timer" parent="." unique_id=107433287]
+wait_time = 0.5
 autostart = true
