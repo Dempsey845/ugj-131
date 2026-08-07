@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
-[ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/tungsten_cube.tres" id="2_oe8m4"]
+[ext_resource type="Resource" uid="uid://c2cquwxmg84u7" path="res://Item/Items/SlimeBall/slime_ball.tres" id="2_lo5ox"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
 [ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
@@ -28,6 +28,9 @@ glow_enabled = true
 vertices = PackedVector3Array(-22.5, 10, -22.25, -20.25, 10, -22.5, -20.25, 10, -24.5, -24.5, 10, -24.5, -24.5, 10, 20.25, -22.5, 10, 20.25, 22.25, 10, -22.5, 22.5, 10, -20.25, 24.5, 10, -20.25, 24.5, 10, -24.5, -21.25, 0.5, -6, -18, 0.5, -6, -17.75, 0.5, -7, -21.25, 0.5, -21.25, -17, 0.5, -5, -17, 0.5, -1, -16.25, 0.5, -1, -16, 0.5, -5.25, -15.75, 0.5, 0, 21.5, 0.5, 0, -16.25, 0.5, -7, 21.5, 0.5, -21.25, 22.5, 10, 22.25, 20.25, 10, 22.5, 20.25, 10, 24.5, 24.5, 10, 24.5, -18, 0.5, -5.25, -18, 0.5, -0.75, -16.25, 0.5, 1, -21.25, 0.5, 21.5, 21.5, 0.5, 21.5, -17.75, 0.5, 1, -22.25, 10, 22.5, -24.5, 10, 24.5)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 9), PackedInt32Array(11, 10, 12), PackedInt32Array(12, 10, 13), PackedInt32Array(16, 15, 14), PackedInt32Array(14, 17, 16), PackedInt32Array(16, 17, 18), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(13, 21, 20), PackedInt32Array(20, 21, 19), PackedInt32Array(20, 12, 13), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 25), PackedInt32Array(7, 8, 22), PackedInt32Array(22, 8, 25), PackedInt32Array(10, 11, 26), PackedInt32Array(26, 14, 10), PackedInt32Array(10, 14, 27), PackedInt32Array(27, 14, 15), PackedInt32Array(28, 18, 29), PackedInt32Array(29, 18, 19), PackedInt32Array(29, 19, 30), PackedInt32Array(29, 31, 28), PackedInt32Array(27, 31, 10), PackedInt32Array(10, 31, 29), PackedInt32Array(5, 32, 4), PackedInt32Array(4, 32, 33), PackedInt32Array(23, 24, 32), PackedInt32Array(32, 24, 33)]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwiry"]
+albedo_color = Color(0.5529556, 0.55295557, 0.55295557, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8h54"]
 albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 
@@ -36,7 +39,7 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-start_item_data = ExtResource("2_oe8m4")
+start_item_data = ExtResource("2_lo5ox")
 
 [node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]
 script = ExtResource("1_yf0ba")
@@ -91,13 +94,19 @@ tackle_friction = 3.0
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1360773894]
 navigation_mesh = SubResource("NavigationMesh_xrivr")
 
+[node name="GroundBox" type="CSGBox3D" parent="NavigationRegion3D" unique_id=256709093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+collision_layer = 3
+size = Vector3(50, 0.5, 50)
+material = SubResource("StandardMaterial3D_rwiry")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="NavigationRegion3D/GroundBox" unique_id=1225446682]
+size = Vector3(50, 0.5, 50)
+
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=177967746]
 material_override = SubResource("StandardMaterial3D_l8h54")
 use_collision = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=256709093]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
-size = Vector3(50, 0.5, 50)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1287016642]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 23.5)

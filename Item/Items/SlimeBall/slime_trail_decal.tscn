@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bd746qhugluct"]
+
+[ext_resource type="Texture2D" uid="uid://c50bhh2b5w3c5" path="res://Item/Items/SlimeBall/circle_white.png" id="1_yqifw"]
+
+[sub_resource type="Animation" id="Animation_yqifw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.001, 0.2, 0.001)]
+}
+
+[sub_resource type="Animation" id="Animation_08nmq"]
+resource_name = "end"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.0333333, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2, 0.2, 2), Vector3(0.001, 0.2, 0.001)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_yymig"]
+resource_name = "start"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7, 2.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.001, 0.2, 0.001), Vector3(2.2, 0.2, 2.2), Vector3(2, 0.2, 2), Vector3(2, 0.2, 2)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"end", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l2ynr"]
+_data = {
+&"RESET": SubResource("Animation_yqifw"),
+&"end": SubResource("Animation_08nmq"),
+&"start": SubResource("Animation_yymig")
+}
+
+[node name="SlimeTrailDecal" type="Decal" unique_id=749451663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9802322e-08, 0)
+size = Vector3(0.001, 0.2, 0.001)
+texture_albedo = ExtResource("1_yqifw")
+modulate = Color(0.5803922, 0.9529412, 0.20784314, 1)
+normal_fade = 0.134
+upper_fade = 1.5834085
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=448991851]
+libraries/ = SubResource("AnimationLibrary_l2ynr")
+autoplay = &"start"

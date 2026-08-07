@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cpafg66x8ymee"]
 
 [ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_1bhby"]
-[ext_resource type="Script" uid="uid://72f53ugbutv3" path="res://Item/Items/tungsten_cube_agent.gd" id="2_skqep"]
+[ext_resource type="Script" uid="uid://72f53ugbutv3" path="res://Item/Items/TungstenCube/tungsten_cube_agent.gd" id="2_skqep"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bhby"]
 albedo_color = Color(0.5850618, 0.5850621, 0.58506197, 1)
