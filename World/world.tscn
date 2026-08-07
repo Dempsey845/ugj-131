@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://iuwi8d7umvdk"]
 
 [ext_resource type="PackedScene" uid="uid://b0ltpyuyjaqj4" path="res://Player/player.tscn" id="1_62w18"]
+[ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -13,6 +14,10 @@ sky_material = SubResource("ProceduralSkyMaterial_8a836")
 background_mode = 2
 sky = SubResource("Sky_j8job")
 glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_xrivr"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8h54"]
 albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
@@ -28,10 +33,44 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=70765496 instance=ExtResource("1_62w18")]
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=177967746]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1360773894]
+navigation_mesh = SubResource("NavigationMesh_xrivr")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=177967746]
 material_override = SubResource("StandardMaterial3D_l8h54")
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=256709093]
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=256709093]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 size = Vector3(50, 0.5, 50)
+
+[node name="Marker3D" type="Marker3D" parent="NavigationRegion3D" unique_id=783231224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="NavigationRegion3D" unique_id=264256936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -10)
+
+[node name="Marker3D3" type="Marker3D" parent="NavigationRegion3D" unique_id=1961769076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -10)
+
+[node name="Marker3D4" type="Marker3D" parent="NavigationRegion3D" unique_id=192683149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -10)
+
+[node name="Marker3D5" type="Marker3D" parent="NavigationRegion3D" unique_id=1509550904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 1)
+
+[node name="Marker3D6" type="Marker3D" parent="NavigationRegion3D" unique_id=49662796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 7)
+
+[node name="Marker3D7" type="Marker3D" parent="NavigationRegion3D" unique_id=1769514891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+
+[node name="Marker3D8" type="Marker3D" parent="NavigationRegion3D" unique_id=1565166663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 7)
+
+[node name="NPC" parent="NavigationRegion3D" unique_id=1626677385 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 0)
+search_points = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("../Marker3D3"), NodePath("../Marker3D4"), NodePath("../Marker3D5"), NodePath("../Marker3D6"), NodePath("../Marker3D7"), NodePath("../Marker3D8")]
+player = NodePath("../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
