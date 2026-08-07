@@ -1,6 +1,9 @@
 class_name PlayerItemPickupArea
 extends Area3D
 
+signal item_picked_up
+signal item_dropped(item: Item)
+
 @export var item_holder: Marker3D
 @export var player: Player
 
@@ -10,9 +13,11 @@ var current_item: Item
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pickup"):
-		if current_item and current_item.carrier == player:
+		if does_player_have_item():
 			var look_direction: Vector3 = -player.visuals.basis.z
+			var item: Item = current_item
 			current_item.drop(look_direction)
+			item_dropped.emit(item)
 		else:
 			try_pickup_item()
 
@@ -30,6 +35,7 @@ func try_pickup_item():
 		if item.collect(player, item_holder):
 			current_item = item
 			current_item.dropped.connect(_on_current_item_dropped)
+			item_picked_up.emit()
 
 		break
 
@@ -38,3 +44,6 @@ func try_pickup_item():
 func _on_current_item_dropped():
 	current_item.dropped.disconnect(_on_current_item_dropped)
 	current_item = null
+
+func does_player_have_item():
+	return current_item and current_item.carrier == player

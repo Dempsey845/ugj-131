@@ -38,10 +38,14 @@ enum State {
 @export var knockback_upward_speed: float = 3.0
 @export var knocked_down_time: float = 0.8
 
+@export_category("Chasing")
+@export var maximum_chase_distance: float = 20.0
+@export var item_pickup_distance: float = 1.25
 
 var state: State = State.SEARCHING
 var chase_target: Node3D
 var carried_item: Item
+var chased_item: Item
 
 var current_search_point: Node3D
 var is_waiting: bool = false
@@ -49,7 +53,7 @@ var knocked_down_remaining: float = 0.0
 
 
 func _ready() -> void:
-	navigation_agent.path_desired_distance = 0.5
+	navigation_agent.path_desired_distance = 1.0
 	navigation_agent.target_desired_distance = 1.0
 
 	call_deferred("_choose_search_point")
@@ -130,11 +134,52 @@ func chase(target: Node3D) -> void:
 	chase_target = target
 	state = State.CHASING
 
+func chase_dropped_item(item: Item) -> void:
+	if not is_instance_valid(item):
+		return
+
+	_stop_tracking_chased_item()
+
+	chased_item = item
+	chase_target = item
+
+	if not item.picked_up.is_connected(
+		_on_chased_item_picked_up
+	):
+		item.picked_up.connect(
+			_on_chased_item_picked_up
+	)
+
+	if not item.tree_exiting.is_connected(
+		_on_chased_item_removed
+	):
+		item.tree_exiting.connect(
+			_on_chased_item_removed
+	)
+
+	if state != State.KNOCKED_DOWN:
+		state = State.CHASING
 
 func _update_chasing(delta: float) -> void:
 	if not is_instance_valid(chase_target):
 		stop_chasing()
 		return
+
+	var distance_to_target: float = global_position.distance_to(
+		chase_target.global_position
+	)
+
+	# Give up if the loose item or its carrier gets too far away.
+	if distance_to_target > maximum_chase_distance:
+		stop_chasing()
+		return
+
+	# The target is still a loose item.
+	if chase_target == chased_item:
+		if distance_to_target <= item_pickup_distance:
+			_slow_down(delta)
+			collect_item(chased_item)
+			return
 
 	navigation_agent.target_position = chase_target.global_position
 	_follow_navigation(move_speed, delta)
@@ -142,9 +187,56 @@ func _update_chasing(delta: float) -> void:
 
 func stop_chasing() -> void:
 	chase_target = null
+	_stop_tracking_chased_item()
+
+	if state == State.KNOCKED_DOWN:
+		return
+
 	state = State.SEARCHING
 	_choose_search_point()
 
+
+func _on_chased_item_picked_up(carrier: Node3D) -> void:
+	if not is_instance_valid(carrier):
+		stop_chasing()
+		return
+
+	if carrier == self:
+		return
+
+	chase_target = carrier
+
+	if state != State.KNOCKED_DOWN:
+		state = State.CHASING
+
+func _on_chased_item_removed() -> void:
+	chased_item = null
+	chase_target = null
+
+	if state != State.KNOCKED_DOWN:
+		state = State.SEARCHING
+		_choose_search_point()
+
+func _stop_tracking_chased_item() -> void:
+	if not is_instance_valid(chased_item):
+		chased_item = null
+		return
+
+	if chased_item.picked_up.is_connected(
+		_on_chased_item_picked_up
+	):
+		chased_item.picked_up.disconnect(
+			_on_chased_item_picked_up
+	)
+
+	if chased_item.tree_exiting.is_connected(
+		_on_chased_item_removed
+	):
+		chased_item.tree_exiting.disconnect(
+			_on_chased_item_removed
+	)
+
+	chased_item = null
 
 # Carrying and fleeing
 
@@ -152,12 +244,16 @@ func collect_item(item: Item) -> void:
 	if not is_instance_valid(item):
 		return
 
-	if carried_item != null:
+	if is_instance_valid(carried_item):
 		return
-
 
 	if item.collect(self, item_holder):
 		carried_item = item
+		chase_target = null
+
+		if chased_item == item:
+			_stop_tracking_chased_item()
+
 		state = State.CARRYING
 		_choose_flee_point()
 
@@ -232,7 +328,9 @@ func receive_tackle(
 	if state == State.KNOCKED_DOWN:
 		return
 
+	var item: Item = carried_item
 	drop_carried_item(direction)
+	chase_dropped_item(item)
 
 	state = State.KNOCKED_DOWN
 	knocked_down_remaining = knocked_down_time
@@ -249,12 +347,30 @@ func receive_tackle(
 func _update_knocked_down(delta: float) -> void:
 	knocked_down_remaining -= delta
 
-	velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
-	velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+	velocity.x = move_toward(
+		velocity.x,
+		0.0,
+		acceleration * delta
+	)
 
-	if knocked_down_remaining <= 0.0 and is_on_floor():
+	velocity.z = move_toward(
+		velocity.z,
+		0.0,
+		acceleration * delta
+	)
+
+	if knocked_down_remaining > 0.0 or not is_on_floor():
+		return
+
+	recovered.emit()
+
+	if is_instance_valid(chase_target):
+		state = State.CHASING
+	elif is_instance_valid(carried_item):
+		state = State.CARRYING
+		_choose_flee_point()
+	else:
 		state = State.SEARCHING
-		recovered.emit()
 		_choose_search_point()
 
 

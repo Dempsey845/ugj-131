@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://bdfrsdlqar3ru" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="PackedScene" uid="uid://cegpc1pqifx1g" path="res://Player/player_item_pickup_area.tscn" id="2_4ntmi"]
+[ext_resource type="Script" uid="uid://cdhxpk507m1g1" path="res://Player/player_item_awareness_area.gd" id="3_btcbx"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+radius = 6.0
 
 [node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox")]
 script = ExtResource("1_l8h54")
@@ -46,3 +50,10 @@ spring_length = 5.0
 [node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player") instance=ExtResource("2_4ntmi")]
 item_holder = NodePath("../Visuals/ItemHolder")
 player = NodePath("..")
+
+[node name="PlayerItemAwarenessArea" type="Area3D" parent="." unique_id=275611359 node_paths=PackedStringArray("item_pickup_area")]
+script = ExtResource("3_btcbx")
+item_pickup_area = NodePath("../PlayerItemPickupArea")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerItemAwarenessArea" unique_id=1986592295]
+shape = SubResource("SphereShape3D_13qdw")
