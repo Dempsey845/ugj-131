@@ -9,7 +9,7 @@ var current_item_data: ItemData
 
 func start_announcement(item_data: ItemData, duration: float = 3.0):
 	announcement_started.emit(
-		"Announcement: A %s has been hidden! Have it when the time is up and it's yours!" % item_data.item_name,
+		"Announcement: A %s has been hidden! Have it when the time is up and it's yours!" % sanitize_string(item_data.item_name),
 		item_data.item_texture,
 		duration
 	)
@@ -22,3 +22,8 @@ func stop_announcement():
 	objective.start_objective(current_item_data)
 	current_item_data = null
 	
+func sanitize_string(text: String) -> String:
+	var regex := RegEx.new()
+	regex.compile("[^a-zA-Z0-9 ]")
+
+	return regex.sub(text, "", true).to_lower()
