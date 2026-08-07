@@ -11,14 +11,17 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_3etx6"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_056qb"]
 radius = 6.0
 
-[node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder")]
+[node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder", "slide_hitbox")]
 script = ExtResource("1_asys0")
 visuals = NodePath("Visuals")
 navigation_agent = NodePath("NavigationAgent3D")
 item_holder = NodePath("Visuals/ItemHolder")
+slide_hitbox = NodePath("Visuals/SlideHitbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1343893479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -33,6 +36,12 @@ mesh = SubResource("CapsuleMesh_xrivr")
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals" unique_id=906278711]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.90000004, -1)
+
+[node name="SlideHitbox" type="Area3D" parent="Visuals" unique_id=1486039683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.7)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visuals/SlideHitbox" unique_id=1358131121]
+shape = SubResource("SphereShape3D_3etx6")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=962650786]
 debug_enabled = true

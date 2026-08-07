@@ -9,6 +9,7 @@ signal item_picked_up
 enum State {
 	SEARCHING,
 	CHASING,
+	SLIDING,
 	CARRYING,
 	KNOCKED_DOWN
 }
@@ -20,6 +21,7 @@ enum State {
 @export var item_holder: Marker3D
 @export var search_points: Array[Node3D]
 @export var player: Player
+@export var slide_hitbox: Area3D
 
 
 @export_category("Movement")
@@ -39,6 +41,15 @@ enum State {
 @export var knockback_upward_speed: float = 3.0
 @export var knocked_down_time: float = 0.8
 
+@export_category("NPC Slide Tackle")
+@export var slide_speed: float = 11.0
+@export var slide_duration: float = 0.65
+@export var slide_deceleration: float = 8.0
+@export var slide_steering: float = 1.5
+@export var tackle_start_distance: float = 4.0
+@export var tackle_cooldown: float = 3.5
+@export_range(0.0, 1.0) var tackle_chance: float = 0.75
+
 @export_category("Chasing")
 @export var maximum_chase_distance: float = 20.0
 @export var item_pickup_distance: float = 1.25
@@ -52,15 +63,33 @@ var current_search_point: Node3D
 var is_waiting: bool = false
 var knocked_down_remaining: float = 0.0
 
+var is_sliding: bool = false
+var slide_direction: Vector3
+var current_slide_speed: float = 0.0
+var slide_time_remaining: float = 0.0
+var tackle_cooldown_remaining: float = 0.0
+var slide_target: Node3D
+
+var slide_hit_targets: Array[Node3D] = []
 
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.0
 	navigation_agent.target_desired_distance = 1.0
 
+	slide_hitbox.monitoring = false
+	slide_hitbox.body_entered.connect(
+		_on_slide_hitbox_body_entered
+	)
+
 	call_deferred("_choose_search_point")
 
 
 func _physics_process(delta: float) -> void:
+	tackle_cooldown_remaining = maxf(
+		tackle_cooldown_remaining - delta,
+		0.0
+	)
+
 	_apply_gravity(delta)
 
 	match state:
@@ -69,6 +98,9 @@ func _physics_process(delta: float) -> void:
 
 		State.CHASING:
 			_update_chasing(delta)
+
+		State.SLIDING:
+			_update_slide(delta)
 
 		State.CARRYING:
 			_update_carrying(delta)
@@ -170,17 +202,29 @@ func _update_chasing(delta: float) -> void:
 		chase_target.global_position
 	)
 
-	# Give up if the loose item or its carrier gets too far away.
 	if distance_to_target > maximum_chase_distance:
 		stop_chasing()
 		return
 
-	# The target is still a loose item.
 	if chase_target == chased_item:
 		if distance_to_target <= item_pickup_distance:
 			_slow_down(delta)
-			collect_item(chased_item)
 			return
+
+	# The target is another character carrying the item.
+	elif (
+		distance_to_target <= tackle_start_distance
+		and tackle_cooldown_remaining <= 0.0
+		and chase_target.has_method("receive_tackle")
+	):
+		# The chance stops every NPC from tackling at exactly
+		# the same moment whenever they reach the carrier.
+		if randf() <= tackle_chance:
+			_start_slide_tackle(chase_target)
+			return
+		else:
+			# Briefly prevent another chance roll every frame.
+			tackle_cooldown_remaining = 0.4
 
 	navigation_agent.target_position = chase_target.global_position
 	_follow_navigation(move_speed, delta)
@@ -238,6 +282,109 @@ func _stop_tracking_chased_item() -> void:
 	)
 
 	chased_item = null
+
+# Sliding
+
+func _start_slide_tackle(target: Node3D) -> void:
+	if state == State.KNOCKED_DOWN:
+		return
+
+	if not is_instance_valid(target):
+		return
+
+	slide_target = target
+
+	slide_direction = target.global_position - global_position
+	slide_direction.y = 0.0
+
+	if slide_direction.length_squared() <= 0.001:
+		return
+
+	slide_direction = slide_direction.normalized()
+
+	state = State.SLIDING
+	is_sliding = true
+	slide_time_remaining = slide_duration
+	current_slide_speed = slide_speed
+
+	slide_hit_targets.clear()
+	slide_hitbox.set_deferred("monitoring", true)
+
+	_rotate_visuals(slide_direction, 1.0)
+
+
+func _update_slide(delta: float) -> void:
+	slide_time_remaining -= delta
+
+	# Give the NPC a small amount of steering toward its target.
+	if is_instance_valid(slide_target):
+		var target_direction := (
+			slide_target.global_position - global_position
+		)
+		target_direction.y = 0.0
+
+		if target_direction.length_squared() > 0.001:
+			target_direction = target_direction.normalized()
+
+			slide_direction = slide_direction.move_toward(
+				target_direction,
+				slide_steering * delta
+			).normalized()
+
+	current_slide_speed = move_toward(
+		current_slide_speed,
+		0.0,
+		slide_deceleration * delta
+	)
+
+	velocity.x = slide_direction.x * current_slide_speed
+	velocity.z = slide_direction.z * current_slide_speed
+
+	_rotate_visuals(slide_direction, delta)
+
+	if (
+		slide_time_remaining <= 0.0
+		or current_slide_speed <= move_speed
+		or not is_on_floor()
+	):
+		_end_slide_tackle()
+
+
+func _end_slide_tackle() -> void:
+	if not is_sliding:
+		return
+
+	is_sliding = false
+	slide_target = null
+	tackle_cooldown_remaining = tackle_cooldown
+
+	slide_hitbox.set_deferred("monitoring", false)
+
+	if is_instance_valid(chase_target):
+		state = State.CHASING
+	else:
+		state = State.SEARCHING
+		_choose_search_point()
+
+func _on_slide_hitbox_body_entered(body: Node3D) -> void:
+	if state != State.SLIDING:
+		return
+
+	if body == self:
+		return
+
+	if body in slide_hit_targets:
+		return
+
+	if not body.has_method("receive_tackle"):
+		return
+
+	slide_hit_targets.append(body)
+
+	body.receive_tackle(slide_direction, self)
+
+	# End after the first valid character is hit.
+	_end_slide_tackle()
 
 # Carrying and fleeing
 

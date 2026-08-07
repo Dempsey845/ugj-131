@@ -11,15 +11,22 @@ signal item_dropped(item: Item)
 
 var current_item: Item
 
+func _ready() -> void:
+	player.knocked_down.connect(_on_knocked_down)
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pickup"):
 		if does_player_have_item():
 			var look_direction: Vector3 = -player.visuals.basis.z
-			var item: Item = current_item
-			current_item.drop(look_direction)
-			item_dropped.emit(item)
+			drop_item(look_direction)
 		else:
 			try_pickup_item()
+
+func drop_item(direction: Vector3):
+	var item: Item = current_item
+	current_item.drop(direction)
+	item_dropped.emit(item)
+
 
 func try_pickup_item():
 	if !pickup_delay_timer.is_stopped():
@@ -40,6 +47,9 @@ func try_pickup_item():
 		break
 
 	pickup_delay_timer.start()
+
+func _on_knocked_down():
+	drop_item(player.knockback_direction)
 
 func _on_current_item_dropped():
 	current_item.dropped.disconnect(_on_current_item_dropped)

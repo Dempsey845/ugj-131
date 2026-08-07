@@ -6,6 +6,8 @@ signal landed
 signal slide_started
 signal slide_ended
 signal slide_hit(target: Node3D)
+signal knocked_down
+signal recovered
 
 
 @export_category("References")
@@ -41,6 +43,22 @@ signal slide_hit(target: Node3D)
 @export var slide_cooldown: float = 0.4
 @export var slide_visual_height: float = 0.55
 
+@export_category("Tackle Reaction")
+@export var tackle_knockback_speed: float = 8.0
+@export var tackle_upward_speed: float = 2.5
+@export var tackle_friction: float = 14.0
+@export var knocked_down_duration: float = 0.65
+@export var recovery_duration: float = 0.3
+@export var recovery_control: float = 0.35
+
+var is_knocked_down: bool = false
+var is_recovering: bool = false
+
+var knocked_down_remaining: float = 0.0
+var recovery_remaining: float = 0.0
+
+var knockback_direction: Vector3
+var default_visual_rotation: Vector3
 
 @export_category("Camera")
 @export var mouse_sensitivity: float = 0.003
@@ -64,11 +82,12 @@ var was_on_floor: bool
 var default_visual_position: Vector3
 var hit_targets: Array[Node3D] = []
 
-
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	default_visual_position = visuals.position
+	default_visual_rotation = visuals.rotation
+
 	slide_hitbox.monitoring = false
 	slide_hitbox.body_entered.connect(_on_slide_hitbox_body_entered)
 
@@ -96,9 +115,25 @@ func _physics_process(delta: float) -> void:
 	_update_timers(delta)
 	_update_controller_camera(delta)
 	_update_ground_tracking(delta)
-	_buffer_jump()
+
+	if is_knocked_down:
+		_update_knocked_down(delta)
+		_apply_gravity(delta)
+		move_and_slide()
+		_check_landing()
+		return
 
 	var input_direction: Vector3 = _get_movement_direction()
+
+	if is_recovering:
+		_update_recovery(delta, input_direction)
+		_apply_gravity(delta)
+		move_and_slide()
+		_check_landing()
+		_rotate_visuals(delta)
+		return
+
+	_buffer_jump()
 
 	if Input.is_action_just_pressed("slide"):
 		_try_start_slide(input_direction)
@@ -110,7 +145,6 @@ func _physics_process(delta: float) -> void:
 		_try_jump()
 
 	_apply_gravity(delta)
-
 	move_and_slide()
 
 	_check_landing()
@@ -411,3 +445,87 @@ func _on_slide_hitbox_body_entered(body: Node3D) -> void:
 	hit_targets.append(body)
 	body.receive_tackle(slide_direction, self)
 	slide_hit.emit(body)
+
+func receive_tackle(
+	direction: Vector3,
+	_attacker: Node3D
+) -> void:
+	if is_knocked_down:
+		return
+
+	if is_sliding:
+		_end_slide()
+
+	knockback_direction = direction
+	knockback_direction.y = 0.0
+
+	if knockback_direction.length_squared() <= 0.001:
+		knockback_direction = -global_transform.basis.z
+	else:
+		knockback_direction = knockback_direction.normalized()
+
+	is_knocked_down = true
+	is_recovering = false
+	knocked_down_remaining = knocked_down_duration
+
+	velocity.x = knockback_direction.x * tackle_knockback_speed
+	velocity.z = knockback_direction.z * tackle_knockback_speed
+	velocity.y = tackle_upward_speed
+
+	knocked_down.emit()
+
+
+func _update_knocked_down(delta: float) -> void:
+	knocked_down_remaining -= delta
+
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	horizontal_velocity = horizontal_velocity.move_toward(
+		Vector3.ZERO,
+		tackle_friction * delta
+	)
+
+	velocity.x = horizontal_velocity.x
+	velocity.z = horizontal_velocity.z
+
+	if knocked_down_remaining > 0.0:
+		return
+
+	if not is_on_floor():
+		return
+
+	is_knocked_down = false
+	is_recovering = true
+	recovery_remaining = recovery_duration
+
+func _update_recovery(
+	delta: float,
+	input_direction: Vector3
+) -> void:
+	recovery_remaining -= delta
+
+	var target_velocity: Vector3 = (
+		input_direction *
+		move_speed *
+		recovery_control
+	)
+
+	velocity.x = move_toward(
+		velocity.x,
+		target_velocity.x,
+		ground_acceleration * delta
+	)
+
+	velocity.z = move_toward(
+		velocity.z,
+		target_velocity.z,
+		ground_acceleration * delta
+	)
+
+	if recovery_remaining <= 0.0:
+		is_recovering = false
+		recovered.emit()
