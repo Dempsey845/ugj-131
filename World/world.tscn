@@ -2,9 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://dsbihogbepty2" path="res://Systems/Announcement/announcement_ui.tscn" id="1_3f78f"]
 [ext_resource type="PackedScene" uid="uid://b0ltpyuyjaqj4" path="res://Player/player.tscn" id="1_62w18"]
+[ext_resource type="Script" uid="uid://cqeaakbdm3twu" path="res://Systems/game_manager.gd" id="1_eidgh"]
+[ext_resource type="Script" uid="uid://cpirf7hf8q8s6" path="res://Systems/Announcement/announcement_manager.gd" id="1_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
+[ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
-[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="3_j8job"]
+[ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/tungston_cube.tres" id="2_oe8m4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -27,11 +30,37 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 
 [node name="World" type="Node3D" unique_id=1526889445]
 
+[node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager")]
+script = ExtResource("1_eidgh")
+announcement_manager = NodePath("../AnnouncementManager")
+start_item_data = ExtResource("2_oe8m4")
+
+[node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]
+script = ExtResource("1_yf0ba")
+objective = NodePath("../Objective")
+metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
+
+[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points")]
+script = ExtResource("2_eidgh")
+item_spawn_points = [NodePath("Marker3D"), NodePath("Marker3D2"), NodePath("Marker3D3")]
+metadata/_custom_type_script = "uid://crdv0o033n1l1"
+
+[node name="Marker3D" type="Marker3D" parent="Objective" unique_id=1324766032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.676411)
+
+[node name="Marker3D2" type="Marker3D" parent="Objective" unique_id=1273103439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8912644, 0, -5.676411)
+
+[node name="Marker3D3" type="Marker3D" parent="Objective" unique_id=996074530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3453536, 0, -5.676411)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 
-[node name="AnnouncementUI" parent="CanvasLayer" unique_id=1889206119 instance=ExtResource("1_3f78f")]
+[node name="AnnouncementUI" parent="CanvasLayer" unique_id=1889206119 node_paths=PackedStringArray("announcement_manager") instance=ExtResource("1_3f78f")]
+announcement_manager = NodePath("../../AnnouncementManager")
 
-[node name="TargetItemUI" parent="CanvasLayer" unique_id=772257791 instance=ExtResource("2_k8do8")]
+[node name="TargetItemUI" parent="CanvasLayer" unique_id=772257791 node_paths=PackedStringArray("objective") instance=ExtResource("2_k8do8")]
+objective = NodePath("../../Objective")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=671047218]
 environment = SubResource("Environment_3f78f")
@@ -109,6 +138,3 @@ search_points = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("..
 player = NodePath("../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
-
-[node name="Item" parent="." unique_id=1963813499 instance=ExtResource("3_j8job")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3, 0, 0)

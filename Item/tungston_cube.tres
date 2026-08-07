@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://x4jsrtkjjr1d"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_m3aee"]
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_gfv20"]
+[ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="3_htmfy"]
+
+[resource]
+script = ExtResource("3_htmfy")
+item_name = "Tungston Cube!"
+item_texture = ExtResource("2_gfv20")
+item_scene = ExtResource("1_m3aee")
+metadata/_custom_type_script = "uid://bta1n6q65gi1m"

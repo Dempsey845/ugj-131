@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bdrc405bmtnt1"]
 
+[ext_resource type="Script" uid="uid://cf3sl8ngd776f" path="res://Systems/Objective/target_item_ui.gd" id="1_p7hx8"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_tm2qb"]
 
 [sub_resource type="Animation" id="Animation_tm2qb"]
@@ -14,7 +15,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_p7hx8"]
@@ -47,6 +48,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_p7hx8")
 
 [node name="TargetPivot" type="Control" parent="." unique_id=1109880953]
 layout_mode = 1
@@ -61,6 +63,7 @@ offset_right = -506.0
 offset_bottom = -226.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Control" type="Control" parent="TargetPivot" unique_id=1419053526]
 anchors_preset = 0
@@ -78,7 +81,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="TargetPivot/Control" unique_id=1928943059]
+[node name="NameLabel" type="Label" parent="TargetPivot/Control" unique_id=1928943059]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(109, 49)
 layout_mode = 1
 anchors_preset = 5
@@ -94,7 +98,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TargetPivot/Control" unique_id=801795518]
+[node name="IconTexture" type="TextureRect" parent="TargetPivot/Control" unique_id=801795518]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -113,4 +118,3 @@ stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1954020070]
 libraries/ = SubResource("AnimationLibrary_uovuv")
-autoplay = &"pop_in"
