@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dki2wd38ewypm"]
 
 [ext_resource type="Script" uid="uid://brgw1axid06lq" path="res://NPC/npc.gd" id="1_asys0"]
+[ext_resource type="PackedScene" uid="uid://cv85hacayqxx5" path="res://NPC/npc_item_detector.tscn" id="2_056qb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -8,9 +9,6 @@
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
-radius = 4.0
 
 [node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder")]
 script = ExtResource("1_asys0")
@@ -35,7 +33,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.90000004, -1)
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=962650786]
 debug_enabled = true
 
-[node name="TargetDetector" type="Area3D" parent="." unique_id=1194050046]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetDetector" unique_id=319348554]
-shape = SubResource("SphereShape3D_xrivr")
+[node name="NPCItemDetector" parent="." unique_id=696106035 instance=ExtResource("2_056qb")]

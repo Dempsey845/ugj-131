@@ -41,7 +41,7 @@ enum State {
 
 var state: State = State.SEARCHING
 var chase_target: Node3D
-var carried_item: Node3D
+var carried_item: Item
 
 var current_search_point: Node3D
 var is_waiting: bool = false
@@ -53,9 +53,6 @@ func _ready() -> void:
 	navigation_agent.target_desired_distance = 1.0
 
 	call_deferred("_choose_search_point")
-
-	await get_tree().create_timer(2.0).timeout
-	chase(player)
 
 
 func _physics_process(delta: float) -> void:
@@ -151,7 +148,7 @@ func stop_chasing() -> void:
 
 # Carrying and fleeing
 
-func collect_item(item: Node3D) -> void:
+func collect_item(item: Item) -> void:
 	if not is_instance_valid(item):
 		return
 
@@ -161,11 +158,7 @@ func collect_item(item: Node3D) -> void:
 	carried_item = item
 	state = State.CARRYING
 
-	if carried_item.has_method("collect"):
-		carried_item.collect(self, item_holder)
-	else:
-		carried_item.reparent(item_holder)
-		carried_item.position = Vector3.ZERO
+	carried_item.collect(self, item_holder)
 
 	_choose_flee_point()
 
@@ -225,14 +218,10 @@ func drop_carried_item(direction: Vector3) -> void:
 		carried_item = null
 		return
 
-	var item: Node3D = carried_item
+	var item: Item = carried_item
 	carried_item = null
 
-	item.reparent(get_tree().current_scene)
-	item.global_position = global_position + Vector3.UP
-
-	if item.has_method("drop"):
-		item.drop(direction)
+	item.drop(direction)
 
 	item_dropped.emit(item)
 
