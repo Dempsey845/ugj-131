@@ -9,16 +9,28 @@ extends Node3D
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
 
+var current_y_state: String = ""
+
 
 func _ready() -> void:
 	playback = animation_tree.get(
 		"parameters/MovementStateMachine/playback"
 	)
+	
+	if body.has_signal("jumped"):
+		body.jumped.connect(_on_body_jumped)
+		
+	if body.has_signal("landed"):
+		body.landed.connect(_on_body_landed)
 
 
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(body):
 		return
+		
+	if current_y_state != "Fall" and not body.is_on_floor() and body.velocity.y < 0.0:
+		playback.travel("Fall")
+		current_y_state = "Fall"
 
 	var horizontal_velocity: Vector2 = Vector2(
 		body.velocity.x,
@@ -41,3 +53,11 @@ func _physics_process(delta: float) -> void:
 		"parameters/MovementStateMachine/MoveBlend/blend_position",
 		current_blend
 	)
+
+func _on_body_jumped():
+	playback.travel("Jump")
+	current_y_state = "Jump"
+
+func _on_body_landed():
+	playback.travel("Land")
+	current_y_state = "Land"
