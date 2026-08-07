@@ -1,6 +1,8 @@
 extends Node3D
 
 @export var body: CharacterBody3D
+@export var item_manager: Node3D
+
 @export var maximum_move_speed: float = 7.0
 @export var blend_smoothing: float = 10.0
 
@@ -8,6 +10,9 @@ extends Node3D
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
+
+var current_hold_blend: float
+var target_hold_blend: float
 
 var current_state: String = ""
 
@@ -27,6 +32,12 @@ func _ready() -> void:
 	if body.has_signal("landed"):
 		body.landed.connect(_on_body_landed)
 		has_land_signal = true
+
+	if item_manager.has_signal("item_picked_up"):
+		item_manager.item_picked_up.connect(_on_item_picked_up)
+
+	if item_manager.has_signal("item_dropped"):
+		item_manager.item_dropped.connect(_on_item_dropped)
 
 	animation_tree.animation_finished.connect(func(anim_name: String):
 		if anim_name == animation_prefix + "Land":
@@ -68,9 +79,20 @@ func _physics_process(delta: float) -> void:
 		blend_smoothing * delta
 	)
 
+	current_hold_blend = move_toward(
+		current_hold_blend,
+		target_hold_blend,
+		5.0 * delta
+	)
+
 	animation_tree.set(
 		"parameters/MovementStateMachine/MoveBlend/blend_position",
 		current_blend
+	)
+
+	animation_tree.set(
+		"parameters/HoldBlend/blend_amount",
+		current_hold_blend
 	)
 
 func _on_body_jumped():
@@ -86,3 +108,9 @@ func _on_body_slide_started():
 
 func _on_body_slide_ended():
 	playback.travel("MoveBlend")
+
+func _on_item_picked_up():
+	target_hold_blend = 1.0
+
+func _on_item_dropped(_item):
+	target_hold_blend = 0.0

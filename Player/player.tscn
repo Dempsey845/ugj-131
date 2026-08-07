@@ -37,9 +37,10 @@ shape = SubResource("SphereShape3D_xrivr")
 [node name="ItemHolder" type="Marker3D" parent="Visuals" unique_id=374173442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 
-[node name="Character" parent="Visuals" unique_id=1454173267 node_paths=PackedStringArray("body") instance=ExtResource("2_gwnis")]
+[node name="Character" parent="Visuals" unique_id=1454173267 node_paths=PackedStringArray("body", "item_manager") instance=ExtResource("2_gwnis")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 body = NodePath("../..")
+item_manager = NodePath("../../PlayerItemPickupArea")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=486528121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
