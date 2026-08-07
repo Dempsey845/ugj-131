@@ -23,6 +23,10 @@ func _process(_delta: float) -> void:
 			try_pickup_item()
 
 func drop_item(direction: Vector3):
+	if current_item == null or !is_instance_valid(current_item):
+		current_item = null
+		return
+
 	var item: Item = current_item
 	current_item.drop(direction)
 	item_dropped.emit(item)
