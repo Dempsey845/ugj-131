@@ -479,7 +479,8 @@ func receive_tackle(
 
 	var item: Item = carried_item
 	drop_carried_item(direction)
-	chase_dropped_item(item)
+	if is_instance_valid(item):
+		chase_dropped_item(item)
 
 	state = State.KNOCKED_DOWN
 	knocked_down_remaining = knocked_down_time

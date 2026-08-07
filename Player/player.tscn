@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bdfrsdlqar3ru" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="PackedScene" uid="uid://cegpc1pqifx1g" path="res://Player/player_item_pickup_area.tscn" id="2_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="2_gwnis"]
 [ext_resource type="Script" uid="uid://cdhxpk507m1g1" path="res://Player/player_item_awareness_area.gd" id="3_btcbx"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
@@ -24,6 +25,7 @@ slide_hitbox = NodePath("Visuals/SlideHitbox")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" unique_id=1003597867]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_xrivr")
 
 [node name="SlideHitbox" type="Area3D" parent="Visuals" unique_id=971207734]
@@ -34,6 +36,10 @@ shape = SubResource("SphereShape3D_xrivr")
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals" unique_id=374173442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="Character" parent="Visuals" unique_id=1454173267 node_paths=PackedStringArray("body") instance=ExtResource("2_gwnis")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+body = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=486528121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

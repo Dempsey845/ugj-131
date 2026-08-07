@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cmcuvtqnnwejj"]
+
+[ext_resource type="PackedScene" uid="uid://rvq15g4ljblb" path="res://Character/Character.fbx" id="1_k3002"]
+[ext_resource type="Script" uid="uid://cme86c72jf8e1" path="res://Character/character.gd" id="2_nwtvh"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k3002"]
+animation = &"Armature|Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nwtvh"]
+animation = &"Armature|Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jkkns"]
+animation = &"Armature|Land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_twwou"]
+animation = &"Armature|Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a23tb"]
+animation = &"Armature|Run"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_uerqc"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_twwou")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"Armature|Idle"
+blend_point_1/node = SubResource("AnimationNodeAnimation_a23tb")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"Armature|Run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1l6l2"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q4sqr"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4te0c"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_veuuo"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rgbux"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f0n7x"]
+xfade_time = 0.35
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ge5jf"]
+states/Fall/node = SubResource("AnimationNodeAnimation_k3002")
+states/Fall/position = Vector2(656, 175)
+states/Jump/node = SubResource("AnimationNodeAnimation_nwtvh")
+states/Jump/position = Vector2(656, 45)
+states/Land/node = SubResource("AnimationNodeAnimation_jkkns")
+states/Land/position = Vector2(509, 236)
+states/MoveBlend/node = SubResource("AnimationNodeBlendSpace1D_uerqc")
+states/MoveBlend/position = Vector2(409, 105)
+states/Start/position = Vector2(168, 105)
+transitions = ["Start", "MoveBlend", SubResource("AnimationNodeStateMachineTransition_1l6l2"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_q4sqr"), "MoveBlend", "Jump", SubResource("AnimationNodeStateMachineTransition_4te0c"), "Fall", "Land", SubResource("AnimationNodeStateMachineTransition_veuuo"), "Land", "MoveBlend", SubResource("AnimationNodeStateMachineTransition_rgbux"), "MoveBlend", "Fall", SubResource("AnimationNodeStateMachineTransition_f0n7x")]
+graph_offset = Vector2(7, -7)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_13qdw"]
+graph_offset = Vector2(-207.62686, 37.391113)
+nodes/output/position = Vector2(680, 120)
+nodes/MovementStateMachine/node = SubResource("AnimationNodeStateMachine_ge5jf")
+nodes/MovementStateMachine/position = Vector2(160, 120)
+node_connections = [&"output", 0, &"MovementStateMachine"]
+
+[node name="Character" unique_id=1454173267 instance=ExtResource("1_k3002")]
+script = ExtResource("2_nwtvh")
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1352641230) index="0" unique_id=721048118]
+bones/1/rotation = Quaternion(0.081406176, -1.973485e-11, 3.1096963e-08, 0.9966811)
+bones/3/rotation = Quaternion(-0.095447235, 0.5756673, -0.29814893, 0.7553835)
+bones/4/rotation = Quaternion(0.46248, -0.22601177, -0.114061244, 0.8497182)
+bones/5/rotation = Quaternion(-0.0022570451, 2.3935058e-07, -4.8894586e-09, 0.9999975)
+bones/7/scale = Vector3(1, 0.99999994, 0.99999994)
+bones/12/rotation = Quaternion(0.2599232, -0.00045030564, 0.45391214, 0.85229313)
+bones/13/rotation = Quaternion(0.6832602, 0.27091062, 0.1762666, 0.6547466)
+bones/14/rotation = Quaternion(-0.0022570316, -2.3969983e-07, 7.217771e-09, 0.9999975)
+bones/18/rotation = Quaternion(0.39909342, -0.0002677743, 9.862977e-08, 0.9169103)
+bones/19/rotation = Quaternion(-0.1306015, 1.6253499e-15, -2.137503e-15, 0.99143493)
+bones/25/rotation = Quaternion(-0.22911857, -0.00012240322, -8.2323364e-05, 0.97339857)
+bones/26/rotation = Quaternion(-0.27487794, 2.4668864e-08, 4.2891948e-08, 0.9614792)
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=2056174455]
+autoplay = &"Armature|Idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1331219524]
+tree_root = SubResource("AnimationNodeBlendTree_13qdw")
+anim_player = NodePath("../AnimationPlayer")
+parameters/MovementStateMachine/MoveBlend/blend_position = 1.0

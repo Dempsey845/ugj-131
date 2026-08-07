@@ -119,13 +119,13 @@ size = Vector3(3, 10, 44)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
 
 [node name="Marker3D2" type="Marker3D" parent="NavigationRegion3D" unique_id=264256936]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 0, -6.6)
 
 [node name="Marker3D3" type="Marker3D" parent="NavigationRegion3D" unique_id=1961769076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
 
 [node name="Marker3D4" type="Marker3D" parent="NavigationRegion3D" unique_id=192683149]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -7)
 
 [node name="Marker3D5" type="Marker3D" parent="NavigationRegion3D" unique_id=1509550904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 1)
