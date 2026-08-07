@@ -65,6 +65,8 @@ var chase_target: Node3D
 var carried_item: Item
 var chased_item: Item
 
+var move_speed_multiplier: float = 1.0
+
 var current_search_point: Node3D
 var is_waiting: bool = false
 var knocked_down_remaining: float = 0.0
@@ -372,8 +374,8 @@ func _update_slide(delta: float) -> void:
 		slide_deceleration * delta
 	)
 
-	velocity.x = slide_direction.x * current_slide_speed
-	velocity.z = slide_direction.z * current_slide_speed
+	velocity.x = slide_direction.x * current_slide_speed * move_speed_multiplier
+	velocity.z = slide_direction.z * current_slide_speed * move_speed_multiplier
 
 	_rotate_visuals_from_velocity(delta)
 
@@ -642,13 +644,13 @@ func _follow_navigation(speed: float, delta: float) -> void:
 
 	velocity.x = move_toward(
 		velocity.x,
-		direction.x * speed,
+		direction.x * speed * move_speed_multiplier,
 		acceleration * delta
 	)
 
 	velocity.z = move_toward(
 		velocity.z,
-		direction.z * speed,
+		direction.z * speed * move_speed_multiplier,
 		acceleration * delta
 	)
 

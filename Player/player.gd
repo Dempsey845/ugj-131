@@ -66,8 +66,8 @@ var default_visual_rotation: Vector3
 @export var minimum_pitch: float = deg_to_rad(-55.0)
 @export var maximum_pitch: float = deg_to_rad(40.0)
 
-
 var can_move: bool = true
+var move_speed_multiplier: float = 1.0
 
 var is_sliding: bool = false
 var slide_direction: Vector3
@@ -238,7 +238,7 @@ func _update_movement(
 	delta: float,
 	input_direction: Vector3
 ) -> void:
-	var target_velocity: Vector3 = input_direction * move_speed
+	var target_velocity: Vector3 = input_direction * move_speed * move_speed_multiplier
 
 	var acceleration: float = ground_acceleration
 
@@ -349,8 +349,8 @@ func _update_slide(
 		slide_deceleration * delta
 	)
 
-	velocity.x = slide_direction.x * current_slide_speed
-	velocity.z = slide_direction.z * current_slide_speed
+	velocity.x = slide_direction.x * current_slide_speed * move_speed_multiplier
+	velocity.z = slide_direction.z * current_slide_speed * move_speed_multiplier
 
 	if (
 		slide_time_remaining <= 0.0

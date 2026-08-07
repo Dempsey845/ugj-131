@@ -2,13 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cwna0g6e0jdu2" path="res://Item/item.gd" id="1_gcssv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
-albedo_color = Color(0.5850618, 0.5850621, 0.58506197, 1)
-metallic = 1.0
-roughness = 0.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
@@ -18,11 +11,6 @@ radius = 1.1732446
 script = ExtResource("1_gcssv")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=680476784]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" unique_id=1267929825]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-material_override = SubResource("StandardMaterial3D_13qdw")
-mesh = SubResource("BoxMesh_xrivr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=250276096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

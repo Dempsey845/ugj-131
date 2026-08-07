@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cpafg66x8ymee"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_1bhby"]
+[ext_resource type="Script" uid="uid://72f53ugbutv3" path="res://Item/Items/tungsten_cube_agent.gd" id="2_skqep"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bhby"]
+albedo_color = Color(0.5850618, 0.5850621, 0.58506197, 1)
+metallic = 1.0
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_skqep"]
+
+[node name="TungstenCubeItem" unique_id=1963813499 instance=ExtResource("1_1bhby")]
+
+[node name="TungstenCubeAgent" type="Node" parent="." index="0" unique_id=679195834]
+script = ExtResource("2_skqep")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=96909939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_1bhby")
+mesh = SubResource("BoxMesh_skqep")

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
-[ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/tungston_cube.tres" id="2_oe8m4"]
+[ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/tungsten_cube.tres" id="2_oe8m4"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
 [ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
