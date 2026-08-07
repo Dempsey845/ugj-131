@@ -6,6 +6,9 @@ signal recovered
 signal item_dropped(item: Node3D)
 signal item_picked_up
 
+signal slide_started
+signal slide_ended
+
 enum State {
 	SEARCHING,
 	CHASING,
@@ -42,12 +45,15 @@ enum State {
 @export var knocked_down_time: float = 0.8
 
 @export_category("NPC Slide Tackle")
-@export var slide_speed: float = 11.0
-@export var slide_duration: float = 1.2
+@export var slide_start_speed: float = 10.0
+@export var slide_hit_delay: float = 0.2
+@export var minimum_slide_speed: float = 4.0
 @export var slide_deceleration: float = 8.0
-@export var slide_steering: float = 1.5
+@export var slide_duration: float = 0.5
+@export var slide_steering: float = 2.5
+@export var slide_visual_height: float = 0.55
 @export var tackle_start_distance: float = 4.0
-@export var tackle_cooldown: float = 3.5
+@export var tackle_cooldown: float = 5.0
 @export_range(0.0, 1.0) var tackle_chance: float = 0.75
 
 @export_category("Chasing")
@@ -69,10 +75,15 @@ var current_slide_speed: float = 0.0
 var slide_time_remaining: float = 0.0
 var tackle_cooldown_remaining: float = 0.0
 var slide_target: Node3D
+var slide_hit_delay_remaining: float = 0.0
+var slide_can_hit: bool = false
 
 var slide_hit_targets: Array[Node3D] = []
+var default_visual_position: Vector3
 
 func _ready() -> void:
+	default_visual_position = visuals.position
+
 	navigation_agent.path_desired_distance = 1.0
 	navigation_agent.target_desired_distance = 1.0
 
@@ -164,6 +175,8 @@ func chase(target: Node3D) -> void:
 	if state == State.KNOCKED_DOWN:
 		return
 
+	_cancel_slide()
+
 	chase_target = target
 	state = State.CHASING
 
@@ -249,6 +262,8 @@ func _on_chased_item_picked_up(carrier: Node3D) -> void:
 	if carrier == self:
 		return
 
+	_cancel_slide()
+
 	chase_target = carrier
 
 	if state != State.KNOCKED_DOWN:
@@ -305,20 +320,40 @@ func _start_slide_tackle(target: Node3D) -> void:
 	state = State.SLIDING
 	is_sliding = true
 	slide_time_remaining = slide_duration
-	current_slide_speed = slide_speed
+
+	slide_hit_delay_remaining = slide_hit_delay
+	slide_can_hit = false
+
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	current_slide_speed = maxf(
+		horizontal_velocity.length(),
+		slide_start_speed
+	)
 
 	slide_hit_targets.clear()
-	slide_hitbox.set_deferred("monitoring", true)
+	slide_hitbox.set_deferred("monitoring", false)
 
-	_rotate_visuals(slide_direction, 1.0)
+	_lower_visuals()
+	slide_started.emit()
 
 
 func _update_slide(delta: float) -> void:
 	slide_time_remaining -= delta
 
-	# Give the NPC a small amount of steering toward its target.
+	if not slide_can_hit:
+		slide_hit_delay_remaining -= delta
+
+		if slide_hit_delay_remaining <= 0.0:
+			slide_can_hit = true
+			slide_hitbox.set_deferred("monitoring", true)
+
 	if is_instance_valid(slide_target):
-		var target_direction := (
+		var target_direction: Vector3 = (
 			slide_target.global_position - global_position
 		)
 		target_direction.y = 0.0
@@ -340,11 +375,11 @@ func _update_slide(delta: float) -> void:
 	velocity.x = slide_direction.x * current_slide_speed
 	velocity.z = slide_direction.z * current_slide_speed
 
-	_rotate_visuals(slide_direction, delta)
+	_rotate_visuals_from_velocity(delta)
 
 	if (
 		slide_time_remaining <= 0.0
-		or current_slide_speed <= move_speed
+		or current_slide_speed <= minimum_slide_speed
 		or not is_on_floor()
 	):
 		_end_slide_tackle()
@@ -355,16 +390,21 @@ func _end_slide_tackle() -> void:
 		return
 
 	is_sliding = false
+	slide_can_hit = false
+	slide_hit_delay_remaining = 0.0
 	slide_target = null
 	tackle_cooldown_remaining = tackle_cooldown
 
 	slide_hitbox.set_deferred("monitoring", false)
+	_restore_visuals()
 
 	if is_instance_valid(chase_target):
 		state = State.CHASING
 	else:
 		state = State.SEARCHING
 		_choose_search_point()
+
+	slide_ended.emit()
 
 func _on_slide_hitbox_body_entered(body: Node3D) -> void:
 	if state != State.SLIDING:
@@ -381,10 +421,64 @@ func _on_slide_hitbox_body_entered(body: Node3D) -> void:
 
 	slide_hit_targets.append(body)
 
+	var hit_intended_target: bool = body == slide_target
+
 	body.receive_tackle(slide_direction, self)
 
-	# End after the first valid character is hit.
-	_end_slide_tackle()
+	if hit_intended_target:
+		_end_slide_tackle()
+
+func _cancel_slide() -> void:
+	if not is_sliding:
+		return
+
+	is_sliding = false
+	slide_target = null
+	current_slide_speed = 0.0
+	slide_time_remaining = 0.0
+
+	slide_hitbox.set_deferred("monitoring", false)
+	_restore_visuals()
+	slide_ended.emit()
+
+func _lower_visuals() -> void:
+	var target_position: Vector3 = default_visual_position
+	target_position.y -= slide_visual_height
+
+	var tween: Tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		visuals,
+		"position",
+		target_position,
+		0.12
+	)
+
+
+func _restore_visuals() -> void:
+	var tween: Tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		visuals,
+		"position",
+		default_visual_position,
+		0.15
+	)
+
+
+func _rotate_visuals_from_velocity(delta: float) -> void:
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	if horizontal_velocity.length_squared() < 0.05:
+		return
+
+	_rotate_visuals(horizontal_velocity.normalized(), delta)
 
 # Carrying and fleeing
 
@@ -396,6 +490,8 @@ func collect_item(item: Item) -> void:
 		return
 
 	if item.collect(self, item_holder):
+		_cancel_slide()
+
 		carried_item = item
 		chase_target = null
 		item_picked_up.emit()
@@ -476,6 +572,9 @@ func receive_tackle(
 ) -> void:
 	if state == State.KNOCKED_DOWN:
 		return
+
+	if is_sliding:
+		_end_slide_tackle()
 
 	var item: Item = carried_item
 	drop_carried_item(direction)

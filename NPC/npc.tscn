@@ -56,6 +56,7 @@ body = NodePath("../..")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=962650786]
 avoidance_enabled = true
+radius = 3.0
 debug_enabled = true
 
 [node name="NPCItemDetector" parent="." unique_id=696106035 instance=ExtResource("2_056qb")]

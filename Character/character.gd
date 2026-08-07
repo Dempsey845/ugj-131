@@ -9,10 +9,12 @@ extends Node3D
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
 
-var current_y_state: String = ""
+var current_state: String = ""
 
 var has_land_signal: bool
 var has_just_landed: bool
+
+var animation_prefix = "Armature|"
 
 func _ready() -> void:
 	playback = animation_tree.get(
@@ -26,19 +28,27 @@ func _ready() -> void:
 		body.landed.connect(_on_body_landed)
 		has_land_signal = true
 
+	animation_tree.animation_finished.connect(func(anim_name: String):
+		if anim_name == animation_prefix + "Land":
+			current_state = "MoveBlend"
+	)
+
+	body.slide_started.connect(_on_body_slide_started)
+	body.slide_ended.connect(_on_body_slide_ended)
 
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(body):
 		return
 		
-	if current_y_state != "Fall" and not body.is_on_floor() and body.velocity.y < 0.0:
+	if current_state != "Fall" and not body.is_on_floor() and body.velocity.y < 0.0:
 		playback.travel("Fall")
-		current_y_state = "Fall"
+		current_state = "Fall"
 		has_just_landed = false
 		
-	if !has_just_landed and !has_land_signal and current_y_state == "Fall":
+	if !has_just_landed and !has_land_signal and current_state == "Fall":
 		if body.is_on_floor():
 			playback.travel("Land")
+			current_state = "Land"
 			has_just_landed = true
 
 	var horizontal_velocity: Vector2 = Vector2(
@@ -65,8 +75,14 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_jumped():
 	playback.travel("Jump")
-	current_y_state = "Jump"
+	current_state = "Jump"
 
 func _on_body_landed():
 	playback.travel("Land")
-	current_y_state = "Land"
+	current_state = "Land"
+
+func _on_body_slide_started():
+	playback.travel("Slide")
+
+func _on_body_slide_ended():
+	playback.travel("MoveBlend")
