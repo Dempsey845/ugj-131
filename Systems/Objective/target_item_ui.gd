@@ -8,6 +8,7 @@ extends Control
 
 func _ready() -> void:
 	objective.objective_started.connect(_on_objective_started)
+	objective.objective_ended.connect(_on_objective_ended)
 
 func show_target_item(item_data: ItemData):
 	name_label.text = item_data.item_name
@@ -19,3 +20,6 @@ func hide_target_item():
 
 func _on_objective_started(item_data: ItemData):
 	show_target_item(item_data)
+
+func _on_objective_ended():
+	hide_target_item()

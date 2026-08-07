@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
 [ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/tungston_cube.tres" id="2_oe8m4"]
+[ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -60,6 +61,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3453536, 0, -5.676411)
 announcement_manager = NodePath("../../AnnouncementManager")
 
 [node name="TargetItemUI" parent="CanvasLayer" unique_id=772257791 node_paths=PackedStringArray("objective") instance=ExtResource("2_k8do8")]
+objective = NodePath("../../Objective")
+
+[node name="CountdownUI" parent="CanvasLayer" unique_id=1299720413 node_paths=PackedStringArray("objective") instance=ExtResource("7_oe8m4")]
 objective = NodePath("../../Objective")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=671047218]

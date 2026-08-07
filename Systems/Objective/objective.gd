@@ -2,6 +2,7 @@ class_name Objective
 extends Node
 
 signal objective_started(item_data: ItemData)
+signal objective_ended
 
 @export var item_spawn_points: Array[Marker3D]
 
@@ -12,3 +13,6 @@ func start_objective(item_data: ItemData):
 	spawn_point.add_child(item)
 	
 	objective_started.emit(item_data)
+
+func stop_objective():
+	objective_ended.emit()
