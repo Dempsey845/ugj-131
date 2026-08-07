@@ -43,7 +43,7 @@ enum State {
 
 @export_category("NPC Slide Tackle")
 @export var slide_speed: float = 11.0
-@export var slide_duration: float = 0.65
+@export var slide_duration: float = 1.2
 @export var slide_deceleration: float = 8.0
 @export var slide_steering: float = 1.5
 @export var tackle_start_distance: float = 4.0
