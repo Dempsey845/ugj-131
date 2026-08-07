@@ -43,9 +43,10 @@ script = ExtResource("1_yf0ba")
 objective = NodePath("../Objective")
 metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
 
-[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points")]
+[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score")]
 script = ExtResource("2_eidgh")
 item_spawn_points = [NodePath("Marker3D"), NodePath("Marker3D2"), NodePath("Marker3D3")]
+player_score = NodePath("../PlayerScore")
 metadata/_custom_type_script = "uid://crdv0o033n1l1"
 
 [node name="Marker3D" type="Marker3D" parent="Objective" unique_id=1324766032]
@@ -121,7 +122,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -10)
 
 [node name="Marker3D3" type="Marker3D" parent="NavigationRegion3D" unique_id=1961769076]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
 
 [node name="Marker3D4" type="Marker3D" parent="NavigationRegion3D" unique_id=192683149]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -10)
