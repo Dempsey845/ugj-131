@@ -11,6 +11,8 @@ var current_blend: float = 0.0
 
 var current_y_state: String = ""
 
+var has_land_signal: bool
+var has_just_landed: bool
 
 func _ready() -> void:
 	playback = animation_tree.get(
@@ -22,6 +24,7 @@ func _ready() -> void:
 		
 	if body.has_signal("landed"):
 		body.landed.connect(_on_body_landed)
+		has_land_signal = true
 
 
 func _physics_process(delta: float) -> void:
@@ -31,6 +34,12 @@ func _physics_process(delta: float) -> void:
 	if current_y_state != "Fall" and not body.is_on_floor() and body.velocity.y < 0.0:
 		playback.travel("Fall")
 		current_y_state = "Fall"
+		has_just_landed = false
+		
+	if !has_just_landed and !has_land_signal and current_y_state == "Fall":
+		if body.is_on_floor():
+			playback.travel("Land")
+			has_just_landed = true
 
 	var horizontal_velocity: Vector2 = Vector2(
 		body.velocity.x,
