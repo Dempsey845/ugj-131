@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b0ltpyuyjaqj4"]
+
+[ext_resource type="Script" uid="uid://bdfrsdlqar3ru" path="res://Player/player.gd" id="1_l8h54"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+
+[node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox")]
+script = ExtResource("1_l8h54")
+camera_pivot = NodePath("CameraPivot")
+visuals = NodePath("Visuals")
+standing_collision = NodePath("CollisionShape3D")
+slide_hitbox = NodePath("Visuals/SlideHitbox")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=146726859]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" unique_id=1003597867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_xrivr")
+
+[node name="SlideHitbox" type="Area3D" parent="Visuals" unique_id=971207734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.7)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visuals/SlideHitbox" unique_id=1423526048]
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=486528121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_xrivr")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=544208360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CameraSpringArm" type="SpringArm3D" parent="CameraPivot" unique_id=905085976]
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]
