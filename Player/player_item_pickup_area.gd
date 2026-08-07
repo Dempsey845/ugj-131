@@ -61,3 +61,6 @@ func _on_current_item_dropped():
 
 func does_player_have_item():
 	return is_instance_valid(current_item) and current_item.carrier == player
+
+func get_current_item() -> Item:
+	return current_item

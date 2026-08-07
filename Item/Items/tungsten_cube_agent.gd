@@ -12,3 +12,9 @@ func _on_item_dropped():
 	affected_carrier.move_speed_multiplier = 1.0
 
 	super._on_item_dropped()
+
+func reset_effect():
+	super.reset_effect()
+
+	if affected_carrier:
+		affected_carrier.move_speed_multiplier = 1.0

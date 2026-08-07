@@ -689,3 +689,6 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y = -0.5
 	else:
 		velocity.y -= gravity * delta
+
+func get_current_item() -> Item:
+	return carried_item

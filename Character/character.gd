@@ -112,5 +112,14 @@ func _on_body_slide_ended():
 func _on_item_picked_up():
 	target_hold_blend = 1.0
 
-func _on_item_dropped(_item):
+	var item: Item = item_manager.get_current_item()
+
+	if !item.is_connected("tree_exited", _on_item_tree_exited):
+		item.tree_exited.connect(_on_item_tree_exited)
+
+func _on_item_tree_exited():
 	target_hold_blend = 0.0
+
+func _on_item_dropped(item):
+	target_hold_blend = 0.0
+	item.tree_exited.disconnect(_on_item_tree_exited)
