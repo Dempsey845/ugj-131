@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://dsbihogbepty2"]
+
+[ext_resource type="Script" uid="uid://d31ajfuljx0uj" path="res://Systems/Announcement/announcement_ui.gd" id="1_e18v2"]
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_kic27"]
+
+[sub_resource type="Animation" id="Animation_kic27"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/MarginContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -80)]
+}
+
+[sub_resource type="Animation" id="Animation_e18v2"]
+resource_name = "show_announcement"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/MarginContainer:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -80), Vector2(0, 20), Vector2(0, 10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_384ps"]
+_data = {
+&"RESET": SubResource("Animation_kic27"),
+&"show_announcement": SubResource("Animation_e18v2")
+}
+
+[node name="AnnouncementUI" type="Control" unique_id=1889206119]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_e18v2")
+
+[node name="Control" type="Control" parent="." unique_id=418611624]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1037872760]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+offset_bottom = -80.00001
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer" unique_id=194415427]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Control/MarginContainer/ColorRect" unique_id=912598551]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Announcement: A tungston cube has been hidden! Have it when the time is up and it's yours!"
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Control/MarginContainer/ColorRect" unique_id=399652672]
+anchors_preset = 0
+offset_right = 63.0
+offset_bottom = 63.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/MarginContainer/ColorRect/Control" unique_id=1749915556]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kic27")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1830589439]
+libraries/ = SubResource("AnimationLibrary_384ps")

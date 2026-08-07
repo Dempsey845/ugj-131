@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://iuwi8d7umvdk"]
 
+[ext_resource type="PackedScene" uid="uid://dsbihogbepty2" path="res://Systems/Announcement/announcement_ui.tscn" id="1_3f78f"]
 [ext_resource type="PackedScene" uid="uid://b0ltpyuyjaqj4" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="3_j8job"]
@@ -25,6 +26,10 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 
 [node name="World" type="Node3D" unique_id=1526889445]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
+
+[node name="AnnouncementUI" parent="CanvasLayer" unique_id=1889206119 instance=ExtResource("1_3f78f")]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=671047218]
 environment = SubResource("Environment_3f78f")
 
@@ -47,6 +52,22 @@ use_collision = true
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=256709093]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 size = Vector3(50, 0.5, 50)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1287016642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 23.5)
+size = Vector3(50, 10, 3)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=154485637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -23.5)
+size = Vector3(50, 10, 3)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=2041290999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 4.5, 0)
+size = Vector3(3, 10, 44)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1510720003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 4.5, 0)
+size = Vector3(3, 10, 44)
 
 [node name="Marker3D" type="Marker3D" parent="NavigationRegion3D" unique_id=783231224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
