@@ -76,5 +76,12 @@ player = NodePath("../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
 
+[node name="NPC2" parent="NavigationRegion3D" unique_id=849882761 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -6)
+search_points = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("../Marker3D3"), NodePath("../Marker3D4"), NodePath("../Marker3D5"), NodePath("../Marker3D6"), NodePath("../Marker3D7"), NodePath("../Marker3D8")]
+player = NodePath("../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
 [node name="Item" parent="." unique_id=1963813499 instance=ExtResource("3_j8job")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3, 0, 0)

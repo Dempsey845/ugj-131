@@ -4,6 +4,7 @@ extends CharacterBody3D
 signal knocked_down
 signal recovered
 signal item_dropped(item: Node3D)
+signal item_picked_up
 
 enum State {
 	SEARCHING,
@@ -250,6 +251,7 @@ func collect_item(item: Item) -> void:
 	if item.collect(self, item_holder):
 		carried_item = item
 		chase_target = null
+		item_picked_up.emit()
 
 		if chased_item == item:
 			_stop_tracking_chased_item()

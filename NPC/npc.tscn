@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://brgw1axid06lq" path="res://NPC/npc.gd" id="1_asys0"]
 [ext_resource type="PackedScene" uid="uid://cv85hacayqxx5" path="res://NPC/npc_item_detector.tscn" id="2_056qb"]
+[ext_resource type="Script" uid="uid://cifc50fqn5liw" path="res://NPC/npc_item_awareness_area.gd" id="3_3etx6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -9,6 +10,9 @@
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_056qb"]
+radius = 6.0
 
 [node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder")]
 script = ExtResource("1_asys0")
@@ -35,3 +39,9 @@ debug_enabled = true
 
 [node name="NPCItemDetector" parent="." unique_id=696106035 instance=ExtResource("2_056qb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.90000004, 0)
+
+[node name="NPCItemAwarenessArea" type="Area3D" parent="." unique_id=1930133485]
+script = ExtResource("3_3etx6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPCItemAwarenessArea" unique_id=1980318681]
+shape = SubResource("SphereShape3D_056qb")
