@@ -21,6 +21,8 @@ func _on_item_dropped(item: Item):
     
     npcs_chasing_this_npc.clear()
 
+    item.tree_exited.disconnect(_on_npc_item_tree_exited)
+
 func _on_item_picked_up():
     var overlapping_bodies: Array[Node3D] = get_overlapping_bodies()
 
@@ -32,6 +34,8 @@ func _on_item_picked_up():
             continue
         
         start_npc_chase(body as NPC)
+
+    npc.carried_item.tree_exited.connect(_on_npc_item_tree_exited)
 
 func _on_body_entered(body: Node3D):
     if body is not NPC:
@@ -46,3 +50,7 @@ func _on_body_entered(body: Node3D):
     var other_npc: NPC = body
 
     start_npc_chase(other_npc)
+
+func _on_npc_item_tree_exited():
+    for other_npc: NPC in npcs_chasing_this_npc:
+        other_npc.stop_chasing()
