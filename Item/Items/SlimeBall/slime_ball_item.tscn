@@ -67,6 +67,7 @@ upward_throw_force = 5.0
 [node name="SlimeBallItemAgent" type="Node" parent="." index="0" unique_id=1074632526 node_paths=PackedStringArray("particles")]
 script = ExtResource("2_rwiry")
 particles = NodePath("../Visuals/SlimeParticles")
+trail_spacing = 1.5
 metadata/_custom_type_script = "uid://d1fwq3pighi0q"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=425441911]

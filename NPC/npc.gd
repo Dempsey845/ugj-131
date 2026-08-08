@@ -60,6 +60,16 @@ enum State {
 @export var maximum_chase_distance: float = 20.0
 @export var item_pickup_distance: float = 1.25
 
+@export_category("Slippery Movement")
+@export var slippery_acceleration: float = 3.5
+@export var slippery_deceleration: float = 1.5
+
+var slippery_area_count: int = 0
+
+var is_on_slippery_surface: bool:
+	get:
+		return slippery_area_count > 0
+
 var state: State = State.SEARCHING
 var chase_target: Node3D
 var carried_item: Item
@@ -632,8 +642,13 @@ func _follow_navigation(speed: float, delta: float) -> void:
 		_slow_down(delta)
 		return
 
-	var next_position: Vector3 = navigation_agent.get_next_path_position()
-	var direction: Vector3 = next_position - global_position
+	var next_position: Vector3 = (
+		navigation_agent.get_next_path_position()
+	)
+
+	var direction: Vector3 = (
+		next_position - global_position
+	)
 	direction.y = 0.0
 
 	if direction.length_squared() <= 0.001:
@@ -642,19 +657,34 @@ func _follow_navigation(speed: float, delta: float) -> void:
 
 	direction = direction.normalized()
 
+	var current_acceleration: float = acceleration
+
+	if is_on_slippery_surface and is_on_floor():
+		current_acceleration = slippery_acceleration
+
 	velocity.x = move_toward(
 		velocity.x,
 		direction.x * speed * move_speed_multiplier,
-		acceleration * delta
+		current_acceleration * delta
 	)
 
 	velocity.z = move_toward(
 		velocity.z,
 		direction.z * speed * move_speed_multiplier,
-		acceleration * delta
+		current_acceleration * delta
 	)
 
-	_rotate_visuals(direction, delta)
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	if horizontal_velocity.length_squared() > 0.05:
+		_rotate_visuals(
+			horizontal_velocity.normalized(),
+			delta
+		)
 
 
 func _slow_down(delta: float) -> void:
@@ -692,3 +722,12 @@ func _apply_gravity(delta: float) -> void:
 
 func get_current_item() -> Item:
 	return carried_item
+
+func enter_slippery_area() -> void:
+	slippery_area_count += 1
+
+func exit_slippery_area() -> void:
+	slippery_area_count = maxi(
+		slippery_area_count - 1,
+		0
+	)

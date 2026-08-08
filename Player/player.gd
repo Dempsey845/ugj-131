@@ -66,6 +66,16 @@ var default_visual_rotation: Vector3
 @export var minimum_pitch: float = deg_to_rad(-55.0)
 @export var maximum_pitch: float = deg_to_rad(40.0)
 
+@export_category("Slippery Movement")
+@export var slippery_acceleration: float = 5.0
+@export var slippery_deceleration: float = 1.5
+
+var slippery_area_count: int = 0
+
+var is_on_slippery_surface: bool:
+	get:
+		return slippery_area_count > 0
+
 var can_move: bool = true
 var move_speed_multiplier: float = 1.0
 
@@ -238,14 +248,28 @@ func _update_movement(
 	delta: float,
 	input_direction: Vector3
 ) -> void:
-	var target_velocity: Vector3 = input_direction * move_speed * move_speed_multiplier
+	var target_velocity: Vector3 = (
+		input_direction *
+		move_speed *
+		move_speed_multiplier
+	)
 
-	var acceleration: float = ground_acceleration
+	var acceleration: float
 
 	if not is_on_floor():
 		acceleration = air_acceleration
+
+	elif is_on_slippery_surface:
+		if input_direction == Vector3.ZERO:
+			acceleration = slippery_deceleration
+		else:
+			acceleration = slippery_acceleration
+
 	elif input_direction == Vector3.ZERO:
 		acceleration = ground_deceleration
+
+	else:
+		acceleration = ground_acceleration
 
 	velocity.x = move_toward(
 		velocity.x,
@@ -529,3 +553,9 @@ func _update_recovery(
 	if recovery_remaining <= 0.0:
 		is_recovering = false
 		recovered.emit()
+
+func enter_slippery_area() -> void:
+	slippery_area_count += 1
+
+func exit_slippery_area() -> void:
+	slippery_area_count = maxi(slippery_area_count - 1, 0)
