@@ -6,6 +6,7 @@ signal objective_ended
 
 @export var item_spawn_points: Array[Marker3D]
 @export var player_score: Score
+@export var confetti_particles: ConfettiParticles
 
 var current_item: Item
 var current_item_data: ItemData
@@ -31,6 +32,9 @@ func stop_objective():
 				carrier_score = current_item.carrier.get_node("Score")
 			else:
 				carrier_score = player_score
+
+			confetti_particles.global_position = current_item.carrier.global_position
+			confetti_particles.explode()
 			
 			carrier_score.add_points(current_item_data.points_reward)
 

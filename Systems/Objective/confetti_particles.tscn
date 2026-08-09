@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dpxaqysqvofy0"]
+
+[ext_resource type="Script" uid="uid://mq0l6c6k6fnf" path="res://Systems/Objective/confetti_particles.gd" id="1_script"]
+
+[sub_resource type="Gradient" id="GradientColours"]
+offsets = PackedFloat32Array(0, 0.16, 0.33, 0.5, 0.67, 0.84, 1)
+colors = PackedColorArray(0.953, 0.514, 0.157, 1, 0.984, 0.745, 0.18, 1, 0.18, 0.78, 0.72, 1, 0.22, 0.55, 1, 1, 0.93, 0.28, 0.5, 1, 0.62, 0.32, 0.95, 1, 0.98, 0.96, 0.88, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTextureColours"]
+gradient = SubResource("GradientColours")
+
+[sub_resource type="Curve" id="Curve_i8o8c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.047008634), 0.0, 0.0, 0, 0, Vector2(0.105545625, 1), 0.0, 0.0, 0, 0, Vector2(0.75670844, 1), 0.0, 0.0, 0, 0, Vector2(0.9928444, 0.012820601), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_p6bqg"]
+curve = SubResource("Curve_i8o8c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xrivr"]
+particle_flag_align_y = true
+emission_shape = 1
+emission_sphere_radius = 0.35
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 1, 0)
+spread = 68.0
+flatness = 0.18
+initial_velocity_min = 9.0
+initial_velocity_max = 16.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, -17, 0)
+damping_min = 0.8
+damping_max = 2.2
+scale_min = 0.7
+scale_max = 1.35
+scale_curve = SubResource("CurveTexture_p6bqg")
+color_initial_ramp = SubResource("GradientTextureColours")
+
+[sub_resource type="StandardMaterial3D" id="ConfettiMaterial"]
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_7f2x3"]
+material = SubResource("ConfettiMaterial")
+size = Vector3(0.1, 0.3, 0.018)
+
+[node name="ConfettiParticles" type="Node3D" unique_id=1799658963]
+script = ExtResource("1_script")
+
+[node name="Particles" type="GPUParticles3D" parent="." unique_id=614370147]
+unique_name_in_owner = true
+cast_shadow = 0
+emitting = false
+amount = 180
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.65
+visibility_aabb = AABB(-20, -5, -20, 40, 30, 40)
+draw_order = 1
+process_material = SubResource("ParticleProcessMaterial_xrivr")
+draw_pass_1 = SubResource("BoxMesh_7f2x3")

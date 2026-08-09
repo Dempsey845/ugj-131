@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
 [ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
+[ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -51,10 +52,11 @@ metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
 script = ExtResource("4_h2aik")
 npc_container = NodePath("../NavigationRegion3D/NPC_Container")
 
-[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score")]
+[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score", "confetti_particles")]
 script = ExtResource("2_eidgh")
 item_spawn_points = [NodePath("Marker3D"), NodePath("Marker3D2"), NodePath("Marker3D3")]
 player_score = NodePath("../PlayerScore")
+confetti_particles = NodePath("../ConfettiParticles")
 metadata/_custom_type_script = "uid://crdv0o033n1l1"
 
 [node name="Marker3D" type="Marker3D" parent="Objective" unique_id=1324766032]
@@ -168,3 +170,6 @@ search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePa
 player = NodePath("../../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
+
+[node name="ConfettiParticles" parent="." unique_id=1799658963 instance=ExtResource("13_0wqet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.3, 0, 0)
