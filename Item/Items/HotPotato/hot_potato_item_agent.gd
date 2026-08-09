@@ -4,10 +4,13 @@ var hot_potato_manager: HotPotatoManager
 
 var hold_time: float
 
+
 func _ready() -> void:
 	super._ready()
 
 	hot_potato_manager = get_tree().current_scene.get_node("HotPotatoManager")
+	
+	game_manager.is_current_round_hot_potato = true
 
 func _process(delta: float) -> void:
 	if affected_carrier:
@@ -35,3 +38,4 @@ func reset_effect():
 	super.reset_effect()
 	hold_time = 0
 
+	

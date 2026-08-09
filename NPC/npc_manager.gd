@@ -81,3 +81,4 @@ func assign_unique_npc_names() -> void:
 			continue
 
 		npcs[i].assign_name(available_names[i])
+		npcs[i].npc_manager = self

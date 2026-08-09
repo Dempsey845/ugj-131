@@ -16,8 +16,12 @@ func start_npc_chase(other_npc: NPC):
     npcs_chasing_this_npc.append(other_npc)
 
 func _on_item_dropped(item: Item):
-    for other_npc in npcs_chasing_this_npc:
-        other_npc.chase_dropped_item(item)
+    if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+        for other_npc in npcs_chasing_this_npc:
+            other_npc.start_fleeing(item)
+    else:
+        for other_npc in npcs_chasing_this_npc:
+            other_npc.chase_dropped_item(item)
     
     npcs_chasing_this_npc.clear()
 

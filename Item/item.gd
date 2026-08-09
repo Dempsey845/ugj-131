@@ -115,3 +115,6 @@ func _on_pickup_area_entered(area: Area3D):
 		var player_item_pickup_area: PlayerItemPickupArea = body.get_node("PlayerItemPickupArea")
 
 		player_item_pickup_area.pickup_item.call_deferred(self)
+
+func is_item_hot_potato():
+	return force_character_to_pickup_on_collide and can_only_be_thrown_if_character_in_front

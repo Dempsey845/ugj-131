@@ -14,6 +14,8 @@ enum State {
 	CHASING,
 	SLIDING,
 	CARRYING,
+	AGGRESSIVE,
+	FLEEING,
 	KNOCKED_DOWN
 }
 
@@ -65,6 +67,14 @@ enum State {
 @export var slippery_acceleration: float = 3.5
 @export var slippery_deceleration: float = 1.5
 
+@export_category("Fleeing")
+@export var fleeing_speed: float = 5.5
+
+@export_category("Aggressive")
+@export var aggressive_speed: float = 6.0
+@export var aggressive_drop_distance: float = 2.5
+@export var aggressive_retarget_interval: float = 0.25
+
 var slippery_area_count: int = 0
 
 var is_on_slippery_surface: bool:
@@ -94,7 +104,15 @@ var slide_can_hit: bool = false
 var slide_hit_targets: Array[Node3D] = []
 var default_visual_position: Vector3
 
+var flee_threat: Node3D
+var resume_fleeing_after_knockdown: bool = false
+
+var aggressive_target: Node3D
+var aggressive_retarget_remaining: float = 0.0
+
 var assigned_name: String
+
+var npc_manager: NPC_Manager
 
 func _ready() -> void:
 	default_visual_position = visuals.position
@@ -130,6 +148,12 @@ func _physics_process(delta: float) -> void:
 
 		State.CARRYING:
 			_update_carrying(delta)
+
+		State.AGGRESSIVE:
+			_update_aggressive(delta)
+
+		State.FLEEING:
+			_update_fleeing(delta)
 
 		State.KNOCKED_DOWN:
 			_update_knocked_down(delta)
@@ -238,6 +262,10 @@ func _update_chasing(delta: float) -> void:
 		if distance_to_target <= item_pickup_distance:
 			_slow_down(delta)
 			return
+
+	if chase_target.has_method("receive_tackle") and GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+		start_fleeing(chase_target)
+		return
 
 	# The target is another character carrying the item.
 	elif (
@@ -527,11 +555,16 @@ func _update_carrying(delta: float) -> void:
 	if navigation_agent.is_navigation_finished():
 		_choose_flee_point()
 
+	if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+		start_aggressive()
+		return
+
 	_follow_navigation(carrying_speed, delta)
 
 
 func _choose_flee_point() -> void:
 	if search_points.is_empty():
+		_slow_down(get_physics_process_delta_time())
 		return
 
 	var valid_points: Array[Node3D] = []
@@ -543,21 +576,39 @@ func _choose_flee_point() -> void:
 	if valid_points.is_empty():
 		return
 
-	# Prefer a distant point so the NPC attempts to escape.
+	var position_to_escape_from: Vector3 = global_position
+
+	if (
+		state == State.FLEEING
+		and is_instance_valid(flee_threat)
+	):
+		position_to_escape_from = flee_threat.global_position
+
+	# Put the furthest points first.
 	valid_points.sort_custom(
 		func(a: Node3D, b: Node3D) -> bool:
-			var distance_a: float = global_position.distance_squared_to(
-				a.global_position
+			var distance_a: float = (
+				a.global_position.distance_squared_to(
+					position_to_escape_from
+				)
 			)
-			var distance_b: float = global_position.distance_squared_to(
-				b.global_position
+
+			var distance_b: float = (
+				b.global_position.distance_squared_to(
+					position_to_escape_from
+				)
 			)
 
 			return distance_a > distance_b
 	)
 
+	# Randomly select between the three furthest points so
+	# NPCs don't always flee along exactly the same route.
 	var selection_count: int = mini(3, valid_points.size())
-	current_search_point = valid_points[randi() % selection_count]
+
+	current_search_point = valid_points[
+		randi() % selection_count
+	]
 
 	navigation_agent.target_position = (
 		current_search_point.global_position
@@ -579,6 +630,35 @@ func drop_carried_item(direction: Vector3) -> void:
 
 	item_dropped.emit(item)
 
+func start_fleeing(threat: Node3D = null) -> void:
+	if state == State.KNOCKED_DOWN:
+		return
+
+	_cancel_slide()
+	_stop_tracking_chased_item()
+
+	chase_target = null
+	flee_threat = threat
+	state = State.FLEEING
+
+	_choose_flee_point()
+
+
+func stop_fleeing() -> void:
+	if state != State.FLEEING:
+		return
+
+	flee_threat = null
+	state = State.SEARCHING
+	_choose_search_point()
+
+
+func _update_fleeing(delta: float) -> void:
+	if navigation_agent.is_navigation_finished():
+		_choose_flee_point()
+
+	_follow_navigation(fleeing_speed, delta)
+
 # Tackle reaction
 
 func receive_tackle(
@@ -588,13 +668,21 @@ func receive_tackle(
 	if state == State.KNOCKED_DOWN:
 		return
 
+	resume_fleeing_after_knockdown = (
+		state == State.FLEEING
+	)
+
 	if is_sliding:
 		_end_slide_tackle()
 
 	var item: Item = carried_item
 	drop_carried_item(direction)
+
 	if is_instance_valid(item):
-		chase_dropped_item(item)
+		if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+			start_fleeing(item)
+		else:
+			chase_dropped_item(item)
 
 	state = State.KNOCKED_DOWN
 	knocked_down_remaining = knocked_down_time
@@ -630,13 +718,120 @@ func _update_knocked_down(delta: float) -> void:
 
 	if is_instance_valid(chase_target):
 		state = State.CHASING
+
 	elif is_instance_valid(carried_item):
 		state = State.CARRYING
 		_choose_flee_point()
+
+	elif resume_fleeing_after_knockdown:
+		resume_fleeing_after_knockdown = false
+		state = State.FLEEING
+		_choose_flee_point()
+
 	else:
 		state = State.SEARCHING
 		_choose_search_point()
 
+
+# Aggressive
+func start_aggressive() -> void:
+	if state == State.KNOCKED_DOWN:
+		return
+
+	if not is_instance_valid(carried_item):
+		state = State.SEARCHING
+		_choose_search_point()
+		return
+
+	_cancel_slide()
+	_stop_tracking_chased_item()
+
+	chase_target = null
+	flee_threat = null
+	aggressive_target = _find_nearest_character()
+	aggressive_retarget_remaining = 0.0
+
+	if not is_instance_valid(aggressive_target):
+		state = State.CARRYING
+		_choose_flee_point()
+		return
+
+	state = State.AGGRESSIVE
+	navigation_agent.target_position = (
+		aggressive_target.global_position
+	)
+
+
+func _update_aggressive(delta: float) -> void:
+	# The item may have been removed by another system.
+	if not is_instance_valid(carried_item):
+		aggressive_target = null
+		state = State.SEARCHING
+		_choose_search_point()
+		return
+
+	aggressive_retarget_remaining -= delta
+
+	if (
+		aggressive_retarget_remaining <= 0.0
+		or not _is_valid_aggressive_target(
+			aggressive_target
+		)
+	):
+		aggressive_retarget_remaining = (
+			aggressive_retarget_interval
+		)
+		aggressive_target = _find_nearest_character()
+
+	if not is_instance_valid(aggressive_target):
+		state = State.CARRYING
+		_choose_flee_point()
+		return
+
+	var direction_to_target: Vector3 = (
+		aggressive_target.global_position
+		- global_position
+	)
+	direction_to_target.y = 0.0
+
+	var distance_to_target: float = (
+		direction_to_target.length()
+	)
+
+	if distance_to_target <= aggressive_drop_distance:
+		_throw_item_at_aggressive_target()
+		return
+
+	navigation_agent.target_position = (
+		aggressive_target.global_position
+	)
+
+	_follow_navigation(aggressive_speed, delta)
+
+
+func _throw_item_at_aggressive_target() -> void:
+	if not is_instance_valid(aggressive_target):
+		state = State.CARRYING
+		_choose_flee_point()
+		return
+
+	var target: Node3D = aggressive_target
+
+	var throw_direction: Vector3 = (
+		target.global_position - global_position
+	)
+	throw_direction.y = 0.0
+
+	if throw_direction.length_squared() <= 0.001:
+		throw_direction = -global_transform.basis.z
+		throw_direction.y = 0.0
+
+	throw_direction = throw_direction.normalized()
+
+	drop_carried_item(throw_direction)
+
+	aggressive_target = null
+	start_fleeing(target)
 
 # Shared movement
 
@@ -741,3 +936,51 @@ func assign_name(npc_name: String):
 
 func get_character_name():
 	return assigned_name
+
+func get_all_characters() -> Array[Node3D]:
+	var all_characters: Array[Node3D] = []
+
+	if is_instance_valid(npc_manager):
+		for npc in npc_manager.npcs:
+			if (
+				is_instance_valid(npc)
+				and npc != self
+				and npc is Node3D
+			):
+				all_characters.append(npc)
+
+	if is_instance_valid(player):
+		all_characters.append(player)
+
+	return all_characters
+
+
+func _find_nearest_character() -> Node3D:
+	var nearest_character: Node3D
+	var nearest_distance_squared: float = INF
+
+	for character in get_all_characters():
+		if not _is_valid_aggressive_target(character):
+			continue
+
+		var distance_squared: float = (
+			global_position.distance_squared_to(
+				character.global_position
+			)
+		)
+
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			nearest_character = character
+
+	return nearest_character
+
+
+func _is_valid_aggressive_target(
+	character: Node3D
+) -> bool:
+	return (
+		is_instance_valid(character)
+		and character != self
+		and character.is_inside_tree()
+	)
