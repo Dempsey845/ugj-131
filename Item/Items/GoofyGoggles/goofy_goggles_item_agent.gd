@@ -14,6 +14,7 @@ func _on_item_picked_up(carrier):
 
 	if carrier is Player:
 		goofy_goggles_screen_effect.enable_goofy_goggles()
+		carrier.enable_goofy_movement()
 
 func _on_item_dropped():
 	var character: Character = affected_carrier.get_node("%Character")
@@ -22,6 +23,7 @@ func _on_item_dropped():
 
 	if affected_carrier is Player:
 		goofy_goggles_screen_effect.disable_goofy_goggles()
+		affected_carrier.disable_goofy_movement()
 
 	super._on_item_dropped()
 
@@ -35,3 +37,4 @@ func reset_effect():
 
 		if affected_carrier is Player:
 			goofy_goggles_screen_effect.disable_goofy_goggles()
+			affected_carrier.disable_goofy_movement()

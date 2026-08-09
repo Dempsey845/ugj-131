@@ -71,6 +71,11 @@ var default_visual_rotation: Vector3
 @export var slippery_acceleration: float = 5.0
 @export var slippery_deceleration: float = 1.5
 
+@export_category("Goofy Movement")
+@export var goofy_wobble_strength: float = 0.8
+@export var goofy_wobble_speed: float = 4.0
+@export var goofy_secondary_wobble: float = 0.4
+
 var slippery_area_count: int = 0
 
 var is_on_slippery_surface: bool:
@@ -92,6 +97,9 @@ var was_on_floor: bool
 
 var default_visual_position: Vector3
 var hit_targets: Array[Node3D] = []
+
+var goofy_movement_enabled: bool = false
+var goofy_wobble_phase: float = 0.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -251,10 +259,14 @@ func _update_movement(
 	delta: float,
 	input_direction: Vector3
 ) -> void:
+	var movement_direction: Vector3 = (
+		_apply_goofy_movement(input_direction)
+	)
+
 	var target_velocity: Vector3 = (
-		input_direction *
-		move_speed *
-		move_speed_multiplier
+		movement_direction
+		* move_speed
+		* move_speed_multiplier
 	)
 
 	var acceleration: float
@@ -286,6 +298,44 @@ func _update_movement(
 		acceleration * delta
 	)
 
+func _apply_goofy_movement(
+	direction: Vector3
+) -> Vector3:
+	if not goofy_movement_enabled:
+		return direction
+
+	if direction.length_squared() <= 0.001:
+		return direction
+
+	var forward: Vector3 = direction.normalized()
+
+	var sideways: Vector3 = Vector3(
+		-forward.z,
+		0.0,
+		forward.x
+	)
+
+	var time: float = (
+		Time.get_ticks_msec() * 0.001
+		+ goofy_wobble_phase
+	)
+
+	var wobble: float = (
+		sin(time * goofy_wobble_speed)
+		* goofy_wobble_strength
+	)
+
+	wobble += (
+		sin(
+			time * goofy_wobble_speed * 2.17
+			+ 1.4
+		)
+		* goofy_secondary_wobble
+	)
+
+	return (
+		forward + sideways * wobble
+	).normalized()
 
 func _try_jump() -> void:
 	if jump_buffer_remaining <= 0.0:
@@ -565,3 +615,17 @@ func exit_slippery_area() -> void:
 
 func get_character_name():
 	return SceneManager.player_name
+
+func set_goofy_movement_enabled(enabled: bool) -> void:
+	goofy_movement_enabled = enabled
+
+	if enabled:
+		goofy_wobble_phase = randf_range(0.0, TAU)
+
+
+func enable_goofy_movement() -> void:
+	set_goofy_movement_enabled(true)
+
+
+func disable_goofy_movement() -> void:
+	set_goofy_movement_enabled(false)
