@@ -2,6 +2,7 @@ class_name CountdownUI
 extends Control
 
 @export var objective: Objective
+@export var game_manager: GameManager
 
 @onready var timer_card: PanelContainer = %TimerCard
 @onready var countdown_label: Label = %CountdownLabel
@@ -11,7 +12,6 @@ extends Control
 
 const NORMAL_COLOUR: Color = Color(0.984, 0.745, 0.18)
 const URGENT_COLOUR: Color = Color(1.0, 0.32, 0.28)
-const URGENT_SECONDS: int = 5
 
 var time: float = 0.0
 var countdown_active: bool = false
@@ -53,7 +53,7 @@ func _update_display() -> void:
 	var displayed_seconds: int = ceili(time)
 	countdown_label.text = str(displayed_seconds)
 
-	var is_urgent: bool = displayed_seconds <= URGENT_SECONDS
+	var is_urgent: bool = displayed_seconds <= game_manager.current_item_data.urgent_time
 	var colour: Color = URGENT_COLOUR if is_urgent else NORMAL_COLOUR
 	countdown_label.add_theme_color_override("font_color", colour)
 	time_progress.modulate = colour
@@ -74,4 +74,3 @@ func _finish_countdown() -> void:
 
 func _on_objective_started(item_data: ItemData) -> void:
 	start_countdown(item_data.seconds_to_collect)
-

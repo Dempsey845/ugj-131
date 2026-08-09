@@ -7,6 +7,7 @@ signal objective_ended
 @export var item_spawn_points: Array[Marker3D]
 @export var player_score: Score
 @export var confetti_particles: ConfettiParticles
+@export var hot_potato_manager: HotPotatoManager
 
 var current_item: Item
 var current_item_data: ItemData
@@ -26,18 +27,59 @@ func stop_objective():
 
 	if is_instance_valid(current_item):
 		if current_item.carrier:
-			var carrier_score: Score
+			var show_confetti: bool = true
+			var confetti_position: Vector3
 
-			if current_item.carrier is NPC:
-				carrier_score = current_item.carrier.get_node("Score")
+			if current_item.is_item_hot_potato():
+				_reset_carrier_item_time(current_item.carrier)
+
+				var top_players: Array[Node3D] = hot_potato_manager.get_top_three_players()
+
+				_reward_top_hot_potato_players(top_players)
+
+				if top_players.size() > 0:
+					confetti_position = top_players[0].global_position
+				else:
+					show_confetti = false
 			else:
-				carrier_score = player_score
+				var carrier_score: Score = player_score
 
-			confetti_particles.global_position = current_item.carrier.global_position
-			confetti_particles.explode()
-			
-			carrier_score.add_points(current_item_data.points_reward)
+				if current_item.carrier is NPC:
+					carrier_score = current_item.carrier.get_node("Score")
+
+				carrier_score.add_points(current_item_data.points_reward)
+				confetti_position = current_item.carrier.global_position
+
+			if show_confetti:
+				confetti_particles.global_position = confetti_position
+				confetti_particles.explode()
 
 		current_item.queue_free()
 		
 	current_item = null
+
+func _reward_top_hot_potato_players(top_players: Array[Node3D]):
+	const POSITION_POINTS = [10, 5, 2]
+
+	for i in range(top_players.size()):
+		var t_player: Node3D = top_players[i]
+		if t_player is NPC:
+			var npc_score: Score = t_player.get_node("Score")
+			npc_score.add_points(POSITION_POINTS[i])
+		elif t_player is Player:
+			player_score.add_points(POSITION_POINTS[i])
+
+func _reset_carrier_item_time(carrier: Node3D):
+	# Reset the carrier who is holding the potato to 0 time
+	if carrier is NPC:
+		var npc: NPC = carrier
+		hot_potato_manager.set_player_hold_second(
+			&"npc_%s" % npc.assigned_name.to_lower(),
+			0.0
+		)
+	
+	elif carrier is Player:
+		hot_potato_manager.set_player_hold_second(
+			&"player",
+			0.0
+		)

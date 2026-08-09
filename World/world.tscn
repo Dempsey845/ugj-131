@@ -54,11 +54,12 @@ metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
 script = ExtResource("4_h2aik")
 npc_container = NodePath("../NavigationRegion3D/NPC_Container")
 
-[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score", "confetti_particles")]
+[node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score", "confetti_particles", "hot_potato_manager")]
 script = ExtResource("2_eidgh")
 item_spawn_points = [NodePath("Marker3D"), NodePath("Marker3D2"), NodePath("Marker3D3")]
 player_score = NodePath("../PlayerScore")
 confetti_particles = NodePath("../ConfettiParticles")
+hot_potato_manager = NodePath("../HotPotatoManager")
 metadata/_custom_type_script = "uid://crdv0o033n1l1"
 
 [node name="Marker3D" type="Marker3D" parent="Objective" unique_id=1324766032]
@@ -90,8 +91,9 @@ announcement_manager = NodePath("../../AnnouncementManager")
 [node name="TargetItemUI" parent="CanvasLayer" unique_id=772257791 node_paths=PackedStringArray("objective") instance=ExtResource("2_k8do8")]
 objective = NodePath("../../Objective")
 
-[node name="CountdownUI" parent="CanvasLayer" unique_id=1299720413 node_paths=PackedStringArray("objective") instance=ExtResource("7_oe8m4")]
+[node name="CountdownUI" parent="CanvasLayer" unique_id=1299720413 node_paths=PackedStringArray("objective", "game_manager") instance=ExtResource("7_oe8m4")]
 objective = NodePath("../../Objective")
+game_manager = NodePath("../../GameManager")
 
 [node name="LeaderboardUI" parent="CanvasLayer" unique_id=1149146776 instance=ExtResource("11_awrha")]
 

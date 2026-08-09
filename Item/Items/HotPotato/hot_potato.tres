@@ -9,5 +9,6 @@ script = ExtResource("1_ccb4y")
 item_name = "Hot Potato"
 item_texture = ExtResource("2_8q0v5")
 item_scene = ExtResource("1_0k0yu")
-seconds_to_collect = 50
+seconds_to_collect = 60
+urgent_time = 20
 metadata/_custom_type_script = "uid://bta1n6q65gi1m"
