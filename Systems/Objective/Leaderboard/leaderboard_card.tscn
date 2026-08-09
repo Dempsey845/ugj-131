@@ -1,0 +1,136 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://btgphx0rb8ncg" path="res://Systems/Objective/Leaderboard/leaderboard_card.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_icon"]
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="RankStyle"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="IconStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="TimeStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="LeaderboardCard" type="PanelContainer"]
+custom_minimum_size = Vector2(304, 84)
+offset_right = 304.0
+offset_bottom = 84.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("CardStyle")
+script = ExtResource("1_script")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 9
+
+[node name="Row" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="RankPanel" type="PanelContainer" parent="Margin/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("RankStyle")
+
+[node name="RankLabel" type="Label" parent="Margin/Row/RankPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 19
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IconPanel" type="PanelContainer" parent="Margin/Row"]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+theme_override_styles/panel = SubResource("IconStyle")
+
+[node name="IconMargin" type="MarginContainer" parent="Margin/Row/IconPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="PlayerIcon" type="TextureRect" parent="Margin/Row/IconPanel/IconMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerInfo" type="VBoxContainer" parent="Margin/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="NameLabel" type="Label" parent="Margin/Row/PlayerInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.95, 0.98, 1)
+theme_override_font_sizes/font_size = 17
+text = "Contestant"
+text_overrun_behavior = 3
+
+[node name="HeldLabel" type="Label" parent="Margin/Row/PlayerInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.58, 0.66, 1)
+theme_override_font_sizes/font_size = 10
+text = "POTATO HELD"
+
+[node name="TimePanel" type="PanelContainer" parent="Margin/Row"]
+custom_minimum_size = Vector2(74, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("TimeStyle")
+
+[node name="SecondsLabel" type="Label" parent="Margin/Row/TimePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 16
+text = "0.0 s"
+horizontal_alignment = 1
+vertical_alignment = 1
+

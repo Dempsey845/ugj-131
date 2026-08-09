@@ -15,6 +15,8 @@ enum State {
 @export var pickup_delay_after_drop: float = 1.5
 @export var throw_force: float = 5.0
 @export var upward_throw_force: float = 3.0
+@export var force_character_to_pickup_on_collide: bool
+@export var can_only_be_thrown_if_character_in_front: bool
 
 @onready var pickup_area: Area3D = $PickupArea
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
@@ -27,6 +29,8 @@ var can_be_collected: bool = true
 func _ready() -> void:
 	freeze = false
 	pickup_area.monitoring = true
+
+	pickup_area.area_entered.connect(_on_pickup_area_entered)
 
 
 func collect(new_carrier: Node3D, item_holder: Node3D ) -> bool:
@@ -97,3 +101,17 @@ func drop(direction: Vector3) -> void:
 	can_be_collected = true
 	pickup_area.set_deferred("monitoring", true)
 	became_available.emit()
+
+func _on_pickup_area_entered(area: Area3D):
+	if !force_character_to_pickup_on_collide:
+		return
+
+	var body: Node3D = area.get_parent()
+
+	if body is NPC:
+		var npc: NPC = body
+		npc.collect_item.call_deferred(self)
+	elif body is Player:
+		var player_item_pickup_area: PlayerItemPickupArea = body.get_node("PlayerItemPickupArea")
+
+		player_item_pickup_area.pickup_item.call_deferred(self)

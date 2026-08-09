@@ -94,6 +94,8 @@ var slide_can_hit: bool = false
 var slide_hit_targets: Array[Node3D] = []
 var default_visual_position: Vector3
 
+var assigned_name: String
+
 func _ready() -> void:
 	default_visual_position = visuals.position
 
@@ -735,3 +737,7 @@ func exit_slippery_area() -> void:
 
 func assign_name(npc_name: String):
 	name_label.text = npc_name
+	assigned_name = npc_name
+
+func get_character_name():
+	return assigned_name

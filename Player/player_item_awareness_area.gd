@@ -54,6 +54,5 @@ func _on_body_entered(body: Node3D):
 	start_npc_chase(npc)
 
 func _on_current_item_tree_exited():
-	print("Item was destroyed.")
 	for npc in npcs_chasing_player:
 		npc.stop_chasing()

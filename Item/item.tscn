@@ -18,8 +18,7 @@ shape = SubResource("BoxShape3D_xrivr")
 
 [node name="PickupArea" type="Area3D" parent="." unique_id=535574247]
 collision_layer = 16
-collision_mask = 0
-monitoring = false
+collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea" unique_id=1620489395]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

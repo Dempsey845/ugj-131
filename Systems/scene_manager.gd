@@ -2,7 +2,7 @@ extends Node
 
 var world_scene: PackedScene = preload("uid://iuwi8d7umvdk")
 
-var player_name: String
+var player_name: String = "Player"
 
 func sign_up(sign_up_name: String):
     player_name = sign_up_name

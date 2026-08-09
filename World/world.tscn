@@ -6,12 +6,14 @@
 [ext_resource type="Script" uid="uid://cpirf7hf8q8s6" path="res://Systems/Announcement/announcement_manager.gd" id="1_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
+[ext_resource type="Resource" uid="uid://dq5ghnilk2kme" path="res://Item/Items/HotPotato/hot_potato.tres" id="2_f23eu"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
-[ext_resource type="Resource" uid="uid://c2cquwxmg84u7" path="res://Item/Items/SlimeBall/slime_ball.tres" id="2_lo5ox"]
 [ext_resource type="Script" uid="uid://ca44c4na4ctqa" path="res://NPC/npc_manager.gd" id="4_h2aik"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
+[ext_resource type="Script" uid="uid://dethtp3k3o0t" path="res://Systems/HotPotato/hot_potato_manager.gd" id="7_f23eu"]
 [ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
+[ext_resource type="PackedScene" uid="uid://bomhcqp5vmgl2" path="res://Systems/Objective/Leaderboard/leaderboard_ui.tscn" id="11_awrha"]
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
@@ -41,7 +43,7 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-start_item_data = ExtResource("2_lo5ox")
+start_item_data = ExtResource("2_f23eu")
 
 [node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]
 script = ExtResource("1_yf0ba")
@@ -72,6 +74,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3453536, 0, -5.676411)
 script = ExtResource("5_lo5ox")
 metadata/_custom_type_script = "uid://dlkw16wmy3th6"
 
+[node name="HotPotatoManager" type="Node" parent="." unique_id=766040283 node_paths=PackedStringArray("leaderboard_ui", "npc_manager")]
+script = ExtResource("7_f23eu")
+leaderboard_ui = NodePath("../CanvasLayer/LeaderboardUI")
+npc_manager = NodePath("../NPCManager")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 
 [node name="ScoreUI" parent="CanvasLayer" unique_id=2103852913 node_paths=PackedStringArray("score") instance=ExtResource("5_w47uh")]
@@ -85,6 +92,8 @@ objective = NodePath("../../Objective")
 
 [node name="CountdownUI" parent="CanvasLayer" unique_id=1299720413 node_paths=PackedStringArray("objective") instance=ExtResource("7_oe8m4")]
 objective = NodePath("../../Objective")
+
+[node name="LeaderboardUI" parent="CanvasLayer" unique_id=1149146776 instance=ExtResource("11_awrha")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=671047218]
 environment = SubResource("Environment_3f78f")

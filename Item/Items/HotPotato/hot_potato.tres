@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dq5ghnilk2kme"]
+
+[ext_resource type="PackedScene" uid="uid://bjgwxqeoxc11w" path="res://Item/Items/HotPotato/hot_potato_item.tscn" id="1_0k0yu"]
+[ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="1_ccb4y"]
+[ext_resource type="Texture2D" uid="uid://c50bhh2b5w3c5" path="res://Item/Items/SlimeBall/circle_white.png" id="2_8q0v5"]
+
+[resource]
+script = ExtResource("1_ccb4y")
+item_name = "Hot Potato"
+item_texture = ExtResource("2_8q0v5")
+item_scene = ExtResource("1_0k0yu")
+seconds_to_collect = 50
+metadata/_custom_type_script = "uid://bta1n6q65gi1m"

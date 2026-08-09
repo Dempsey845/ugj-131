@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bjgwxqeoxc11w"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_11r7f"]
+[ext_resource type="Script" uid="uid://bfhdsloeyy4c5" path="res://Item/Items/HotPotato/hot_potato_item_agent.gd" id="2_7uhtp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
+albedo_color = Color(0.9529412, 0.7921569, 0.5372549, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b1lj4")
+radius = 0.4
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+
+[node name="HotPotatoItem" unique_id=1963813499 instance=ExtResource("1_11r7f")]
+pickup_delay_after_drop = 0.5
+force_character_to_pickup_on_collide = true
+can_only_be_thrown_if_character_in_front = true
+
+[node name="HotPotatoItemAgent" type="Node" parent="." index="0" unique_id=615875704]
+script = ExtResource("2_7uhtp")
+metadata/_custom_type_script = "uid://d1fwq3pighi0q"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=445229909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("SphereMesh_xrivr")
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=250276096]
+shape = SubResource("SphereShape3D_13qdw")
+debug_color = Color(0, 0.6, 0.69803923, 1)

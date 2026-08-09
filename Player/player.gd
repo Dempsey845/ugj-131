@@ -562,3 +562,6 @@ func enter_slippery_area() -> void:
 
 func exit_slippery_area() -> void:
 	slippery_area_count = maxi(slippery_area_count - 1, 0)
+
+func get_character_name():
+	return SceneManager.player_name

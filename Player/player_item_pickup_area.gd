@@ -6,6 +6,7 @@ signal item_dropped(item: Item)
 
 @export var item_holder: Marker3D
 @export var player: Player
+@export var character_check_ray: RayCast3D
 
 @onready var pickup_delay_timer: Timer = $PickupDelayTimer
 
@@ -17,8 +18,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pickup"):
 		if does_player_have_item():
-			var look_direction: Vector3 = -player.visuals.basis.z
-			drop_item(look_direction)
+			var can_throw: bool
+
+			if current_item.can_only_be_thrown_if_character_in_front:
+				character_check_ray.force_raycast_update()
+				can_throw = character_check_ray.is_colliding() and character_check_ray.get_collider() is NPC
+			else:
+				can_throw = true
+
+			if can_throw:
+				var look_direction: Vector3 = -player.visuals.basis.z
+				drop_item(look_direction)
 		else:
 			try_pickup_item()
 
@@ -43,14 +53,17 @@ func try_pickup_item():
 
 		var item: Item = area.get_parent()
 
-		if item.collect(player, item_holder):
-			current_item = item
-			current_item.dropped.connect(_on_current_item_dropped)
-			item_picked_up.emit()
+		pickup_item(item)
 
 		break
 
 	pickup_delay_timer.start()
+
+func pickup_item(item: Item):
+	if item.collect(player, item_holder):
+		current_item = item
+		current_item.dropped.connect(_on_current_item_dropped)
+		item_picked_up.emit()
 
 func _on_knocked_down():
 	drop_item(player.knockback_direction)

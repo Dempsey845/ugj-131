@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://bomhcqp5vmgl2"]
+
+[ext_resource type="Script" uid="uid://ckhocvco4sfeq" path="res://Systems/Objective/Leaderboard/leaderboard_ui.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Systems/Objective/Leaderboard/leaderboard_card.tscn" id="2_card"]
+
+[sub_resource type="StyleBoxFlat" id="BoardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 11.0
+content_margin_top = 3.0
+content_margin_right = 11.0
+content_margin_bottom = 3.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="DividerStyle"]
+bg_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="LeaderboardUI" type="Control" unique_id=1149146776]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+card_scene = ExtResource("2_card")
+
+[node name="Control" type="Control" parent="." unique_id=1822356524]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -354.0
+offset_top = -364.0
+offset_right = -18.0
+offset_bottom = 46.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="PanelContainer" parent="Control" unique_id=1768911897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("BoardStyle")
+
+[node name="BoardMargin" type="MarginContainer" parent="Control/ColorRect" unique_id=1124796814]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Content" type="VBoxContainer" parent="Control/ColorRect/BoardMargin" unique_id=343337590]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Badge" type="PanelContainer" parent="Control/ColorRect/BoardMargin/Content" unique_id=694641398]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="Control/ColorRect/BoardMargin/Content/Badge" unique_id=1613780444]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 11
+text = "HOT POTATO"
+
+[node name="Title" type="Label" parent="Control/ColorRect/BoardMargin/Content" unique_id=1282028111]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.95, 0.98, 1)
+theme_override_font_sizes/font_size = 24
+text = "HOLD-TIME LEADERS"
+
+[node name="Subtitle" type="Label" parent="Control/ColorRect/BoardMargin/Content" unique_id=731976793]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.58, 0.66, 1)
+theme_override_font_sizes/font_size = 11
+text = "Hold it longest. Just don't be holding it last!"
+
+[node name="Divider" type="Panel" parent="Control/ColorRect/BoardMargin/Content" unique_id=1781820948]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("DividerStyle")
+
+[node name="CardsLayer" type="Control" parent="Control/ColorRect/BoardMargin/Content" unique_id=1504980954]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(304, 272)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EmptyLabel" type="Label" parent="Control/ColorRect/BoardMargin/Content/CardsLayer" unique_id=147014972]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.42, 0.46, 0.53, 1)
+theme_override_font_sizes/font_size = 14
+text = "Waiting for contestants..."
+horizontal_alignment = 1
+vertical_alignment = 1

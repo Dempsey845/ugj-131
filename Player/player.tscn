@@ -14,6 +14,9 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
 radius = 6.0
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13qdw"]
+radius = 0.6
+
 [node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox", "name_label")]
 script = ExtResource("1_l8h54")
 camera_pivot = NodePath("CameraPivot")
@@ -43,6 +46,10 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0
 body = NodePath("../..")
 item_manager = NodePath("../../PlayerItemPickupArea")
 
+[node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+target_position = Vector3(0, 0, -5)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=486528121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
@@ -55,9 +62,10 @@ spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]
 
-[node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player") instance=ExtResource("2_4ntmi")]
+[node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player", "character_check_ray") instance=ExtResource("2_4ntmi")]
 item_holder = NodePath("../Visuals/ItemHolder")
 player = NodePath("..")
+character_check_ray = NodePath("../Visuals/CharacterCheckRay")
 
 [node name="PlayerItemAwarenessArea" type="Area3D" parent="." unique_id=275611359 node_paths=PackedStringArray("item_pickup_area")]
 script = ExtResource("3_btcbx")
@@ -70,3 +78,12 @@ shape = SubResource("SphereShape3D_13qdw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3000002, 0)
 billboard = 1
 text = "Bob"
+
+[node name="CharacterCollectArea" type="Area3D" parent="." unique_id=725802374]
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterCollectArea" unique_id=61861642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_13qdw")
+debug_color = Color(0, 0.6342056, 0.4353572, 0.41960785)
