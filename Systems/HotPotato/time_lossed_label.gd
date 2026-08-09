@@ -10,5 +10,5 @@ func _ready() -> void:
 
 func _on_player_time_reset(player_id: StringName, time_lossed: float):
     if hot_potato_manager.player_id_to_instance[player_id] == get_parent():
-        text = str(time_lossed)
+        text = "%.1fs" % time_lossed
         animation_player.play("pop_in")

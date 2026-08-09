@@ -41,13 +41,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.7)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Visuals/SlideHitbox" unique_id=1423526048]
 shape = SubResource("SphereShape3D_xrivr")
 
-[node name="ItemHolder" type="Marker3D" parent="Visuals" unique_id=374173442]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
-
 [node name="Character" parent="Visuals" unique_id=1454173267 node_paths=PackedStringArray("body", "item_manager") instance=ExtResource("2_gwnis")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 body = NodePath("../..")
 item_manager = NodePath("../../PlayerItemPickupArea")
+
+[node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
+bones/7/scale = Vector3(1.0247726, 1.0247726, 1.0247726)
+
+[node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" parent_id_path=PackedInt32Array(1454173267, 1311297362) index="0" unique_id=374173442]
+transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
@@ -66,7 +69,7 @@ spring_length = 5.0
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]
 
 [node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player", "character_check_ray") instance=ExtResource("2_4ntmi")]
-item_holder = NodePath("../Visuals/ItemHolder")
+item_holder = NodePath("../Visuals/Character/Armature/Skeleton3D/BoneAttachment3D/ItemHolder")
 player = NodePath("..")
 character_check_ray = NodePath("../Visuals/CharacterCheckRay")
 
@@ -98,3 +101,5 @@ script = ExtResource("6_od3ui")
 
 [node name="PointsLabel" parent="." unique_id=863403297 instance=ExtResource("5_k53q1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+
+[editable path="Visuals/Character"]
