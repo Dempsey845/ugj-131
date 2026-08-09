@@ -25,6 +25,7 @@ enum State {
 @export var search_points: Array[Node3D]
 @export var player: Player
 @export var slide_hitbox: Area3D
+@export var name_label: Label3D
 
 
 @export_category("Movement")
@@ -731,3 +732,6 @@ func exit_slippery_area() -> void:
 		slippery_area_count - 1,
 		0
 	)
+
+func assign_name(npc_name: String):
+	name_label.text = npc_name

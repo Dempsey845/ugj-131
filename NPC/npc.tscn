@@ -18,12 +18,13 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_056qb"]
 radius = 6.0
 
-[node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder", "slide_hitbox")]
+[node name="NPC" type="CharacterBody3D" unique_id=1626677385 node_paths=PackedStringArray("visuals", "navigation_agent", "item_holder", "slide_hitbox", "name_label")]
 script = ExtResource("1_asys0")
 visuals = NodePath("Visuals")
 navigation_agent = NodePath("NavigationAgent3D")
 item_holder = NodePath("Visuals/ItemHolder")
 slide_hitbox = NodePath("Visuals/SlideHitbox")
+name_label = NodePath("NameLabel")
 
 [node name="Score" type="Node" parent="." unique_id=288638561]
 script = ExtResource("2_k1h6f")
@@ -68,3 +69,8 @@ script = ExtResource("3_3etx6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCItemAwarenessArea" unique_id=1980318681]
 shape = SubResource("SphereShape3D_056qb")
+
+[node name="NameLabel" type="Label3D" parent="." unique_id=1542255986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3000002, 0)
+billboard = 1
+text = "Bob"

@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
 [ext_resource type="Resource" uid="uid://c2cquwxmg84u7" path="res://Item/Items/SlimeBall/slime_ball.tres" id="2_lo5ox"]
+[ext_resource type="Script" uid="uid://ca44c4na4ctqa" path="res://NPC/npc_manager.gd" id="4_h2aik"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
 [ext_resource type="PackedScene" uid="uid://v2c87soka5kt" path="res://Systems/Countdown/countdown_ui.tscn" id="7_oe8m4"]
@@ -45,6 +46,10 @@ start_item_data = ExtResource("2_lo5ox")
 script = ExtResource("1_yf0ba")
 objective = NodePath("../Objective")
 metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
+
+[node name="NPCManager" type="Node" parent="." unique_id=459181645 node_paths=PackedStringArray("npc_container")]
+script = ExtResource("4_h2aik")
+npc_container = NodePath("../NavigationRegion3D/NPC_Container")
 
 [node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score")]
 script = ExtResource("2_eidgh")
@@ -148,16 +153,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
 [node name="Marker3D8" type="Marker3D" parent="NavigationRegion3D" unique_id=1565166663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 7)
 
-[node name="NPC" parent="NavigationRegion3D" unique_id=1626677385 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+[node name="NPC_Container" type="Node3D" parent="NavigationRegion3D" unique_id=286122809]
+
+[node name="NPC" parent="NavigationRegion3D/NPC_Container" unique_id=1626677385 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 0)
-search_points = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("../Marker3D3"), NodePath("../Marker3D4"), NodePath("../Marker3D5"), NodePath("../Marker3D6"), NodePath("../Marker3D7"), NodePath("../Marker3D8")]
-player = NodePath("../../Player")
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
 
-[node name="NPC2" parent="NavigationRegion3D" unique_id=849882761 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+[node name="NPC2" parent="NavigationRegion3D/NPC_Container" unique_id=849882761 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -6)
-search_points = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("../Marker3D3"), NodePath("../Marker3D4"), NodePath("../Marker3D5"), NodePath("../Marker3D6"), NodePath("../Marker3D7"), NodePath("../Marker3D8")]
-player = NodePath("../../Player")
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
