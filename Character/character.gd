@@ -1,3 +1,4 @@
+class_name Character
 extends Node3D
 
 @export var body: CharacterBody3D
@@ -7,6 +8,7 @@ extends Node3D
 @export var blend_smoothing: float = 10.0
 
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var goofy_goggles: Node3D = %GoofyGoggles
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
@@ -123,3 +125,9 @@ func _on_item_tree_exited():
 func _on_item_dropped(item):
 	target_hold_blend = 0.0
 	item.tree_exited.disconnect(_on_item_tree_exited)
+
+func show_goggles():
+	goofy_goggles.visible = true
+
+func hide_goggles():
+	goofy_goggles.visible = false

@@ -1,0 +1,377 @@
+[gd_scene format=3 uid="uid://bf40m4ego2pub"]
+
+[ext_resource type="PackedScene" uid="uid://wm5fkpl3k18" path="res://Item/Items/GoofyGoggles/GoofyGoggles.fbx" id="1_i4uqj"]
+
+[sub_resource type="Shader" id="Shader_i4uqj"]
+code = "shader_type spatial;
+
+render_mode blend_mix,
+	depth_draw_never,
+	cull_disabled,
+	unshaded;
+
+
+uniform sampler2D screen_texture
+	: hint_screen_texture, filter_linear_mipmap, repeat_disable;
+
+uniform sampler2D texture_albedo
+	: source_color, filter_linear_mipmap, repeat_enable;
+
+
+// Main controls.
+uniform float effect_strength
+	: hint_range(0.0, 1.0) = 1.0;
+
+uniform float opacity
+	: hint_range(0.0, 1.0) = 0.94;
+
+
+// Lens distortion.
+uniform float magnification
+	: hint_range(-0.5, 0.5) = 0.18;
+
+uniform float wobble_strength
+	: hint_range(0.0, 0.25) = 0.065;
+
+uniform float wobble_speed
+	: hint_range(0.0, 10.0) = 3.0;
+
+uniform float wobble_scale
+	: hint_range(1.0, 40.0) = 12.0;
+
+uniform float swirl_strength
+	: hint_range(-1.0, 1.0) = 0.18;
+
+uniform float normal_refraction
+	: hint_range(0.0, 0.2) = 0.06;
+
+
+// Confusion effects.
+uniform float chromatic_aberration
+	: hint_range(0.0, 0.1) = 0.022;
+
+uniform float double_vision_strength
+	: hint_range(0.0, 0.1) = 0.018;
+
+uniform float double_vision_opacity
+	: hint_range(0.0, 1.0) = 0.3;
+
+
+// Glass colouring.
+uniform vec4 glass_colour
+	: source_color = vec4(0.25, 0.8, 1.0, 1.0);
+
+uniform float glass_tint_strength
+	: hint_range(0.0, 1.0) = 0.12;
+
+uniform float rainbow_strength
+	: hint_range(0.0, 1.0) = 0.42;
+
+uniform float rainbow_speed
+	: hint_range(0.0, 5.0) = 1.2;
+
+
+// Lens edge.
+uniform vec4 rim_colour
+	: source_color = vec4(0.4, 0.95, 1.0, 1.0);
+
+uniform float rim_strength
+	: hint_range(0.0, 5.0) = 1.5;
+
+uniform float rim_width
+	: hint_range(0.0, 0.5) = 0.16;
+
+
+// UV controls.
+uniform vec2 uv_scale = vec2(1.0);
+uniform vec2 uv_offset = vec2(0.0);
+
+
+vec3 rainbow(float value) {
+	return vec3(
+		sin(value) * 0.5 + 0.5,
+		sin(value + 2.094) * 0.5 + 0.5,
+		sin(value + 4.188) * 0.5 + 0.5
+	);
+}
+
+
+vec2 rotate_uv(vec2 value, float angle) {
+	float sine = sin(angle);
+	float cosine = cos(angle);
+
+	return mat2(
+		vec2(cosine, -sine),
+		vec2(sine, cosine)
+	) * value;
+}
+
+
+void vertex() {
+	UV = UV * uv_scale + uv_offset;
+}
+
+
+void fragment() {
+	vec2 lens_uv = UV;
+	vec2 centered_uv = lens_uv - vec2(0.5);
+
+	float distance_from_center = length(centered_uv);
+	float time = TIME * wobble_speed;
+
+	/*
+		The distortion fades toward the lens edge, preventing the
+		background from visibly separating from the goggle frame.
+	*/
+	float lens_mask = 1.0 - smoothstep(
+		0.30,
+		0.72,
+		distance_from_center
+	);
+
+	// Strong animated horizontal and vertical wobble.
+	float horizontal_wave = (
+		sin(lens_uv.y * wobble_scale + time) +
+		sin(
+			lens_uv.y * wobble_scale * 2.37 -
+			time * 1.41
+		) * 0.5
+	);
+
+	float vertical_wave = (
+		cos(
+			lens_uv.x * wobble_scale * 0.81 -
+			time * 1.13
+		) +
+		sin(
+			(lens_uv.x + lens_uv.y) *
+			wobble_scale *
+			1.63 +
+			time * 0.77
+		) * 0.5
+	);
+
+	vec2 wobble_offset = vec2(
+		horizontal_wave,
+		vertical_wave
+	) * wobble_strength;
+
+	// Swirl the image around the middle of each lens.
+	float swirl_angle = (
+		swirl_strength *
+		(1.0 - smoothstep(
+			0.0,
+			0.7,
+			distance_from_center
+		)) *
+		sin(time * 0.55)
+	);
+
+	vec2 swirled_uv = rotate_uv(
+		centered_uv,
+		swirl_angle
+	);
+
+	vec2 swirl_offset = swirled_uv - centered_uv;
+
+	/*
+		Positive magnification pulls screen samples toward the
+		lens centre, making objects appear larger.
+	*/
+	vec2 magnification_offset = (
+		-centered_uv *
+		magnification *
+		(1.0 - distance_from_center)
+	);
+
+	// Curved geometry contributes additional refraction.
+	vec2 surface_offset = NORMAL.xy * normal_refraction;
+
+	vec2 distortion_offset = (
+		wobble_offset +
+		swirl_offset +
+		magnification_offset +
+		surface_offset
+	);
+
+	distortion_offset *= lens_mask * effect_strength;
+
+	vec2 distorted_uv = clamp(
+		SCREEN_UV + distortion_offset,
+		vec2(0.002),
+		vec2(0.998)
+	);
+
+	// Animated direction for stronger RGB separation.
+	vec2 colour_direction = normalize(
+		distortion_offset +
+		vec2(
+			sin(time * 0.7),
+			cos(time * 0.9)
+		) * 0.01 +
+		vec2(0.0001)
+	);
+
+	vec2 colour_offset = (
+		colour_direction *
+		chromatic_aberration *
+		lens_mask *
+		effect_strength
+	);
+
+	float red = texture(
+		screen_texture,
+		clamp(
+			distorted_uv + colour_offset,
+			vec2(0.002),
+			vec2(0.998)
+		)
+	).r;
+
+	float green = texture(
+		screen_texture,
+		distorted_uv
+	).g;
+
+	float blue = texture(
+		screen_texture,
+		clamp(
+			distorted_uv - colour_offset,
+			vec2(0.002),
+			vec2(0.998)
+		)
+	).b;
+
+	vec3 refracted_colour = vec3(
+		red,
+		green,
+		blue
+	);
+
+	// Animated second image for a goofy double-vision effect.
+	vec2 double_offset = vec2(
+		sin(time * 0.83),
+		cos(time * 1.07)
+	);
+
+	double_offset *= (
+		double_vision_strength *
+		lens_mask *
+		effect_strength
+	);
+
+	vec3 double_vision_colour = texture(
+		screen_texture,
+		clamp(
+			distorted_uv + double_offset,
+			vec2(0.002),
+			vec2(0.998)
+		)
+	).rgb;
+
+	refracted_colour = mix(
+		refracted_colour,
+		double_vision_colour,
+		double_vision_opacity *
+		effect_strength
+	);
+
+	// Animated rainbow sheen.
+	float rainbow_wave = (
+		lens_uv.x * 9.0 +
+		lens_uv.y * 5.0 +
+		TIME * rainbow_speed +
+		sin(lens_uv.y * 13.0 + time) * 1.2
+	);
+
+	vec3 rainbow_colour = rainbow(rainbow_wave);
+
+	float animated_rainbow = (
+		sin(
+			lens_uv.x * 10.0 -
+			lens_uv.y * 7.0 +
+			TIME * rainbow_speed
+		) * 0.5 + 0.5
+	);
+
+	// Rim based on the lens UV and the viewing angle.
+	float uv_rim = smoothstep(
+		1.0 - rim_width,
+		1.0,
+		clamp(distance_from_center / 0.71, 0.0, 1.0)
+	);
+
+	float fresnel = pow(
+		1.0 - clamp(
+			dot(
+				normalize(NORMAL),
+				normalize(VIEW)
+			),
+			0.0,
+			1.0
+		),
+		2.5
+	);
+
+	float total_rim = max(uv_rim, fresnel);
+
+	vec3 final_colour = mix(
+		refracted_colour,
+		glass_colour.rgb,
+		glass_tint_strength
+	);
+
+	final_colour = mix(
+		final_colour,
+		rainbow_colour,
+		rainbow_strength *
+		animated_rainbow *
+		(0.25 + fresnel * 0.75) *
+		effect_strength
+	);
+
+	final_colour += (
+		rim_colour.rgb *
+		total_rim *
+		rim_strength *
+		0.35
+	);
+
+	ALBEDO = final_colour;
+	EMISSION = final_colour;
+
+	/*
+		The shader must remain nearly opaque because final_colour
+		already includes the background sampled from screen_texture.
+	*/
+	ALPHA = opacity;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fvo1s"]
+render_priority = 0
+shader = SubResource("Shader_i4uqj")
+shader_parameter/effect_strength = 1.0
+shader_parameter/opacity = 0.94
+shader_parameter/magnification = 0.18
+shader_parameter/wobble_strength = 0.065
+shader_parameter/wobble_speed = 2.5
+shader_parameter/wobble_scale = 12.0
+shader_parameter/swirl_strength = 0.18
+shader_parameter/normal_refraction = 0.06
+shader_parameter/chromatic_aberration = 0.008
+shader_parameter/double_vision_strength = 0.018
+shader_parameter/double_vision_opacity = 0.3
+shader_parameter/glass_colour = Color(0.25, 0.8, 1, 1)
+shader_parameter/glass_tint_strength = 0.12
+shader_parameter/rainbow_strength = 0.42
+shader_parameter/rainbow_speed = 0.8
+shader_parameter/rim_colour = Color(0.5, 0.95, 1, 1)
+shader_parameter/rim_strength = 1.2
+shader_parameter/rim_width = 0.16
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)
+
+[node name="GoofyGoggles" unique_id=533621145 instance=ExtResource("1_i4uqj")]
+
+[node name="Goggles" parent="." index="0" unique_id=81544341]
+surface_material_override/1 = SubResource("ShaderMaterial_fvo1s")

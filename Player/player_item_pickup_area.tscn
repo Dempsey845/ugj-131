@@ -16,5 +16,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("SphereShape3D_13qdw")
 
 [node name="PickupDelayTimer" type="Timer" parent="." unique_id=2115542123]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true

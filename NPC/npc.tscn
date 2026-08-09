@@ -55,22 +55,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.7)
 shape = SubResource("SphereShape3D_3etx6")
 
 [node name="Character" parent="Visuals" unique_id=1454173267 node_paths=PackedStringArray("body", "item_manager") instance=ExtResource("3_6swda")]
+unique_name_in_owner = true
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 body = NodePath("../..")
 item_manager = NodePath("../..")
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17710578, 0.1412796, -0.39637873, 0.8896952)
-bones/5/rotation = Quaternion(-0.0022555874, -0.0011159178, -0.036562316, 0.9993282)
-bones/7/scale = Vector3(1.0853124, 1.0853124, 1.0853124)
-bones/12/rotation = Quaternion(0.17742874, -0.14006883, 0.39295974, 0.89133745)
-bones/14/rotation = Quaternion(-0.0022539159, 0.0016080787, 0.052684113, 0.99860746)
+bones/3/rotation = Quaternion(0.17711957, 0.14122842, -0.39623794, 0.88976336)
+bones/5/rotation = Quaternion(-0.0022564842, -0.001185924, -0.03885695, 0.99924153)
+bones/7/scale = Vector3(1.0906701, 1.0906701, 1.0906701)
+bones/12/rotation = Quaternion(0.17743026, -0.14006872, 0.392954, 0.8913398)
+bones/14/rotation = Quaternion(-0.0022534928, 0.0017134979, 0.056137346, 0.99841905)
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.98804605, -0.15409885, 0.00435546, -3.5478733e-06, -0.028230635, -0.9996014, 0.15416048, -0.9876519, 0.027892496, -0.0060650334, 0.0013483913, 0.009666385)
+transform = Transform3D(-0.98908734, -0.14727244, 0.0041658957, -7.0875976e-06, -0.028228674, -0.9996014, 0.14733161, -0.98869276, 0.027919404, -0.006065086, 0.0013483937, 0.009666415)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=906278711]
 transform = Transform3D(0.009468984, 0.00012204486, -0.003212981, -0.0032125069, -5.715544e-05, -0.009469759, -0.00013393749, 0.00999909, -1.4913403e-05, -0.0017314008, 0.0069313743, -0.0031971373)
+
+[node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
+transform = Transform3D(1.0906701, -2.842171e-14, 1.6468657e-07, 2.842171e-14, -1.09067, 1.3001805e-07, 1.6468658e-07, -1.3001801e-07, -1.09067, 6.3206795e-16, -2.3275872e-09, 0.017791132)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=962650786]
 avoidance_enabled = true

@@ -75,6 +75,11 @@ enum State {
 @export var aggressive_drop_distance: float = 2.5
 @export var aggressive_retarget_interval: float = 0.25
 
+@export_category("Goofy Goggles")
+@export var goggles_wobble_strength: float = 0.8
+@export var goggles_wobble_speed: float = 4.0
+@export var goggles_secondary_wobble: float = 0.4
+
 @onready var game_manager: GameManager = get_tree().current_scene.get_node("GameManager")
 
 var slippery_area_count: int = 0
@@ -112,12 +117,15 @@ var resume_fleeing_after_knockdown: bool = false
 var aggressive_target: Node3D
 var aggressive_retarget_remaining: float = 0.0
 
+var goggles_wobble_phase: float = 0.0
+
 var assigned_name: String
 
 var npc_manager: NPC_Manager
 
 func _ready() -> void:
 	default_visual_position = visuals.position
+	goggles_wobble_phase = randf_range(0.0, TAU)
 
 	navigation_agent.path_desired_distance = 1.0
 	navigation_agent.target_desired_distance = 1.0
@@ -837,7 +845,10 @@ func _throw_item_at_aggressive_target() -> void:
 
 # Shared movement
 
-func _follow_navigation(speed: float, delta: float) -> void:
+func _follow_navigation(
+	speed: float,
+	delta: float
+) -> void:
 	if navigation_agent.is_navigation_finished():
 		_slow_down(delta)
 		return
@@ -849,6 +860,7 @@ func _follow_navigation(speed: float, delta: float) -> void:
 	var direction: Vector3 = (
 		next_position - global_position
 	)
+
 	direction.y = 0.0
 
 	if direction.length_squared() <= 0.001:
@@ -857,6 +869,11 @@ func _follow_navigation(speed: float, delta: float) -> void:
 
 	direction = direction.normalized()
 
+	# Automatically applies only while this NPC is carrying the goofy goggles
+	direction = _apply_goofy_goggles_wobble(
+		direction
+	)
+
 	var current_acceleration: float = acceleration
 
 	if is_on_slippery_surface and is_on_floor():
@@ -864,13 +881,17 @@ func _follow_navigation(speed: float, delta: float) -> void:
 
 	velocity.x = move_toward(
 		velocity.x,
-		direction.x * speed * move_speed_multiplier,
+		direction.x
+			* speed
+			* move_speed_multiplier,
 		current_acceleration * delta
 	)
 
 	velocity.z = move_toward(
 		velocity.z,
-		direction.z * speed * move_speed_multiplier,
+		direction.z
+			* speed
+			* move_speed_multiplier,
 		current_acceleration * delta
 	)
 
@@ -986,6 +1007,46 @@ func _is_valid_aggressive_target(
 		and character != self
 		and character.is_inside_tree()
 	)
+
+func _apply_goofy_goggles_wobble(
+	direction: Vector3
+) -> Vector3:
+	if !is_instance_valid(carried_item) or not carried_item.has_node("GoofyGogglesItemAgent"):
+		return direction
+
+	if direction.length_squared() <= 0.001:
+		return direction
+
+	var forward: Vector3 = direction.normalized()
+
+	var sideways: Vector3 = Vector3(
+		-forward.z,
+		0.0,
+		forward.x
+	)
+
+	var time: float = (
+		Time.get_ticks_msec() * 0.001
+		+ goggles_wobble_phase
+	)
+
+	# The second wave makes the movement less mechanically predictable.
+	var wobble: float = (
+		sin(time * goggles_wobble_speed)
+		* goggles_wobble_strength
+	)
+
+	wobble += (
+		sin(
+			time * goggles_wobble_speed * 2.17
+			+ 1.4
+		)
+		* goggles_secondary_wobble
+	)
+
+	return (
+		forward + sideways * wobble
+	).normalized()
 
 func is_hot_round_urgent():
 	return game_manager.is_current_round_hot_potato and game_manager.round_time < game_manager.urgent_time

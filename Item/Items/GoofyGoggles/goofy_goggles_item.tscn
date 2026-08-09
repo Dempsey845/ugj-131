@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://da33evqxerf58"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_nbo3d"]
+[ext_resource type="PackedScene" uid="uid://bf40m4ego2pub" path="res://Item/Items/GoofyGoggles/goofy_goggles_visual.tscn" id="2_lvu40"]
+[ext_resource type="Script" uid="uid://jbpqpjpcekqc" path="res://Item/Items/GoofyGoggles/goofy_goggles_item_agent.gd" id="2_ran03"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ran03"]
+size = Vector3(0.88183594, 0.4139099, 0.46533203)
+
+[node name="GoofyGogglesItem" unique_id=1963813499 instance=ExtResource("1_nbo3d")]
+
+[node name="GoofyGogglesItemAgent" type="Node" parent="." index="0" unique_id=1099176954]
+script = ExtResource("2_ran03")
+metadata/_custom_type_script = "uid://d1fwq3pighi0q"
+
+[node name="GoofyGoggles" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=533621145 instance=ExtResource("2_lvu40")]
+transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 0, 0.26040274, 0.39999998)
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008300781, 0.3143158, 0.08679199)
+shape = SubResource("BoxShape3D_ran03")

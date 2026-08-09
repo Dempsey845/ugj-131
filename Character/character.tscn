@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://rvq15g4ljblb" path="res://Character/Character.fbx" id="1_k3002"]
 [ext_resource type="Script" uid="uid://cme86c72jf8e1" path="res://Character/character.gd" id="2_nwtvh"]
+[ext_resource type="PackedScene" uid="uid://bf40m4ego2pub" path="res://Item/Items/GoofyGoggles/goofy_goggles_visual.tscn" id="3_jkkns"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uerqc"]
 animation = &"Armature|Hold"
@@ -80,7 +81,6 @@ transitions = ["Start", "MoveBlend", SubResource("AnimationNodeStateMachineTrans
 graph_offset = Vector2(-23, -131)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_13qdw"]
-graph_offset = Vector2(134.66956, 76.64041)
 nodes/output/position = Vector2(1100, 140)
 nodes/MovementStateMachine/node = SubResource("AnimationNodeStateMachine_ge5jf")
 nodes/MovementStateMachine/position = Vector2(160, 120)
@@ -98,15 +98,15 @@ bones/1/rotation = Quaternion(1.7117504e-08, 6.3108872e-30, 4.081131e-15, 1)
 bones/2/rotation = Quaternion(-0.18880585, 0.18764053, -0.67948014, 0.68370324)
 bones/2/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
 bones/3/position = Vector3(-1.7326731e-09, 0.0019930922, 1.0399472e-10)
-bones/3/rotation = Quaternion(0.17728612, 0.14061469, -0.3945253, 0.89058805)
+bones/3/rotation = Quaternion(0.1771119, 0.1412569, -0.3963163, 0.8897254)
 bones/4/position = Vector3(1.6088016e-12, 0.002764064, 6.9891724e-11)
 bones/4/rotation = Quaternion(0.08737507, 0.011402963, -0.201421, 0.9755333)
 bones/4/scale = Vector3(1, 0.99999994, 0.99999976)
 bones/5/position = Vector3(3.0517575e-09, 0.0023289307, -5.0482667e-11)
-bones/5/rotation = Quaternion(-0.0022563348, -0.0007222077, -0.02366536, 0.9997172)
+bones/5/rotation = Quaternion(-0.002255577, -0.0011521878, -0.03775053, 0.999284)
 bones/5/scale = Vector3(1, 1.0000001, 1.0000002)
 bones/7/position = Vector3(3.3914254e-24, 0.00603823, -1.422467e-17)
-bones/7/scale = Vector3(1.0552286, 1.0552286, 1.0552286)
+bones/7/scale = Vector3(1.0880866, 1.0880866, 1.0880866)
 bones/8/position = Vector3(-8.443277e-31, 0.0018188965, 3.541367e-24)
 bones/8/rotation = Quaternion(4.863822e-22, 0, 1.1476674e-28, 1)
 bones/9/position = Vector3(0, 0.0016662629, 0)
@@ -114,13 +114,13 @@ bones/9/rotation = Quaternion(0.70710677, -3.090862e-08, 1.3767877e-07, 0.707106
 bones/9/scale = Vector3(1, 1, 1)
 bones/11/scale = Vector3(1, 1.0000001, 1.0000001)
 bones/12/position = Vector3(-1.3755809e-09, 0.0019930918, -1.5793766e-10)
-bones/12/rotation = Quaternion(0.17777583, -0.13877226, 0.38934922, 0.8930539)
+bones/12/rotation = Quaternion(0.17741911, -0.14010778, 0.3930611, 0.8912885)
 bones/12/scale = Vector3(0.99999994, 0.99999976, 1.0000001)
 bones/13/position = Vector3(-2.8958207e-12, 0.0027640657, 1.4535914e-10)
 bones/13/rotation = Quaternion(0.08689995, -0.01277774, 0.22570464, 0.9702281)
 bones/13/scale = Vector3(1.0000001, 1, 1)
 bones/14/position = Vector3(-1.7347235e-17, 0.0023289304, -2.5604059e-11)
-bones/14/rotation = Quaternion(-0.0022557373, 0.0010400517, 0.03407708, 0.9994161)
+bones/14/rotation = Quaternion(-0.0022537096, 0.0016603104, 0.054395087, 0.99851567)
 bones/14/scale = Vector3(1, 1, 0.9999999)
 bones/16/rotation = Quaternion(2.9597805e-07, 1.05955735e-07, -0.79970443, 0.60039395)
 bones/17/position = Vector3(1.2310936e-10, 0.0022316442, 1.3484169e-16)
@@ -151,9 +151,19 @@ bones/28/rotation = Quaternion(0.606838, -9.475069e-08, -1.6397081e-07, 0.794825
 bones/28/scale = Vector3(1, 1, 1.0000001)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.9799714, -0.19905894, 0.0056285257, -2.6507769e-06, -0.028251918, -0.9996009, 0.19913863, -0.9795799, 0.027685385, -0.006101315, 0.001348295, 0.009686728)
+transform = Transform3D(-0.9886047, -0.15047565, 0.004255413, -6.496208e-06, -0.028226271, -0.99960154, 0.15053599, -0.9882104, 0.02790352, -0.0060640033, 0.0013484062, 0.009665816)
 bone_name = "Hand.r"
 bone_idx = 14
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=621893403]
+transform = Transform3D(1.0880866, -2.842171e-14, 1.6429647e-07, 2.842171e-14, -1.0880865, 1.2971007e-07, 1.6429648e-07, -1.2971003e-07, -1.0880865, 6.317481e-16, -2.3265136e-09, 0.017782127)
+bone_name = "Face"
+bone_idx = 9
+
+[node name="GoofyGoggles" parent="Armature/Skeleton3D/BoneAttachment3D2" index="0" unique_id=533621145 instance=ExtResource("3_jkkns")]
+unique_name_in_owner = true
+transform = Transform3D(0.010171708, 1.5358856e-09, 7.2054605e-17, 4.918932e-18, -4.4461948e-10, 0.010171707, 1.5358854e-09, -0.010171707, -4.4461942e-10, 0.00010143714, 0.00018952416, 0.0010859268)
+visible = false
 
 [node name="AnimationPlayer" parent="." index="1" unique_id=1319684762]
 autoplay = &"Armature|Idle"
