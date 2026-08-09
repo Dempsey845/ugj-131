@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="2_gwnis"]
 [ext_resource type="Script" uid="uid://cdhxpk507m1g1" path="res://Player/player_item_awareness_area.gd" id="3_btcbx"]
 [ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="5_k53q1"]
+[ext_resource type="PackedScene" uid="uid://ddde03colgkh1" path="res://Systems/HotPotato/time_lossed_label.tscn" id="5_vtle1"]
+[ext_resource type="Script" uid="uid://72x6frhdyctn" path="res://Systems/HotPotato/time_lossed_label.gd" id="6_od3ui"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
@@ -90,6 +92,9 @@ transparency = 0.5
 billboard = 1
 text = "Bob"
 
-[node name="PointsLabel" parent="." unique_id=863403297 node_paths=PackedStringArray("score") instance=ExtResource("5_k53q1")]
+[node name="TimeLossedLabel" parent="." unique_id=1682071733 instance=ExtResource("5_vtle1")]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.6000001, 0)
+script = ExtResource("6_od3ui")
+
+[node name="PointsLabel" parent="." unique_id=863403297 instance=ExtResource("5_k53q1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
-score = NodePath("")

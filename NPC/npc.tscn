@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://cifc50fqn5liw" path="res://NPC/npc_item_awareness_area.gd" id="3_3etx6"]
 [ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="3_6swda"]
 [ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="6_rovd1"]
+[ext_resource type="PackedScene" uid="uid://ddde03colgkh1" path="res://Systems/HotPotato/time_lossed_label.tscn" id="7_m2dqh"]
+[ext_resource type="Script" uid="uid://72x6frhdyctn" path="res://Systems/HotPotato/time_lossed_label.gd" id="8_bey1f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -92,3 +94,7 @@ text = "Bob"
 [node name="PointsLabel" parent="." unique_id=863403297 node_paths=PackedStringArray("score") instance=ExtResource("6_rovd1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
 score = NodePath("../Score")
+
+[node name="TimeLossedLabel" parent="." unique_id=1682071733 instance=ExtResource("7_m2dqh")]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.6000001, 0)
+script = ExtResource("8_bey1f")

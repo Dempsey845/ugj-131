@@ -1,6 +1,8 @@
 class_name HotPotatoManager
 extends Node
 
+signal player_time_reset(player_id: StringName, time_lossed: float)
+
 @export var leaderboard_ui: LeaderboardUI
 @export var npc_manager: NPC_Manager
 @export var player: Player
@@ -45,6 +47,10 @@ func set_player_hold_second(player_id: StringName, value: float):
 		player_hold_seconds[player_id],
 		load("res://icon.svg")
 	)
+
+func reset_player_hold_second(player_id: StringName):
+	player_time_reset.emit(player_id, player_hold_seconds[player_id])
+	set_player_hold_second(player_id, 0.0)
 
 func increment_player_hold_second(player_id: StringName, increment: float = 0.1):
 	set_player_hold_second(player_id, player_hold_seconds[player_id] + increment)

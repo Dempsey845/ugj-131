@@ -80,13 +80,11 @@ func _reset_carrier_item_time(carrier: Node3D):
 	# Reset the carrier who is holding the potato to 0 time
 	if carrier is NPC:
 		var npc: NPC = carrier
-		hot_potato_manager.set_player_hold_second(
-			&"npc_%s" % npc.assigned_name.to_lower(),
-			0.0
+		hot_potato_manager.reset_player_hold_second(
+			&"npc_%s" % npc.assigned_name.to_lower()
 		)
 	
 	elif carrier is Player:
-		hot_potato_manager.set_player_hold_second(
-			&"player",
-			0.0
+		hot_potato_manager.reset_player_hold_second(
+			&"player"
 		)
