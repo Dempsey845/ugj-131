@@ -1,8 +1,58 @@
 [gd_scene format=3 uid="uid://c4dyuc1ga0qxi"]
 
 [ext_resource type="Script" uid="uid://c33xr88s5a725" path="res://Systems/Score/score_ui.gd" id="1_xep6f"]
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_icon"]
 
-[sub_resource type="Animation" id="Animation_tw4qy"]
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="IconStyle"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="ScoreStyle"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="Animation" id="Animation_RESET"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -26,7 +76,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(540.5, 73)]
+"values": [Vector2(232, 77)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -41,8 +91,9 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_xep6f"]
+[sub_resource type="Animation" id="Animation_POINTS"]
 resource_name = "points_gained"
+length = 0.75
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -51,7 +102,7 @@ tracks/0/path = NodePath("Container/PointsGainedLabel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.15, 0.5, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -63,10 +114,10 @@ tracks/1/path = NodePath("Container/PointsGainedLabel:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.15, 0.55),
+"transitions": PackedFloat32Array(1, 1, 0.75),
 "update": 0,
-"values": [Vector2(60, 93), Vector2(60, 93), Vector2(60, 17)]
+"values": [Vector2(232, 77), Vector2(232, 77), Vector2(232, 10)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -75,10 +126,10 @@ tracks/2/path = NodePath("Container/PointsPivot:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.40000004, 0.55, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.4, 0.55, 0.7),
+"transitions": PackedFloat32Array(1, 0.7, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(3, 3), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1.35, 1.35), Vector2(1, 1)]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -97,8 +148,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yaano"]
 _data = {
-&"RESET": SubResource("Animation_tw4qy"),
-&"points_gained": SubResource("Animation_xep6f")
+&"RESET": SubResource("Animation_RESET"),
+&"points_gained": SubResource("Animation_POINTS")
 }
 
 [node name="ScoreUI" type="Control" unique_id=2103852913]
@@ -113,56 +164,137 @@ script = ExtResource("1_xep6f")
 
 [node name="Container" type="Control" parent="." unique_id=1998586859]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -99.0
-offset_top = 18.0
-offset_right = 101.0
-offset_bottom = 160.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -354.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 146.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Card" type="PanelContainer" parent="Container" unique_id=2018592853]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="CardMargin" type="MarginContainer" parent="Container/Card" unique_id=209576050]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="ProfileRow" type="HBoxContainer" parent="Container/Card/CardMargin" unique_id=503469599]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="IconPanel" type="PanelContainer" parent="Container/Card/CardMargin/ProfileRow" unique_id=1719312289]
+custom_minimum_size = Vector2(86, 86)
+layout_mode = 2
+theme_override_styles/panel = SubResource("IconStyle")
+
+[node name="IconMargin" type="MarginContainer" parent="Container/Card/CardMargin/ProfileRow/IconPanel" unique_id=509217248]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="PlayerIcon" type="TextureRect" parent="Container/Card/CardMargin/ProfileRow/IconPanel/IconMargin" unique_id=201657548]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerDetails" type="VBoxContainer" parent="Container/Card/CardMargin/ProfileRow" unique_id=829401804]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="Badge" type="PanelContainer" parent="Container/Card/CardMargin/ProfileRow/PlayerDetails" unique_id=167063985]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="Container/Card/CardMargin/ProfileRow/PlayerDetails/Badge" unique_id=223463957]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 10
+text = "CONTESTANT"
+
+[node name="NameLabel" type="Label" parent="Container/Card/CardMargin/ProfileRow/PlayerDetails" unique_id=220253920]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.94, 0.95, 0.98, 1)
+theme_override_font_sizes/font_size = 20
+text = "Player Name"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="SpeciesLabel" type="Label" parent="Container/Card/CardMargin/ProfileRow/PlayerDetails" unique_id=281034762]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.53, 0.58, 0.66, 1)
+theme_override_font_sizes/font_size = 12
+text = "SPECIES: BEAN"
+
+[node name="ScorePanel" type="PanelContainer" parent="Container/Card/CardMargin/ProfileRow" unique_id=2001034340]
+custom_minimum_size = Vector2(78, 86)
+layout_mode = 2
+theme_override_styles/panel = SubResource("ScoreStyle")
+
+[node name="ScoreColumn" type="VBoxContainer" parent="Container/Card/CardMargin/ProfileRow/ScorePanel" unique_id=1713394126]
+layout_mode = 2
+
+[node name="ScoreTitle" type="Label" parent="Container/Card/CardMargin/ProfileRow/ScorePanel/ScoreColumn" unique_id=1766478553]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 10
+text = "POINTS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PointsPivot" type="Control" parent="Container" unique_id=1803151567]
 anchors_preset = 0
-offset_left = 100.0
-offset_top = 31.0
-offset_right = 100.0
-offset_bottom = 31.0
+offset_left = 277.0
+offset_top = 69.0
+offset_right = 277.0
+offset_bottom = 69.0
 
 [node name="PointsLabel" type="Label" parent="Container/PointsPivot" unique_id=1896622738]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -13.0
-offset_top = -31.0
-offset_right = 11.0
-offset_bottom = 27.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 42
+layout_mode = 0
+offset_left = -39.0
+offset_top = -25.0
+offset_right = 33.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
 text = "0"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PointsGainedLabel" type="Label" parent="Container" unique_id=693878873]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 440.5
-offset_top = -69.0
-offset_right = 511.5
-offset_bottom = -19.999847
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 16
-text = "+5
-"
+layout_mode = 0
+offset_left = 232.0
+offset_top = 77.0
+offset_right = 322.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 20
+text = "+5"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=263840014]
 libraries/ = SubResource("AnimationLibrary_yaano")

@@ -2,6 +2,94 @@
 
 [ext_resource type="Script" uid="uid://dntyll7shl64n" path="res://Systems/Countdown/countdown_ui.gd" id="1_keolf"]
 
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 11.0
+content_margin_top = 3.0
+content_margin_right = 11.0
+content_margin_bottom = 3.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="DividerStyle"]
+bg_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="ProgressBackground"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProgressFill"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_keolf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_dfyut"]
+resource_name = "start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kcto6"]
+_data = {
+&"RESET": SubResource("Animation_keolf"),
+&"show": SubResource("Animation_dfyut")
+}
+
 [node name="CountdownUI" type="Control" unique_id=1299720413]
 layout_mode = 3
 anchors_preset = 15
@@ -12,11 +100,97 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_keolf")
 
-[node name="CountdownLabel" type="Label" parent="." unique_id=474949718]
+[node name="Control" type="Control" parent="." unique_id=2051740949]
+anchors_preset = 0
+offset_left = 955.0
+offset_top = 98.0
+offset_right = 955.0
+offset_bottom = 98.0
+scale = Vector2(1e-05, 1e-05)
+
+[node name="TimerCard" type="PanelContainer" parent="Control" unique_id=935951767]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 0)
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = -75.0
+offset_right = 120.0
+offset_bottom = 62.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="CardMargin" type="MarginContainer" parent="Control/TimerCard" unique_id=1683431907]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 13
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="Content" type="VBoxContainer" parent="Control/TimerCard/CardMargin" unique_id=1007360848]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Badge" type="PanelContainer" parent="Control/TimerCard/CardMargin/Content" unique_id=398987695]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="Control/TimerCard/CardMargin/Content/Badge" unique_id=1883446252]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 11
+text = "ROUND TIMER"
+horizontal_alignment = 1
+
+[node name="TimerRow" type="HBoxContainer" parent="Control/TimerCard/CardMargin/Content" unique_id=1449515917]
+layout_mode = 2
+alignment = 1
+
+[node name="CountdownLabel" type="Label" parent="Control/TimerCard/CardMargin/Content/TimerRow" unique_id=474949718]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 39.59)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
 theme_override_font_sizes/font_size = 32
+text = "10"
 horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SecondsLabel" type="Label" parent="Control/TimerCard/CardMargin/Content/TimerRow" unique_id=1234126060]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.66, 0.73, 1)
+theme_override_font_sizes/font_size = 13
+text = "SECONDS"
+vertical_alignment = 1
+
+[node name="Divider" type="Panel" parent="Control/TimerCard/CardMargin/Content" unique_id=799576655]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("DividerStyle")
+
+[node name="TimeProgress" type="ProgressBar" parent="Control/TimerCard/CardMargin/Content" unique_id=1751070410]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("ProgressBackground")
+theme_override_styles/fill = SubResource("ProgressFill")
+max_value = 10.0
+value = 10.0
+show_percentage = false
+
+[node name="StatusLabel" type="Label" parent="Control/TimerCard/CardMargin/Content" unique_id=610621297]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 10
+text = "ITEM HUNT ACTIVE"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284740372]
+libraries/ = SubResource("AnimationLibrary_kcto6")

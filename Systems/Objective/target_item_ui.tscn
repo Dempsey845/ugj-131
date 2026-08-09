@@ -3,7 +3,51 @@
 [ext_resource type="Script" uid="uid://cf3sl8ngd776f" path="res://Systems/Objective/target_item_ui.gd" id="1_p7hx8"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_tm2qb"]
 
-[sub_resource type="Animation" id="Animation_tm2qb"]
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.42)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 11.0
+content_margin_top = 4.0
+content_margin_right = 11.0
+content_margin_bottom = 4.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="IconStyle"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="StyleBoxFlat" id="DividerStyle"]
+bg_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Animation" id="Animation_RESET"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -15,10 +59,22 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TargetPivot:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_p7hx8"]
+[sub_resource type="Animation" id="Animation_POP"]
 resource_name = "pop_in"
 length = 0.6
 tracks/0/type = "value"
@@ -28,16 +84,28 @@ tracks/0/path = NodePath("TargetPivot:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.42, 0.6),
+"transitions": PackedFloat32Array(1, 0.7, 1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(1.15, 1.15), Vector2(1, 1)]
+"values": [Vector2(1e-05, 1e-05), Vector2(1.12, 1.12), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TargetPivot:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uovuv"]
 _data = {
-&"RESET": SubResource("Animation_tm2qb"),
-&"pop_in": SubResource("Animation_p7hx8")
+&"RESET": SubResource("Animation_RESET"),
+&"pop_in": SubResource("Animation_POP")
 }
 
 [node name="TargetItemUI" type="Control" unique_id=772257791]
@@ -51,70 +119,94 @@ mouse_filter = 2
 script = ExtResource("1_p7hx8")
 
 [node name="TargetPivot" type="Control" parent="." unique_id=1109880953]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -506.0
-offset_top = -226.0
-offset_right = -506.0
-offset_bottom = -226.0
-grow_horizontal = 2
+offset_left = 112.0
+offset_top = -165.0
+offset_right = 112.0
+offset_bottom = -165.0
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
 
 [node name="Control" type="Control" parent="TargetPivot" unique_id=1419053526]
 anchors_preset = 0
-offset_left = -59.0
-offset_top = -85.0
-offset_right = 59.0
-offset_bottom = 85.0
+offset_left = -76.0
+offset_top = -104.0
+offset_right = 76.0
+offset_bottom = 104.0
+mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="TargetPivot/Control" unique_id=1897013616]
+[node name="ColorRect" type="PanelContainer" parent="TargetPivot/Control" unique_id=1897013616]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+theme_override_styles/panel = SubResource("CardStyle")
 
-[node name="NameLabel" type="Label" parent="TargetPivot/Control" unique_id=1928943059]
+[node name="CardMargin" type="MarginContainer" parent="TargetPivot/Control/ColorRect" unique_id=2002707580]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 13
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="Content" type="VBoxContainer" parent="TargetPivot/Control/ColorRect/CardMargin" unique_id=930919286]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Badge" type="PanelContainer" parent="TargetPivot/Control/ColorRect/CardMargin/Content" unique_id=1640660505]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="TargetPivot/Control/ColorRect/CardMargin/Content/Badge" unique_id=236628799]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 11
+text = "TARGET ITEM"
+horizontal_alignment = 1
+
+[node name="IconPanel" type="PanelContainer" parent="TargetPivot/Control/ColorRect/CardMargin/Content" unique_id=477342189]
+custom_minimum_size = Vector2(104, 94)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("IconStyle")
+
+[node name="IconMargin" type="MarginContainer" parent="TargetPivot/Control/ColorRect/CardMargin/Content/IconPanel" unique_id=274455589]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="IconTexture" type="TextureRect" parent="TargetPivot/Control/ColorRect/CardMargin/Content/IconPanel/IconMargin" unique_id=801795518]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(109, 49)
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -54.5
-offset_top = 6.0
-offset_right = 54.5
-offset_bottom = 55.0
-grow_horizontal = 2
-text = "Tungston cube!"
+layout_mode = 2
+texture = ExtResource("1_tm2qb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Divider" type="Panel" parent="TargetPivot/Control/ColorRect/CardMargin/Content" unique_id=206255241]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("DividerStyle")
+
+[node name="NameLabel" type="Label" parent="TargetPivot/Control/ColorRect/CardMargin/Content" unique_id=1928943059]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.95, 0.98, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tungsten Cube"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-
-[node name="IconTexture" type="TextureRect" parent="TargetPivot/Control" unique_id=801795518]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -45.0
-offset_top = -102.0
-offset_right = 51.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("1_tm2qb")
-expand_mode = 2
-stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1954020070]
 libraries/ = SubResource("AnimationLibrary_uovuv")

@@ -9,7 +9,7 @@ var current_item_data: ItemData
 
 func start_announcement(item_data: ItemData, duration: float = 3.0):
 	announcement_started.emit(
-		"Announcement: A %s has been hidden! Have it when the time is up and it's yours!" % sanitize_string(item_data.item_name),
+		"A %s has been hidden! Have it when the time is up and it's yours!" % sanitize_string(item_data.item_name),
 		item_data.item_texture,
 		duration
 	)
