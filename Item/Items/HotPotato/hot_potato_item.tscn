@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_11r7f"]
 [ext_resource type="Script" uid="uid://bfhdsloeyy4c5" path="res://Item/Items/HotPotato/hot_potato_item_agent.gd" id="2_7uhtp"]
+[ext_resource type="PackedScene" uid="uid://bglxp30a52mbp" path="res://Item/Items/HotPotato/fire_particles.tscn" id="3_nrx85"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
 albedo_color = Color(0.9529412, 0.7921569, 0.5372549, 1)
@@ -30,3 +31,6 @@ mesh = SubResource("SphereMesh_xrivr")
 [node name="CollisionShape3D" parent="." index="2" unique_id=250276096]
 shape = SubResource("SphereShape3D_13qdw")
 debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="FireParticles" parent="." index="4" unique_id=210430930 instance=ExtResource("3_nrx85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
