@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 		return
 
 	time = maxf(time - delta, 0.0)
-	GameManager.round_time = time
+	game_manager.round_time = time
 	time_progress.value = time
 	_update_display()
 

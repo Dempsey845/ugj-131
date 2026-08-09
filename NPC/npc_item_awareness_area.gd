@@ -2,6 +2,7 @@ class_name NPC_ItemAwarenessArea
 extends Area3D
 
 @onready var npc: NPC = get_parent()
+@onready var game_manager: GameManager = get_tree().current_scene.get_node("GameManager")
 
 var npcs_chasing_this_npc: Array[NPC]
 
@@ -16,7 +17,7 @@ func start_npc_chase(other_npc: NPC):
     npcs_chasing_this_npc.append(other_npc)
 
 func _on_item_dropped(item: Item):
-    if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+    if game_manager.is_current_round_hot_potato and game_manager.round_time < game_manager.urgent_time:
         for other_npc in npcs_chasing_this_npc:
             other_npc.start_fleeing(item)
     else:

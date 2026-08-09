@@ -75,6 +75,8 @@ enum State {
 @export var aggressive_drop_distance: float = 2.5
 @export var aggressive_retarget_interval: float = 0.25
 
+@onready var game_manager: GameManager = get_tree().current_scene.get_node("GameManager")
+
 var slippery_area_count: int = 0
 
 var is_on_slippery_surface: bool:
@@ -263,7 +265,7 @@ func _update_chasing(delta: float) -> void:
 			_slow_down(delta)
 			return
 
-	if chase_target.has_method("receive_tackle") and GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+	if chase_target.has_method("receive_tackle") and is_hot_round_urgent():
 		start_fleeing(chase_target)
 		return
 
@@ -555,7 +557,7 @@ func _update_carrying(delta: float) -> void:
 	if navigation_agent.is_navigation_finished():
 		_choose_flee_point()
 
-	if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+	if is_hot_round_urgent():
 		start_aggressive()
 		return
 
@@ -679,7 +681,7 @@ func receive_tackle(
 	drop_carried_item(direction)
 
 	if is_instance_valid(item):
-		if GameManager.is_current_round_hot_potato and GameManager.round_time < GameManager.urgent_time:
+		if is_hot_round_urgent():
 			start_fleeing(item)
 		else:
 			chase_dropped_item(item)
@@ -984,3 +986,6 @@ func _is_valid_aggressive_target(
 		and character != self
 		and character.is_inside_tree()
 	)
+
+func is_hot_round_urgent():
+	return game_manager.is_current_round_hot_potato and game_manager.round_time < game_manager.urgent_time

@@ -26,21 +26,19 @@ func stop_objective():
 	objective_ended.emit()
 
 	if is_instance_valid(current_item):
-		if current_item.carrier:
-			var show_confetti: bool = true
-			var confetti_position: Vector3
+		var show_confetti: bool
+		var confetti_position: Vector3
 
+		if current_item.carrier:
 			if current_item.is_item_hot_potato():
 				_reset_carrier_item_time(current_item.carrier)
 
 				var top_players: Array[Node3D] = hot_potato_manager.get_top_three_players()
-
 				_reward_top_hot_potato_players(top_players)
 
 				if top_players.size() > 0:
 					confetti_position = top_players[0].global_position
-				else:
-					show_confetti = false
+					show_confetti = true
 			else:
 				var carrier_score: Score = player_score
 
@@ -48,12 +46,21 @@ func stop_objective():
 					carrier_score = current_item.carrier.get_node("Score")
 
 				carrier_score.add_points(current_item_data.points_reward)
-				confetti_position = current_item.carrier.global_position
 
-			if show_confetti:
+				show_confetti = true
+				confetti_position = current_item.carrier.global_position
+		else:
+			if current_item.is_item_hot_potato():
+				var top_players: Array[Node3D] = hot_potato_manager.get_top_three_players()
+				_reward_top_hot_potato_players(top_players)
+
+				if top_players.size() > 0:
+					confetti_position = top_players[0].global_position
+					show_confetti = true
+
+		if show_confetti:
 				confetti_particles.global_position = confetti_position
 				confetti_particles.explode()
-
 		current_item.queue_free()
 		
 	current_item = null

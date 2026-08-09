@@ -75,10 +75,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3453536, 0, -5.676411)
 script = ExtResource("5_lo5ox")
 metadata/_custom_type_script = "uid://dlkw16wmy3th6"
 
-[node name="HotPotatoManager" type="Node" parent="." unique_id=766040283 node_paths=PackedStringArray("leaderboard_ui", "npc_manager")]
+[node name="HotPotatoManager" type="Node" parent="." unique_id=766040283 node_paths=PackedStringArray("leaderboard_ui", "npc_manager", "player")]
 script = ExtResource("7_f23eu")
 leaderboard_ui = NodePath("../CanvasLayer/LeaderboardUI")
 npc_manager = NodePath("../NPCManager")
+player = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 

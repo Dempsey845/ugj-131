@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="2_k1h6f"]
 [ext_resource type="Script" uid="uid://cifc50fqn5liw" path="res://NPC/npc_item_awareness_area.gd" id="3_3etx6"]
 [ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="3_6swda"]
+[ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="6_rovd1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -73,11 +74,6 @@ script = ExtResource("3_3etx6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPCItemAwarenessArea" unique_id=1980318681]
 shape = SubResource("SphereShape3D_056qb")
 
-[node name="NameLabel" type="Label3D" parent="." unique_id=1542255986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3000002, 0)
-billboard = 1
-text = "Bob"
-
 [node name="CharacterCollectArea" type="Area3D" parent="." unique_id=1513225406]
 collision_layer = 32
 collision_mask = 16
@@ -86,3 +82,13 @@ collision_mask = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_6swda")
 debug_color = Color(0, 0.6342056, 0.4353572, 0.41960785)
+
+[node name="NameLabel" type="Label3D" parent="." unique_id=584826755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+transparency = 0.5
+billboard = 1
+text = "Bob"
+
+[node name="PointsLabel" parent="." unique_id=863403297 node_paths=PackedStringArray("score") instance=ExtResource("6_rovd1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+score = NodePath("../Score")
