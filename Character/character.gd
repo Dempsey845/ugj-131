@@ -9,6 +9,7 @@ extends Node3D
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var goofy_goggles: Node3D = %GoofyGoggles
+@onready var confused_particles: ConfusedParticles = $ConfusedParticles
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
@@ -128,6 +129,8 @@ func _on_item_dropped(item):
 
 func show_goggles():
 	goofy_goggles.visible = true
+	confused_particles.set_particle_emission(true)
 
 func hide_goggles():
 	goofy_goggles.visible = false
+	confused_particles.set_particle_emission(false)
