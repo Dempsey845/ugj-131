@@ -15,6 +15,7 @@ signal recovered
 @export var visuals: Node3D
 @export var standing_collision: CollisionShape3D
 @export var slide_hitbox: Area3D
+@export var name_label: Label3D
 
 
 @export_category("Movement")
@@ -100,6 +101,8 @@ func _ready() -> void:
 
 	slide_hitbox.monitoring = false
 	slide_hitbox.body_entered.connect(_on_slide_hitbox_body_entered)
+
+	name_label.text = SceneManager.player_name
 
 
 func _unhandled_input(event: InputEvent) -> void:

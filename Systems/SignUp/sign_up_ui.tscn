@@ -1,0 +1,257 @@
+[gd_scene format=3 uid="uid://cd40mh45udhto"]
+
+[ext_resource type="Script" uid="uid://c1feahv70x5g1" path="res://Systems/SignUp/sign_up_ui.gd" id="1_qgsqj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBackground"]
+bg_color = Color(0.055, 0.071, 0.102, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleCard"]
+bg_color = Color(0.105, 0.129, 0.173, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleInput"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleInputFocus"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleButton"]
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonPressed"]
+bg_color = Color(0.824, 0.365, 0.102, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonHover"]
+bg_color = Color(1, 0.643, 0.208, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleButtonDisabled"]
+bg_color = Color(0.251, 0.278, 0.329, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="SignUpUI" type="Control" unique_id=1080814572]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qgsqj")
+
+[node name="Background" type="Panel" parent="." unique_id=397306509]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBackground")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1836653812]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer" unique_id=92293737]
+layout_mode = 2
+
+[node name="Card" type="PanelContainer" parent="MarginContainer/CenterContainer" unique_id=124338324]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleCard")
+
+[node name="CardMargin" type="MarginContainer" parent="MarginContainer/CenterContainer/Card" unique_id=1159154517]
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 34
+
+[node name="Form" type="VBoxContainer" parent="MarginContainer/CenterContainer/Card/CardMargin" unique_id=1672226894]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Eyebrow" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=852705413]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 16
+text = "OFFICIAL CONTESTANT REGISTRATION"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1142286798]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "SUPERMARKET SCRAMBLE"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1048670501]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.76, 0.83, 1)
+theme_override_font_sizes/font_size = 16
+text = "Complete this extremely legitimate form to enter the show."
+horizontal_alignment = 1
+
+[node name="SpacerTop" type="Control" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=51947247]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1783553103]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.94, 0.97, 1)
+theme_override_font_sizes/font_size = 17
+text = "Contestant name"
+
+[node name="NameInput" type="LineEdit" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=710928942]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(0.48, 0.52, 0.6, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleInput")
+theme_override_styles/focus = SubResource("StyleInputFocus")
+placeholder_text = "Enter your show name..."
+max_length = 18
+clear_button_enabled = true
+
+[node name="ErrorLabel" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1848698934]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.42, 0.38, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 2
+
+[node name="SpeciesLabel" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1483072622]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.94, 0.97, 1)
+theme_override_font_sizes/font_size = 17
+text = "Species / race"
+
+[node name="SpeciesSelection" type="OptionButton" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1936217211]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 8
+theme_override_colors/font_disabled_color = Color(0.74, 0.77, 0.82, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/disabled = SubResource("StyleInput")
+disabled = true
+selected = 0
+item_count = 1
+popup/item_0/text = "Bean"
+popup/item_0/id = 0
+
+[node name="SpeciesNote" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=281563530]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.59, 0.67, 1)
+theme_override_font_sizes/font_size = 13
+text = "Species was detected automatically and cannot be changed."
+autowrap_mode = 2
+
+[node name="DisclaimerPanel" type="PanelContainer" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1565406057]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleInput")
+
+[node name="DisclaimerMargin" type="MarginContainer" parent="MarginContainer/CenterContainer/Card/CardMargin/Form/DisclaimerPanel" unique_id=189549275]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Disclaimer" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form/DisclaimerPanel/DisclaimerMargin" unique_id=1455339083]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.76, 0.83, 1)
+theme_override_font_sizes/font_size = 13
+text = "DISCLAIMER: By entering Supermarket Scramble, you accept the possibility of runaway trolleys, suspiciously slippery aisles, airborne groceries, dramatic falls, mild embarrassment, and being bonked by another contestant. The producers are not responsible for bruised beans, lost dignity, or unexpected game-show confetti."
+autowrap_mode = 2
+
+[node name="ConsentCheckBox" type="CheckBox" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=2031469823]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.94, 0.97, 1)
+theme_override_font_sizes/font_size = 15
+text = "I have read none of that, but I consent to compete anyway."
+autowrap_mode = 2
+
+[node name="SubmitButton" type="Button" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=1434453875]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_colors/font_disabled_color = Color(0.53, 0.55, 0.59, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleButton")
+theme_override_styles/pressed = SubResource("StyleButtonPressed")
+theme_override_styles/hover = SubResource("StyleButtonHover")
+theme_override_styles/disabled = SubResource("StyleButtonDisabled")
+disabled = true
+text = "ENTER THE SCRAMBLE!"
+
+[node name="FinePrint" type="Label" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=205321499]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.46, 0.53, 1)
+theme_override_font_sizes/font_size = 11
+text = "No refunds. No substitutions. No changing species."
+horizontal_alignment = 1

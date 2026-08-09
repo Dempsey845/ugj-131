@@ -1,0 +1,362 @@
+[gd_scene format=3 uid="uid://d20afwoja42gi"]
+
+[ext_resource type="Script" uid="uid://8h72n7sqrmwe" path="res://Systems/MainMenu/main_menu.gd" id="1_inl6p"]
+[ext_resource type="PackedScene" uid="uid://cd40mh45udhto" path="res://Systems/SignUp/sign_up_ui.tscn" id="2_dhb5l"]
+
+[sub_resource type="StyleBoxFlat" id="BackgroundStyle"]
+bg_color = Color(0.055, 0.071, 0.102, 1)
+
+[sub_resource type="StyleBoxFlat" id="GlowStyle"]
+bg_color = Color(0.984, 0.745, 0.18, 0.07)
+corner_radius_top_left = 240
+corner_radius_top_right = 240
+corner_radius_bottom_right = 240
+corner_radius_bottom_left = 240
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="HeroStyle"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="InfoStyle"]
+bg_color = Color(0.098, 0.118, 0.157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryNormal"]
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryPressed"]
+bg_color = Color(0.824, 0.365, 0.102, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryHover"]
+bg_color = Color(1, 0.643, 0.208, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SecondaryNormal"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SecondaryHover"]
+bg_color = Color(0.14, 0.169, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MainMenu" type="Control" unique_id=16742667]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_inl6p")
+sign_up_scene = ExtResource("2_dhb5l")
+
+[node name="Background" type="Panel" parent="." unique_id=481404915]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("BackgroundStyle")
+
+[node name="TopGlow" type="Panel" parent="." unique_id=1114875243]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -250.0
+offset_right = 500.0
+offset_bottom = 350.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("GlowStyle")
+
+[node name="BottomGlow" type="Panel" parent="." unique_id=795222619]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -430.0
+offset_top = -330.0
+offset_right = 170.0
+offset_bottom = 270.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("GlowStyle")
+
+[node name="PageMargin" type="MarginContainer" parent="." unique_id=701086409]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 30
+
+[node name="Page" type="VBoxContainer" parent="PageMargin" unique_id=1266451905]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Header" type="HBoxContainer" parent="PageMargin/Page" unique_id=1245083634]
+layout_mode = 2
+
+[node name="Brand" type="Label" parent="PageMargin/Page/Header" unique_id=238266262]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 19
+text = "SUPERMARKET SCRAMBLE"
+
+[node name="Season" type="Label" parent="PageMargin/Page/Header" unique_id=368379423]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 14
+text = "SEASON 01  •  LIVE"
+vertical_alignment = 1
+
+[node name="Center" type="CenterContainer" parent="PageMargin/Page" unique_id=342789621]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Card" type="PanelContainer" parent="PageMargin/Page/Center" unique_id=379229093]
+custom_minimum_size = Vector2(940, 540)
+layout_mode = 2
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="Columns" type="HBoxContainer" parent="PageMargin/Page/Center/Card" unique_id=1854976822]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Hero" type="PanelContainer" parent="PageMargin/Page/Center/Card/Columns" unique_id=1472495180]
+custom_minimum_size = Vector2(545, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("HeroStyle")
+
+[node name="HeroMargin" type="MarginContainer" parent="PageMargin/Page/Center/Card/Columns/Hero" unique_id=51636699]
+layout_mode = 2
+theme_override_constants/margin_left = 46
+theme_override_constants/margin_top = 44
+theme_override_constants/margin_right = 46
+theme_override_constants/margin_bottom = 44
+
+[node name="HeroContent" type="VBoxContainer" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin" unique_id=268615515]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Badge" type="PanelContainer" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent" unique_id=1198115164]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent/Badge" unique_id=745381473]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 13
+text = "NOW CASTING BRAVE BEANS"
+
+[node name="Title" type="Label" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent" unique_id=1369685588]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "READY.
+SET.
+SCRAMBLE!"
+
+[node name="Tagline" type="Label" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent" unique_id=278500069]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.76, 0.83, 1)
+theme_override_font_sizes/font_size = 17
+text = "Grab the goods. Dodge the trolleys.
+Become the supermarket's greatest champion."
+autowrap_mode = 2
+
+[node name="HeroSpacer" type="Control" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent" unique_id=434366577]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ShowInfo" type="PanelContainer" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent" unique_id=118138617]
+layout_mode = 2
+theme_override_styles/panel = SubResource("InfoStyle")
+
+[node name="InfoMargin" type="MarginContainer" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent/ShowInfo" unique_id=290993002]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="InfoText" type="Label" parent="PageMargin/Page/Center/Card/Columns/Hero/HeroMargin/HeroContent/ShowInfo/InfoMargin" unique_id=272948695]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.84, 0.89, 1)
+theme_override_font_sizes/font_size = 14
+text = "TODAY'S SPECIAL
+Chaos, competition and suspiciously slippery floors."
+autowrap_mode = 2
+
+[node name="Actions" type="MarginContainer" parent="PageMargin/Page/Center/Card/Columns" unique_id=1169372471]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 42
+
+[node name="ActionContent" type="VBoxContainer" parent="PageMargin/Page/Center/Card/Columns/Actions" unique_id=1783595104]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ActionEyebrow" type="Label" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=1326537254]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 14
+text = "CONTESTANT PORTAL"
+
+[node name="ActionTitle" type="Label" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=991440175]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Enter the aisle"
+
+[node name="ActionDescription" type="Label" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=1324309566]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.66, 0.73, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sign the extremely official waiver to begin your shot at grocery-store glory."
+autowrap_mode = 2
+
+[node name="ActionSpacer" type="Control" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=1302923814]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="SignUpButton" type="Button" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=1038608047]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("PrimaryNormal")
+theme_override_styles/pressed = SubResource("PrimaryPressed")
+theme_override_styles/hover = SubResource("PrimaryHover")
+text = "SIGN UP TO COMPETE"
+
+[node name="SettingsButton" type="Button" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=482121772]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("SecondaryNormal")
+theme_override_styles/pressed = SubResource("SecondaryHover")
+theme_override_styles/hover = SubResource("SecondaryHover")
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=416303115]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_colors/font_hover_color = Color(1, 0.54, 0.49, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("SecondaryNormal")
+theme_override_styles/pressed = SubResource("SecondaryHover")
+theme_override_styles/hover = SubResource("SecondaryHover")
+text = "QUIT SHOW"
+
+[node name="ActionsSpacer" type="Control" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=850015678]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FinePrint" type="Label" parent="PageMargin/Page/Center/Card/Columns/Actions/ActionContent" unique_id=412553029]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.46, 0.53, 1)
+theme_override_font_sizes/font_size = 11
+text = "100% legitimate. Probably insured.
+Beans only. Terms definitely apply."
+horizontal_alignment = 1
+
+[node name="Footer" type="HBoxContainer" parent="PageMargin/Page" unique_id=1993192725]
+layout_mode = 2
+
+[node name="Copyright" type="Label" parent="PageMargin/Page/Footer" unique_id=451594950]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.38, 0.42, 0.49, 1)
+theme_override_font_sizes/font_size = 11
+text = "© SUPERMARKET SCRAMBLE BROADCASTING"
+
+[node name="Status" type="Label" parent="PageMargin/Page/Footer" unique_id=409197286]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.42, 0.49, 1)
+theme_override_font_sizes/font_size = 11
+text = "AISLES OPEN  •  ITEMS READY"

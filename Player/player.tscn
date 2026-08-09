@@ -14,12 +14,13 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
 radius = 6.0
 
-[node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox")]
+[node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox", "name_label")]
 script = ExtResource("1_l8h54")
 camera_pivot = NodePath("CameraPivot")
 visuals = NodePath("Visuals")
 standing_collision = NodePath("CollisionShape3D")
 slide_hitbox = NodePath("Visuals/SlideHitbox")
+name_label = NodePath("NameLabel")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=146726859]
 
@@ -64,3 +65,8 @@ item_pickup_area = NodePath("../PlayerItemPickupArea")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerItemAwarenessArea" unique_id=1986592295]
 shape = SubResource("SphereShape3D_13qdw")
+
+[node name="NameLabel" type="Label3D" parent="." unique_id=1559052525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3000002, 0)
+billboard = 1
+text = "Bob"

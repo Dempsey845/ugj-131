@@ -3,7 +3,7 @@ extends Node
 
 @export var npc_container: Node3D
 
-var npc_names: Array[String] = [
+static var npc_names: Array[String] = [
 	"Bingo",
 	"Bonk",
 	"Bubbles",
