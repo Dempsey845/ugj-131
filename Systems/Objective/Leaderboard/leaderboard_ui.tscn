@@ -35,6 +35,43 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="Animation" id="Animation_nsua7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_yytp8"]
+resource_name = "pop_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tnxs5"]
+_data = {
+&"RESET": SubResource("Animation_nsua7"),
+&"pop_in": SubResource("Animation_yytp8")
+}
+
 [node name="LeaderboardUI" type="Control" unique_id=1149146776]
 layout_mode = 3
 anchors_preset = 15
@@ -59,6 +96,8 @@ offset_right = -18.0
 offset_bottom = 46.0
 grow_horizontal = 0
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(168, 205)
 mouse_filter = 2
 
 [node name="ColorRect" type="PanelContainer" parent="Control" unique_id=1768911897]
@@ -129,3 +168,6 @@ theme_override_font_sizes/font_size = 14
 text = "Waiting for contestants..."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547333005]
+libraries/ = SubResource("AnimationLibrary_tnxs5")

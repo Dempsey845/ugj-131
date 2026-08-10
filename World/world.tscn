@@ -63,7 +63,7 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu"), ExtResource("7_dg1ng")])
+rounds = Array[ExtResource("2_dqu5g")]([ExtResource("7_dg1ng"), ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu")])
 npc_manager = NodePath("../NPCManager")
 
 [node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]

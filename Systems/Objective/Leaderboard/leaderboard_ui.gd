@@ -9,6 +9,7 @@ extends Control
 
 @onready var cards_layer: Control = %CardsLayer
 @onready var empty_label: Label = %EmptyLabel
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var entries: Dictionary = {}
 var cards: Dictionary = {}
@@ -116,3 +117,10 @@ func _get_ranked_ids() -> Array[StringName]:
 		return a_seconds > b_seconds
 	)
 	return ranked_ids
+
+func pop_in():
+	animation_player.play("pop_in")
+
+func pop_out():
+	await get_tree().create_timer(2.0).timeout
+	animation_player.play_backwards("pop_in")

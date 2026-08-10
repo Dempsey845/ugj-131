@@ -20,6 +20,9 @@ func start_objective(item_data: ItemData):
 	spawn_point.add_child(current_item)
 
 	current_item_data = item_data
+
+	if current_item.has_node("HotPotatoItemAgent"):
+		hot_potato_manager.start()
 	
 	objective_started.emit(item_data)
 
@@ -29,6 +32,9 @@ func stop_objective():
 	if is_instance_valid(current_item):
 		var show_confetti: bool
 		var confetti_position: Vector3
+
+		if current_item.has_node("HotPotatoItemAgent"):
+			hot_potato_manager.end()
 
 		if current_item.carrier:
 			if current_item.is_item_hot_potato():

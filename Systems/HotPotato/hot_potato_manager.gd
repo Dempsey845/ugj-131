@@ -93,3 +93,9 @@ func register_npc(npc: NPC):
 func _on_npcs_created(npcs: Array[NPC]):
 	for npc in npcs:
 		register_npc(npc)
+
+func start():
+	leaderboard_ui.pop_in()
+
+func end():
+	leaderboard_ui.pop_out()
