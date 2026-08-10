@@ -24,7 +24,6 @@ enum State {
 @export var visuals: Node3D
 @export var navigation_agent: NavigationAgent3D
 @export var item_holder: Marker3D
-@export var search_points: Array[Node3D]
 @export var player: Player
 @export var slide_hitbox: Area3D
 @export var name_label: Label3D
@@ -40,6 +39,11 @@ enum State {
 
 @export_category("Searching")
 @export var search_wait_time: float = 1.0
+
+@export_category("Random Navigation")
+@export var random_point_attempts: int = 12
+@export var minimum_search_distance: float = 4.0
+@export var flee_point_samples: int = 10
 
 
 @export_category("Tackle")
@@ -100,7 +104,9 @@ var chased_item: Item
 
 var move_speed_multiplier: float = 1.0
 
-var current_search_point: Node3D
+var current_search_position: Vector3
+var has_search_position: bool = false
+
 var is_waiting: bool = false
 var knocked_down_remaining: float = 0.0
 
@@ -181,11 +187,13 @@ func _physics_process(delta: float) -> void:
 # Searching
 
 func _update_searching(delta: float) -> void:
-	if current_search_point == null:
+	if not has_search_position:
 		_choose_search_point()
+		_slow_down(delta)
 		return
 
 	if navigation_agent.is_navigation_finished():
+		has_search_position = false
 		_wait_at_search_point()
 		_slow_down(delta)
 		return
@@ -194,19 +202,22 @@ func _update_searching(delta: float) -> void:
 
 
 func _choose_search_point() -> void:
-	if search_points.is_empty():
-		return
-
-	var available_points: Array = search_points.filter(
-		func(point: Node3D) -> bool:
-			return is_instance_valid(point)
+	var random_position: Variant = (
+		_get_random_reachable_point(
+			minimum_search_distance
+		)
 	)
 
-	if available_points.is_empty():
+	if random_position == null:
+		has_search_position = false
 		return
 
-	current_search_point = available_points.pick_random()
-	navigation_agent.target_position = current_search_point.global_position
+	current_search_position = random_position
+	has_search_position = true
+
+	navigation_agent.target_position = (
+		current_search_position
+	)
 
 
 func _wait_at_search_point() -> void:
@@ -580,57 +591,57 @@ func _update_carrying(delta: float) -> void:
 
 
 func _choose_flee_point() -> void:
-	if search_points.is_empty():
-		_slow_down(get_physics_process_delta_time())
-		return
-
-	var valid_points: Array[Node3D] = []
-
-	for point in search_points:
-		if is_instance_valid(point):
-			valid_points.append(point)
-
-	if valid_points.is_empty():
-		return
-
-	var position_to_escape_from: Vector3 = global_position
+	var position_to_escape_from: Vector3 = (
+		global_position
+	)
 
 	if (
 		state == State.FLEEING
 		and is_instance_valid(flee_threat)
 	):
-		position_to_escape_from = flee_threat.global_position
+		position_to_escape_from = (
+			flee_threat.global_position
+		)
 
-	# Put the furthest points first.
-	valid_points.sort_custom(
-		func(a: Node3D, b: Node3D) -> bool:
-			var distance_a: float = (
-				a.global_position.distance_squared_to(
-					position_to_escape_from
-				)
+	var best_position: Vector3
+	var best_distance_squared: float = -1.0
+	var found_position: bool = false
+
+	for sample in flee_point_samples:
+		var random_position: Variant = (
+			_get_random_reachable_point(
+				minimum_search_distance
 			)
+		)
 
-			var distance_b: float = (
-				b.global_position.distance_squared_to(
-					position_to_escape_from
-				)
+		if random_position == null:
+			continue
+
+		var candidate: Vector3 = random_position
+
+		var distance_squared: float = (
+			candidate.distance_squared_to(
+				position_to_escape_from
 			)
+		)
 
-			return distance_a > distance_b
-	)
+		if distance_squared > best_distance_squared:
+			best_distance_squared = distance_squared
+			best_position = candidate
+			found_position = true
 
-	# Randomly select between the three furthest points so
-	# NPCs don't always flee along exactly the same route.
-	var selection_count: int = mini(3, valid_points.size())
+	if not found_position:
+		_slow_down(
+			get_physics_process_delta_time()
+		)
+		return
 
-	current_search_point = valid_points[
-		randi() % selection_count
-	]
+	current_search_position = best_position
+	has_search_position = true
 
 	navigation_agent.target_position = (
-		current_search_point.global_position
+		current_search_position
 	)
-
 
 func is_carrying_target() -> bool:
 	return is_instance_valid(carried_item)
@@ -1046,6 +1057,46 @@ func _is_valid_aggressive_target(
 		and character != self
 		and character.is_inside_tree()
 	)
+
+func _get_random_reachable_point(
+	minimum_distance: float = 0.0
+) -> Variant:
+	var navigation_map: RID = (
+		navigation_agent.get_navigation_map()
+	)
+
+	if not navigation_map.is_valid():
+		return null
+
+	for attempt in random_point_attempts:
+		var candidate: Vector3 = (
+			NavigationServer3D.map_get_random_point(
+				navigation_map,
+				navigation_agent.navigation_layers,
+				true
+			)
+		)
+
+		if (
+			global_position.distance_to(candidate)
+			< minimum_distance
+		):
+			continue
+
+		var path: PackedVector3Array = (
+			NavigationServer3D.map_get_path(
+				navigation_map,
+				global_position,
+				candidate,
+				true,
+				navigation_agent.navigation_layers
+			)
+		)
+
+		if path.size() >= 2:
+			return candidate
+
+	return null
 
 func _apply_goofy_goggles_wobble(
 	direction: Vector3

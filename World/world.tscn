@@ -209,5 +209,215 @@ player = NodePath("../../../Player")
 knockback_speed = 14.0
 knockback_upward_speed = 6.0
 
+[node name="NPC3" parent="NavigationRegion3D/NPC_Container" unique_id=325153592 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.842478, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC4" parent="NavigationRegion3D/NPC_Container" unique_id=434353826 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.842478, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC5" parent="NavigationRegion3D/NPC_Container" unique_id=869317145 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.348679, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC6" parent="NavigationRegion3D/NPC_Container" unique_id=1323244515 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.348679, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC7" parent="NavigationRegion3D/NPC_Container" unique_id=16752176 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7503448, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC8" parent="NavigationRegion3D/NPC_Container" unique_id=1020360275 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7503448, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC9" parent="NavigationRegion3D/NPC_Container" unique_id=445053417 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.585569, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC10" parent="NavigationRegion3D/NPC_Container" unique_id=1629273355 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.585569, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC11" parent="NavigationRegion3D/NPC_Container" unique_id=1647422107 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6155815, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC12" parent="NavigationRegion3D/NPC_Container" unique_id=169229331 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6155815, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC13" parent="NavigationRegion3D/NPC_Container" unique_id=432751671 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.772701, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC14" parent="NavigationRegion3D/NPC_Container" unique_id=1605134538 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.772701, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC15" parent="NavigationRegion3D/NPC_Container" unique_id=1526230125 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.519007, 0, 0)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC16" parent="NavigationRegion3D/NPC_Container" unique_id=1394551687 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.519007, 0, -6)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC17" parent="NavigationRegion3D/NPC_Container" unique_id=2059729248 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC18" parent="NavigationRegion3D/NPC_Container" unique_id=989050374 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC19" parent="NavigationRegion3D/NPC_Container" unique_id=244987971 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.842478, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC20" parent="NavigationRegion3D/NPC_Container" unique_id=2087760624 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.842478, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC21" parent="NavigationRegion3D/NPC_Container" unique_id=2044879538 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.348679, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC22" parent="NavigationRegion3D/NPC_Container" unique_id=667148845 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.348679, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC23" parent="NavigationRegion3D/NPC_Container" unique_id=234928294 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7503448, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC24" parent="NavigationRegion3D/NPC_Container" unique_id=2125998453 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7503448, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC25" parent="NavigationRegion3D/NPC_Container" unique_id=803572257 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.585569, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC26" parent="NavigationRegion3D/NPC_Container" unique_id=392582650 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.585569, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC27" parent="NavigationRegion3D/NPC_Container" unique_id=1152743031 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6155815, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC28" parent="NavigationRegion3D/NPC_Container" unique_id=440544857 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6155815, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC29" parent="NavigationRegion3D/NPC_Container" unique_id=865208178 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.772701, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC30" parent="NavigationRegion3D/NPC_Container" unique_id=353445951 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.772701, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC31" parent="NavigationRegion3D/NPC_Container" unique_id=1837063079 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.519007, 0, 14.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
+[node name="NPC32" parent="NavigationRegion3D/NPC_Container" unique_id=573460301 node_paths=PackedStringArray("search_points", "player") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.519007, 0, 8.089239)
+search_points = [NodePath("../../Marker3D"), NodePath("../../Marker3D2"), NodePath("../../Marker3D3"), NodePath("../../Marker3D4"), NodePath("../../Marker3D5"), NodePath("../../Marker3D6"), NodePath("../../Marker3D7"), NodePath("../../Marker3D8")]
+player = NodePath("../../../Player")
+knockback_speed = 14.0
+knockback_upward_speed = 6.0
+
 [node name="ConfettiParticles" parent="." unique_id=1799658963 instance=ExtResource("13_0wqet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.3, 0, 0)
