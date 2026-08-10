@@ -27,6 +27,8 @@ var has_just_landed: bool
 
 var animation_prefix = "Armature|"
 
+var slide_animation_active: bool = false
+
 func _ready() -> void:
 	playback = animation_tree.get(
 		"parameters/MovementStateMachine/playback"
@@ -56,17 +58,37 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(body):
 		return
-		
-	if current_state != "Fall" and not body.is_on_floor() and body.velocity.y < 0.0:
+
+	var body_is_sliding: bool = body.get(
+		"is_sliding"
+	)
+
+	if (
+		slide_animation_active
+		and not body_is_sliding
+	):
+		_on_body_slide_ended()
+
+	if (
+		not slide_animation_active
+		and current_state != "Fall"
+		and not body.is_on_floor()
+		and body.velocity.y < 0.0
+	):
 		playback.travel("Fall")
 		current_state = "Fall"
 		has_just_landed = false
-		
-	if !has_just_landed and !has_land_signal and current_state == "Fall":
-		if body.is_on_floor():
-			playback.travel("Land")
-			current_state = "Land"
-			has_just_landed = true
+
+	if (
+		not slide_animation_active
+		and not has_just_landed
+		and not has_land_signal
+		and current_state == "Fall"
+		and body.is_on_floor()
+	):
+		playback.travel("Land")
+		current_state = "Land"
+		has_just_landed = true
 
 	var horizontal_velocity: Vector2 = Vector2(
 		body.velocity.x,
@@ -74,7 +96,8 @@ func _physics_process(delta: float) -> void:
 	)
 
 	var target_blend: float = clampf(
-		horizontal_velocity.length() / maximum_move_speed,
+		horizontal_velocity.length()
+			/ maximum_move_speed,
 		0.0,
 		1.0
 	)
@@ -101,19 +124,54 @@ func _physics_process(delta: float) -> void:
 		current_hold_blend
 	)
 
-func _on_body_jumped():
+func _on_body_jumped() -> void:
+	if slide_animation_active:
+		return
+
 	playback.travel("Jump")
 	current_state = "Jump"
 
-func _on_body_landed():
+
+func _on_body_landed() -> void:
+	if slide_animation_active:
+		return
+
 	playback.travel("Land")
 	current_state = "Land"
 
-func _on_body_slide_started():
-	playback.travel("Slide")
+func _on_body_slide_started() -> void:
+	slide_animation_active = true
+	current_state = "Slide"
 
-func _on_body_slide_ended():
-	playback.travel("MoveBlend")
+	playback.start(
+		"Slide",
+		true
+	)
+
+
+func _on_body_slide_ended() -> void:
+	if not slide_animation_active:
+		return
+
+	slide_animation_active = false
+
+	if (
+		not body.is_on_floor()
+		and body.velocity.y < 0.0
+	):
+		current_state = "Fall"
+
+		playback.start(
+			"Fall",
+			true
+		)
+	else:
+		current_state = "MoveBlend"
+
+		playback.start(
+			"MoveBlend",
+			true
+		)
 
 func _on_item_picked_up():
 	target_hold_blend = 1.0

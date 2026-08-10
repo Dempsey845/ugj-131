@@ -77,7 +77,7 @@ var default_visual_rotation: Vector3
 @export var goofy_secondary_wobble: float = 0.4
 
 @export_category("Ice Movement")
-@export var ice_acceleration: float = 4.5
+@export var ice_acceleration: float = 8.5
 @export var ice_deceleration: float = 0.4
 @export var ice_rotation_speed: float = 3.0
 

@@ -9,6 +9,8 @@ signal item_picked_up
 signal slide_started
 signal slide_ended
 
+signal stopped_chasing
+
 enum State {
 	SEARCHING,
 	CHASING,
@@ -51,6 +53,10 @@ enum State {
 @export var knockback_upward_speed: float = 3.0
 @export var knocked_down_time: float = 0.8
 
+@export var collision_knockback_enabled: bool = true
+@export var collision_knockback_multiplier: float = 0.75
+@export var minimum_collision_knockback_speed: float = 0.1
+
 @export_category("NPC Slide Tackle")
 @export var slide_start_speed: float = 10.0
 @export var slide_hit_delay: float = 0.2
@@ -60,6 +66,7 @@ enum State {
 @export var slide_steering: float = 2.5
 @export var slide_visual_height: float = 0.55
 @export var tackle_start_distance: float = 4.0
+@export var tackle_start_delay: float = 1.25
 @export var tackle_cooldown: float = 5.0
 @export_range(0.0, 1.0) var tackle_chance: float = 0.75
 
@@ -85,7 +92,7 @@ enum State {
 @export var goggles_secondary_wobble: float = 0.4
 
 @export_category("Ice Movement")
-@export var ice_acceleration: float = 4.5
+@export var ice_acceleration: float = 8.5
 @export var ice_deceleration: float = 0.4
 @export var ice_rotation_speed: float = 3.0
 
@@ -118,6 +125,9 @@ var tackle_cooldown_remaining: float = 0.0
 var slide_target: Node3D
 var slide_hit_delay_remaining: float = 0.0
 var slide_can_hit: bool = false
+
+var knockback_direction: Vector3
+var knockback_collision_targets: Array[NPC] = []
 
 var slide_hit_targets: Array[Node3D] = []
 var default_visual_position: Vector3
@@ -183,6 +193,9 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	if state == State.KNOCKED_DOWN:
+		_apply_collision_knockback()
+
 
 # Searching
 
@@ -242,10 +255,18 @@ func chase(target: Node3D) -> void:
 	if state == State.KNOCKED_DOWN:
 		return
 
+	if not is_instance_valid(target):
+		return
+
+	var is_new_target: bool = chase_target != target
+
 	_cancel_slide()
 
 	chase_target = target
 	state = State.CHASING
+
+	if is_new_target:
+		_start_tackle_delay()
 
 func chase_dropped_item(item: Item) -> void:
 	if not is_instance_valid(item):
@@ -323,9 +344,12 @@ func stop_chasing() -> void:
 
 	state = State.SEARCHING
 	_choose_search_point()
+	stopped_chasing.emit()
 
 
-func _on_chased_item_picked_up(carrier: Node3D) -> void:
+func _on_chased_item_picked_up(
+	carrier: Node3D
+) -> void:
 	if not is_instance_valid(carrier):
 		stop_chasing()
 		return
@@ -335,10 +359,15 @@ func _on_chased_item_picked_up(carrier: Node3D) -> void:
 
 	_cancel_slide()
 
+	var is_new_target: bool = chase_target != carrier
+
 	chase_target = carrier
 
 	if state != State.KNOCKED_DOWN:
 		state = State.CHASING
+
+		if is_new_target:
+			_start_tackle_delay()
 
 func _on_chased_item_removed() -> void:
 	chased_item = null
@@ -691,7 +720,8 @@ func _update_fleeing(delta: float) -> void:
 
 func receive_tackle(
 	direction: Vector3,
-	_attacker: Node3D
+	_attacker: Node3D,
+	strength_multiplier: float = 1.0
 ) -> void:
 	if state == State.KNOCKED_DOWN:
 		return
@@ -703,8 +733,18 @@ func receive_tackle(
 	if is_sliding:
 		_end_slide_tackle()
 
+	knockback_direction = direction
+	knockback_direction.y = 0.0
+
+	if knockback_direction.length_squared() <= 0.001:
+		knockback_direction = -global_transform.basis.z
+		knockback_direction.y = 0.0
+
+	knockback_direction = knockback_direction.normalized()
+	knockback_collision_targets.clear()
+
 	var item: Item = carried_item
-	drop_carried_item(direction)
+	drop_carried_item(knockback_direction)
 
 	if is_instance_valid(item):
 		if is_hot_round_urgent():
@@ -717,12 +757,84 @@ func receive_tackle(
 
 	navigation_agent.target_position = global_position
 
-	velocity.x = direction.x * knockback_speed
-	velocity.z = direction.z * knockback_speed
-	velocity.y = knockback_upward_speed
+	velocity.x = (
+		knockback_direction.x
+		* knockback_speed
+		* strength_multiplier
+	)
+
+	velocity.z = (
+		knockback_direction.z
+		* knockback_speed
+		* strength_multiplier
+	)
+
+	velocity.y = (
+		knockback_upward_speed
+		* strength_multiplier
+	)
 
 	knocked_down.emit()
 
+func _start_tackle_delay() -> void:
+	tackle_cooldown_remaining = maxf(
+		tackle_cooldown_remaining,
+		tackle_start_delay
+	)
+
+func _apply_collision_knockback() -> void:
+	if not collision_knockback_enabled:
+		return
+
+	var horizontal_speed: float = Vector2(
+		velocity.x,
+		velocity.z
+	).length()
+
+	if horizontal_speed < minimum_collision_knockback_speed:
+		return
+
+	for collision_index in get_slide_collision_count():
+		var collision: KinematicCollision3D = (
+			get_slide_collision(collision_index)
+		)
+
+		var collider: Object = collision.get_collider()
+
+		if collider is not NPC:
+			continue
+
+		var other_npc: NPC = collider as NPC
+
+		if other_npc == self:
+			continue
+
+		if other_npc in knockback_collision_targets:
+			continue
+
+		if other_npc.state == State.KNOCKED_DOWN:
+			continue
+
+		var transferred_direction: Vector3 = (
+			other_npc.global_position - global_position
+		)
+
+		transferred_direction.y = 0.0
+
+		if transferred_direction.length_squared() <= 0.001:
+			transferred_direction = knockback_direction
+
+		transferred_direction = (
+			transferred_direction.normalized()
+		)
+
+		knockback_collision_targets.append(other_npc)
+
+		other_npc.receive_tackle(
+			transferred_direction,
+			self,
+			collision_knockback_multiplier
+		)
 
 func _update_knocked_down(delta: float) -> void:
 	knocked_down_remaining -= delta
