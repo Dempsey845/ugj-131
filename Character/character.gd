@@ -10,6 +10,10 @@ extends Node3D
 @export var maximum_move_speed: float = 7.0
 @export var blend_smoothing: float = 10.0
 
+@export var random_base_colour: bool = true
+@export var random_shoe_colour: bool = true
+@export var character_mesh: MeshInstance3D
+
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var goofy_goggles: Node3D = %GoofyGoggles
 @onready var confused_particles: ConfusedParticles = $ConfusedParticles
@@ -54,6 +58,59 @@ func _ready() -> void:
 
 	body.slide_started.connect(_on_body_slide_started)
 	body.slide_ended.connect(_on_body_slide_ended)
+
+	var base_colour: Color = Color("fd7352")
+
+	if random_base_colour:
+		base_colour = Color.from_hsv(
+			randf(),
+			randf_range(0.55, 0.8),
+			randf_range(0.8, 1.0)
+		)
+
+		var base_material := (
+			character_mesh
+			.get_surface_override_material(0)
+			.duplicate()
+		) as StandardMaterial3D
+
+		base_material.albedo_color = base_colour
+
+		character_mesh.set_surface_override_material(
+			0,
+			base_material
+		)
+
+	if random_shoe_colour:
+		var hue_offset: float = randf_range(
+			0.3,
+			0.7
+		)
+
+		var shoe_hue: float = fmod(
+			base_colour.h + hue_offset,
+			1.0
+		)
+
+		var shoe_colour := Color.from_hsv(
+			shoe_hue,
+			randf_range(0.6, 0.85),
+			randf_range(0.8, 1.0)
+		)
+
+		var shoe_material := (
+			character_mesh
+			.get_surface_override_material(2)
+			.duplicate()
+		) as StandardMaterial3D
+
+		shoe_material.albedo_color = shoe_colour
+
+		character_mesh.set_surface_override_material(
+			2,
+			shoe_material
+		)
+
 
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(body):

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b0ltpyuyjaqj4" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="Script" uid="uid://cqeaakbdm3twu" path="res://Systems/game_manager.gd" id="1_eidgh"]
 [ext_resource type="Script" uid="uid://cpirf7hf8q8s6" path="res://Systems/Announcement/announcement_manager.gd" id="1_yf0ba"]
-[ext_resource type="Resource" uid="uid://dro1epnvavafw" path="res://Item/Items/ShoeBox/shoe_box.tres" id="2_5xkvv"]
+[ext_resource type="Resource" uid="uid://dq5ghnilk2kme" path="res://Item/Items/HotPotato/hot_potato.tres" id="2_5xkvv"]
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
