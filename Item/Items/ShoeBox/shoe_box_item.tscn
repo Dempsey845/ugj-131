@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bkhsqpwjr4o5i"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_4n6f2"]
+[ext_resource type="Script" uid="uid://c8at4jt26dsky" path="res://Item/Items/ShoeBox/shoe_box_item_agent.gd" id="2_n4ctc"]
+[ext_resource type="PackedScene" uid="uid://trgdxj46wqew" path="res://Item/Items/ShoeBox/shoe_box.tscn" id="2_wvwyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n4ctc"]
+size = Vector3(1, 0.4, 0.80107427)
+
+[node name="ShoeBoxItem" unique_id=1963813499 instance=ExtResource("1_4n6f2")]
+
+[node name="ShoeBoxItemAgent" type="Node" parent="." index="0" unique_id=497762740]
+script = ExtResource("2_n4ctc")
+metadata/_custom_type_script = "uid://d1fwq3pighi0q"
+
+[node name="ShoeBox" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=1991889664 instance=ExtResource("2_wvwyc")]
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16884767, 0.00053709745)
+shape = SubResource("BoxShape3D_n4ctc")
+debug_color = Color(0.97976047, 0, 0.38926455, 0.41960785)

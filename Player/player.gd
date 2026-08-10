@@ -41,7 +41,7 @@ signal recovered
 @export var slide_deceleration: float = 11.0
 @export var slide_duration: float = 0.75
 @export var slide_steering: float = 2.5
-@export var slide_cooldown: float = 0.4
+@export var slide_cooldown: float = 1.0
 @export var slide_visual_height: float = 0.55
 
 @export_category("Tackle Reaction")
@@ -75,6 +75,13 @@ var default_visual_rotation: Vector3
 @export var goofy_wobble_strength: float = 0.8
 @export var goofy_wobble_speed: float = 4.0
 @export var goofy_secondary_wobble: float = 0.4
+
+@export_category("Ice Movement")
+@export var ice_acceleration: float = 4.5
+@export var ice_deceleration: float = 0.4
+@export var ice_rotation_speed: float = 3.0
+
+var ice_movement_enabled: bool = false
 
 var slippery_area_count: int = 0
 
@@ -273,6 +280,12 @@ func _update_movement(
 
 	if not is_on_floor():
 		acceleration = air_acceleration
+
+	elif ice_movement_enabled:
+		if input_direction == Vector3.ZERO:
+			acceleration = ice_deceleration
+		else:
+			acceleration = ice_acceleration
 
 	elif is_on_slippery_surface:
 		if input_direction == Vector3.ZERO:
@@ -486,16 +499,24 @@ func _rotate_visuals(delta: float) -> void:
 	if horizontal_velocity.length_squared() < 0.05:
 		return
 
-	var target_direction: Vector3 = horizontal_velocity.normalized()
+	var target_direction: Vector3 = (
+		horizontal_velocity.normalized()
+	)
+
 	var target_angle: float = atan2(
 		-target_direction.x,
 		-target_direction.z
 	)
 
+	var current_rotation_speed: float = rotation_speed
+
+	if ice_movement_enabled and is_on_floor():
+		current_rotation_speed = ice_rotation_speed
+
 	visuals.rotation.y = lerp_angle(
 		visuals.rotation.y,
 		target_angle,
-		rotation_speed * delta
+		current_rotation_speed * delta
 	)
 
 
@@ -629,3 +650,6 @@ func enable_goofy_movement() -> void:
 
 func disable_goofy_movement() -> void:
 	set_goofy_movement_enabled(false)
+
+func set_ice_movement_enabled(enabled: bool) -> void:
+	ice_movement_enabled = enabled

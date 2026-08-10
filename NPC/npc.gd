@@ -80,6 +80,11 @@ enum State {
 @export var goggles_wobble_speed: float = 4.0
 @export var goggles_secondary_wobble: float = 0.4
 
+@export_category("Ice Movement")
+@export var ice_acceleration: float = 4.5
+@export var ice_deceleration: float = 0.4
+@export var ice_rotation_speed: float = 3.0
+
 @onready var game_manager: GameManager = get_tree().current_scene.get_node("GameManager")
 
 var slippery_area_count: int = 0
@@ -118,6 +123,8 @@ var aggressive_target: Node3D
 var aggressive_retarget_remaining: float = 0.0
 
 var goggles_wobble_phase: float = 0.0
+
+var ice_movement_enabled: bool = false
 
 var assigned_name: String
 
@@ -869,15 +876,18 @@ func _follow_navigation(
 
 	direction = direction.normalized()
 
-	# Automatically applies only while this NPC is carrying the goofy goggles
 	direction = _apply_goofy_goggles_wobble(
 		direction
 	)
 
 	var current_acceleration: float = acceleration
 
-	if is_on_slippery_surface and is_on_floor():
-		current_acceleration = slippery_acceleration
+	if is_on_floor():
+		if ice_movement_enabled:
+			current_acceleration = ice_acceleration
+
+		elif is_on_slippery_surface:
+			current_acceleration = slippery_acceleration
 
 	velocity.x = move_toward(
 		velocity.x,
@@ -909,29 +919,58 @@ func _follow_navigation(
 
 
 func _slow_down(delta: float) -> void:
+	var current_deceleration: float = acceleration
+
+	if is_on_floor():
+		if ice_movement_enabled:
+			current_deceleration = ice_deceleration
+
+		elif is_on_slippery_surface:
+			current_deceleration = slippery_deceleration
+
 	velocity.x = move_toward(
 		velocity.x,
 		0.0,
-		acceleration * delta
+		current_deceleration * delta
 	)
 
 	velocity.z = move_toward(
 		velocity.z,
 		0.0,
-		acceleration * delta
+		current_deceleration * delta
 	)
+
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	if horizontal_velocity.length_squared() > 0.05:
+		_rotate_visuals(
+			horizontal_velocity.normalized(),
+			delta
+		)
 
 
 func _rotate_visuals(
 	direction: Vector3,
 	delta: float
 ) -> void:
-	var target_angle: float = atan2(-direction.x, -direction.z)
+	var target_angle: float = atan2(
+		-direction.x,
+		-direction.z
+	)
+
+	var current_rotation_speed: float = rotation_speed
+
+	if ice_movement_enabled and is_on_floor():
+		current_rotation_speed = ice_rotation_speed
 
 	visuals.rotation.y = lerp_angle(
 		visuals.rotation.y,
 		target_angle,
-		rotation_speed * delta
+		current_rotation_speed * delta
 	)
 
 
@@ -1050,3 +1089,6 @@ func _apply_goofy_goggles_wobble(
 
 func is_hot_round_urgent():
 	return game_manager.is_current_round_hot_potato and game_manager.round_time < game_manager.urgent_time
+
+func set_ice_movement_enabled(enabled: bool) -> void:
+	ice_movement_enabled = enabled

@@ -48,20 +48,20 @@ body = NodePath("../..")
 item_manager = NodePath("../../PlayerItemPickupArea")
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17717785, 0.14101146, -0.39564055, 0.8900519)
-bones/5/rotation = Quaternion(-0.0022556917, -0.0010716827, -0.03511328, 0.9993803)
-bones/7/scale = Vector3(1.0819294, 1.0819294, 1.0819294)
-bones/12/rotation = Quaternion(0.17751513, -0.13977106, 0.3921373, 0.8917291)
-bones/14/rotation = Quaternion(-0.0022541601, 0.0015443754, 0.050597366, 0.9987154)
+bones/3/rotation = Quaternion(0.17727317, 0.14065517, -0.39464766, 0.89053005)
+bones/5/rotation = Quaternion(-0.0022562677, -0.00074074196, -0.024272455, 0.9997026)
+bones/7/scale = Vector3(1.0566428, 1.0566428, 1.0566428)
+bones/12/rotation = Quaternion(0.17775886, -0.13883165, 0.38952088, 0.89297324)
+bones/14/rotation = Quaternion(-0.0022556342, 0.0010674493, 0.034974527, 0.9993851)
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.98708636, -0.16012563, 0.004537261, -1.2664124e-05, -0.028247034, -0.99960095, 0.1601901, -0.9866922, 0.027880121, -0.0060733305, 0.0013483001, 0.009670997)
+transform = Transform3D(-0.9804064, -0.19690773, 0.0055647255, 7.979106e-07, -0.028253624, -0.99960077, 0.19698647, -0.9800146, 0.027700076, -0.006099602, 0.0013482926, 0.0096857585)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=374173442]
 transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0819294, -2.842171e-14, 1.6336676e-07, 2.842171e-14, -1.0819293, 1.2897608e-07, 1.6336678e-07, -1.2897604e-07, -1.0819293, 6.309857e-16, -2.3239557e-09, 0.017760668)
+transform = Transform3D(1.0566428, -2.842171e-14, 1.5954858e-07, 2.842171e-14, -1.0566427, 1.2596168e-07, 1.5954859e-07, -1.2596163e-07, -1.0566427, 6.2785475e-16, -2.31345e-09, 0.01767254)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)

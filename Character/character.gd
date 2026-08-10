@@ -4,6 +4,9 @@ extends Node3D
 @export var body: CharacterBody3D
 @export var item_manager: Node3D
 
+@export var left_shoe: Node3D
+@export var right_shoe: Node3D
+
 @export var maximum_move_speed: float = 7.0
 @export var blend_smoothing: float = 10.0
 
@@ -134,3 +137,11 @@ func show_goggles():
 func hide_goggles():
 	goofy_goggles.visible = false
 	confused_particles.set_particle_emission(false)
+
+func show_shoes():
+	left_shoe.visible = true
+	right_shoe.visible = true
+
+func hide_shoes():
+	left_shoe.visible = false
+	right_shoe.visible = false
