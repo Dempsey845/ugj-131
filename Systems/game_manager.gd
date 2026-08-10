@@ -6,7 +6,7 @@ extends Node
 
 var is_current_round_hot_potato: bool
 var round_time: float
-var urgent_time: float = 30.0
+var urgent_time: float = 20.0
 
 var current_item_data: ItemData
 

@@ -17,16 +17,9 @@ func _ready() -> void:
 	await get_tree().process_frame
 
 	for npc: NPC in npc_manager.npcs:
-		var npc_id: StringName = &"npc_%s" % npc.assigned_name.to_lower()
-		leaderboard_ui.add_player(
-		npc_id,
-		npc.assigned_name,
-		load("res://icon.svg")
-		)
+		register_npc(npc)
 
-		player_hold_seconds[npc_id] = 0
-		player_id_to_name[npc_id] = npc.assigned_name
-		player_id_to_instance[npc_id] = npc
+	npc_manager.npcs_created.connect(_on_npcs_created)
 
 	leaderboard_ui.add_player(
 		&"player",
@@ -84,3 +77,19 @@ func get_top_three_players() -> Array[Node3D]:
 			break
 
 	return top_players
+
+func register_npc(npc: NPC):
+	var npc_id: StringName = &"npc_%s" % npc.assigned_name.to_lower()
+	leaderboard_ui.add_player(
+	npc_id,
+	npc.assigned_name,
+	load("res://icon.svg")
+	)
+
+	player_hold_seconds[npc_id] = 0
+	player_id_to_name[npc_id] = npc.assigned_name
+	player_id_to_instance[npc_id] = npc
+
+func _on_npcs_created(npcs: Array[NPC]):
+	for npc in npcs:
+		register_npc(npc)
