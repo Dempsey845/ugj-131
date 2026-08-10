@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://f2cakg4cf8h3" path="res://Item/Items/GoofyGoggles/goofy_goggles_effect.gd" id="9_5xkvv"]
 [ext_resource type="PackedScene" uid="uid://bomhcqp5vmgl2" path="res://Systems/Objective/Leaderboard/leaderboard_ui.tscn" id="11_awrha"]
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
-[ext_resource type="PackedScene" uid="uid://csr8eipfti5vk" path="res://Enemy/Slime/slime.tscn" id="23_o6lw0"]
+[ext_resource type="PackedScene" uid="uid://csr8eipfti5vk" path="res://Enemy/Slime/slime_visual.tscn" id="23_o6lw0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xrivr"]
 shader = ExtResource("8_oeat8")

@@ -103,7 +103,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_ci0vs"]
 resource_name = "death"
-length = 0.75
+length = 3.0000000000000004
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -171,7 +171,48 @@ _data = {
 &"idle": SubResource("Animation_8mbfc")
 }
 
-[node name="Slime" unique_id=155367976 instance=ExtResource("1_8mbfc")]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8mbfc"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_24ow7"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_dd8l2"]
+fadeout_time = 0.1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ci0vs"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_7q6gy"]
+fadein_time = 0.2
+fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_70vp6"]
+animation = &"hit"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_jgbd1"]
+fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xrivr"]
+graph_offset = Vector2(-132.75848, 28.847336)
+nodes/output/position = Vector2(1200, 260)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_8mbfc")
+nodes/Animation/position = Vector2(-40, 140)
+nodes/AttackShot/node = SubResource("AnimationNodeOneShot_dd8l2")
+nodes/AttackShot/position = Vector2(280, 260)
+nodes/HitShot/node = SubResource("AnimationNodeOneShot_jgbd1")
+nodes/HitShot/position = Vector2(540, 260)
+nodes/DeathShot/node = SubResource("AnimationNodeOneShot_7q6gy")
+nodes/DeathShot/position = Vector2(820, 260)
+nodes/AttackAnimation/node = SubResource("AnimationNodeAnimation_24ow7")
+nodes/AttackAnimation/position = Vector2(60, 560)
+nodes/HitAnimation/node = SubResource("AnimationNodeAnimation_70vp6")
+nodes/HitAnimation/position = Vector2(380, 580)
+nodes/DeathAnimation/node = SubResource("AnimationNodeAnimation_ci0vs")
+nodes/DeathAnimation/position = Vector2(640, 600)
+node_connections = [&"output", 0, &"DeathShot", &"AttackShot", 0, &"Animation", &"AttackShot", 1, &"AttackAnimation", &"HitShot", 0, &"AttackShot", &"HitShot", 1, &"HitAnimation", &"DeathShot", 0, &"HitShot", &"DeathShot", 1, &"DeathAnimation"]
+
+[node name="SlimeVisual" unique_id=155367976 instance=ExtResource("1_8mbfc")]
 
 [node name="Sphere" parent="." index="0" unique_id=372653603]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
@@ -179,3 +220,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_t8qkd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1487996771]
 libraries/ = SubResource("AnimationLibrary_24ow7")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1957447616]
+tree_root = SubResource("AnimationNodeBlendTree_xrivr")
+anim_player = NodePath("../AnimationPlayer")
+parameters/AttackShot/active = false
+parameters/AttackShot/internal_active = false
+parameters/AttackShot/request = 0
+parameters/HitShot/active = false
+parameters/HitShot/internal_active = false
+parameters/HitShot/request = 0
+parameters/DeathShot/active = false
+parameters/DeathShot/internal_active = false
+parameters/DeathShot/request = 0
