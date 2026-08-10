@@ -25,7 +25,6 @@ var state: State = State.AVAILABLE
 var carrier: Node3D
 var can_be_collected: bool = true
 
-
 func _ready() -> void:
 	freeze = false
 	pickup_area.monitoring = true
