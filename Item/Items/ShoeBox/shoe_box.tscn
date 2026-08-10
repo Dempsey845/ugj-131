@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cntohei0eokpe" path="res://Item/Items/ShoeBox/ShoeBox.fbx" id="1_vf8nq"]
 [ext_resource type="Script" uid="uid://d36jt76admab" path="res://Item/Items/ShoeBox/shoe_box.gd" id="2_4j785"]
 [ext_resource type="Shader" uid="uid://03wnq62hrxun" path="res://Character/ice_shoe.gdshader" id="3_i571y"]
+[ext_resource type="PackedScene" uid="uid://c3k2wf3q1n8uu" path="res://Character/IceShoe/ice_vapour_particles.tscn" id="4_2ew7x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i571y"]
 render_priority = 0
@@ -103,5 +104,11 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 transform = Transform3D(-0.98768836, 0.15643421, 6.8379564e-09, 0, -4.371139e-08, 1, 0.15643421, 0.98768836, 4.317323e-08, 0, 0, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_k5t3e")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=2050136035]
+[node name="IceVapourParticles" parent="." index="3" unique_id=1550504511 instance=ExtResource("4_2ew7x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+amount = 8
+lifetime = 0.5
+local_coords = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4" unique_id=2050136035]
 libraries/ = SubResource("AnimationLibrary_k5t3e")
