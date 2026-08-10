@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cme86c72jf8e1" path="res://Character/character.gd" id="2_nwtvh"]
 [ext_resource type="PackedScene" uid="uid://bf40m4ego2pub" path="res://Item/Items/GoofyGoggles/goofy_goggles_visual.tscn" id="3_jkkns"]
 [ext_resource type="PackedScene" uid="uid://badhj0r4lwhhf" path="res://Item/Items/GoofyGoggles/confused_particles.tscn" id="4_twwou"]
+[ext_resource type="PackedScene" uid="uid://nkhf6bov7c86" path="res://Character/ice_shoe.tscn" id="5_a23tb"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uerqc"]
 animation = &"Armature|Hold"
@@ -99,15 +100,15 @@ bones/1/rotation = Quaternion(1.7117504e-08, 6.3108872e-30, 4.081131e-15, 1)
 bones/2/rotation = Quaternion(-0.18880585, 0.18764053, -0.67948014, 0.68370324)
 bones/2/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
 bones/3/position = Vector3(-1.7326731e-09, 0.0019930922, 1.0399472e-10)
-bones/3/rotation = Quaternion(0.17724498, 0.14076097, -0.3949435, 0.8903878)
+bones/3/rotation = Quaternion(0.17743121, 0.14007597, -0.3930094, 0.89131397)
 bones/4/position = Vector3(1.6088016e-12, 0.002764064, 6.9891724e-11)
 bones/4/rotation = Quaternion(0.08737507, 0.011402963, -0.201421, 0.9755333)
 bones/4/scale = Vector3(1, 0.99999994, 0.99999976)
 bones/5/position = Vector3(3.0517575e-09, 0.0023289307, -5.0482667e-11)
-bones/5/rotation = Quaternion(-0.0022562225, -0.0007869086, -0.02578475, 0.9996647)
+bones/5/rotation = Quaternion(-0.0022564605, -0.00048820986, -0.016000098, 0.9998694)
 bones/5/scale = Vector3(1, 1.0000001, 1.0000002)
 bones/7/position = Vector3(3.3914254e-24, 0.00603823, -1.422467e-17)
-bones/7/scale = Vector3(1.0601575, 1.0601575, 1.0601575)
+bones/7/scale = Vector3(1.0373049, 1.0373049, 1.0373049)
 bones/8/position = Vector3(-8.443277e-31, 0.0018188965, 3.541367e-24)
 bones/8/rotation = Quaternion(4.863822e-22, 0, 1.1476674e-28, 1)
 bones/9/position = Vector3(0, 0.0016662629, 0)
@@ -115,13 +116,13 @@ bones/9/rotation = Quaternion(0.70710677, -3.090862e-08, 1.3767877e-07, 0.707106
 bones/9/scale = Vector3(1, 1, 1)
 bones/11/scale = Vector3(1, 1.0000001, 1.0000001)
 bones/12/position = Vector3(-1.3755809e-09, 0.0019930918, -1.5793766e-10)
-bones/12/rotation = Quaternion(0.1777185, -0.13898318, 0.3899455, 0.8927723)
+bones/12/rotation = Quaternion(0.17798138, -0.13799936, 0.3871912, 0.89407045)
 bones/12/scale = Vector3(0.99999994, 0.99999976, 1.0000001)
 bones/13/position = Vector3(-2.8958207e-12, 0.0027640657, 1.4535914e-10)
 bones/13/rotation = Quaternion(0.08689995, -0.01277774, 0.22570464, 0.9702281)
 bones/13/scale = Vector3(1.0000001, 1, 1)
 bones/14/position = Vector3(-1.7347235e-17, 0.0023289304, -2.5604059e-11)
-bones/14/rotation = Quaternion(-0.002255489, 0.0011341367, 0.037159037, 0.99930626)
+bones/14/rotation = Quaternion(-0.0022561506, 0.0007036647, 0.023057748, 0.99973136)
 bones/14/scale = Vector3(1, 1, 0.9999999)
 bones/16/rotation = Quaternion(2.9597805e-07, 1.05955735e-07, -0.79970443, 0.60039395)
 bones/17/position = Vector3(1.2310936e-10, 0.0022316442, 1.3484169e-16)
@@ -152,18 +153,36 @@ bones/28/rotation = Quaternion(0.606838, -9.475069e-08, -1.6397081e-07, 0.794825
 bones/28/scale = Vector3(1, 1, 1.0000001)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.98144895, -0.19164787, 0.0054154973, 1.2172386e-06, -0.028252892, -0.99960077, 0.1917245, -0.98105675, 0.027728869, -0.00609535, 0.0013482963, 0.009683355)
+transform = Transform3D(-0.97421795, -0.22551946, 0.0063794423, -3.5212142e-06, -0.028261904, -0.9996005, 0.22560973, -0.9738285, 0.02753238, -0.00612288, 0.0013482498, 0.009699011)
 bone_name = "Hand.r"
 bone_idx = 14
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0601575, -2.842171e-14, 1.600793e-07, 2.842171e-14, -1.0601574, 1.2638067e-07, 1.6007931e-07, -1.2638063e-07, -1.0601574, 6.2828997e-16, -2.3149103e-09, 0.017684791)
+transform = Transform3D(1.0373049, -2.842171e-14, 1.5662864e-07, 2.842171e-14, -1.0373048, 1.2365642e-07, 1.5662864e-07, -1.2365638e-07, -1.0373048, 6.2546046e-16, -2.3054159e-09, 0.017605146)
 bone_name = "Face"
 bone_idx = 9
 
 [node name="GoofyGoggles" parent="Armature/Skeleton3D/BoneAttachment3D2" index="0" unique_id=533621145 instance=ExtResource("3_jkkns")]
 unique_name_in_owner = true
 transform = Transform3D(0.010171708, 1.5358856e-09, 7.2054605e-17, 4.918932e-18, -4.4461948e-10, 0.010171707, 1.5358854e-09, -0.010171707, -4.4461942e-10, 0.00010143714, 0.00018952416, 0.0010859268)
+visible = false
+
+[node name="BoneAttachment3D3" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3" unique_id=1178742684]
+transform = Transform3D(-0.9999997, 8.940695e-08, -1.5099577e-07, 1.5099565e-07, 1.1920924e-07, -0.9999999, -2.9802333e-08, -0.9999996, -1.1920946e-07, 0.002142993, -1.8089576e-10, 0.002322576)
+bone_name = "Foot.l"
+bone_idx = 20
+
+[node name="IceShoeL" parent="Armature/Skeleton3D/BoneAttachment3D3" index="0" unique_id=375161168 instance=ExtResource("5_a23tb")]
+transform = Transform3D(-0.0100000035, -8.9407015e-10, -1.5099586e-09, 2.9802374e-10, -0.010000005, -1.7739903e-15, -1.5099573e-09, -4.4051196e-17, 0.010000003, 3.334391e-05, 0.0023225772, 0.0006500924)
+visible = false
+
+[node name="BoneAttachment3D4" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="4" unique_id=691542133]
+transform = Transform3D(-0.9999997, -8.940695e-08, 1.5099577e-07, -1.5099575e-07, 1.1920912e-07, -0.9999999, 2.9802333e-08, -0.9999996, -1.192094e-07, -0.002142993, -1.8089703e-10, 0.002322576)
+bone_name = "Foot.r"
+bone_idx = 27
+
+[node name="IceShoeR" parent="Armature/Skeleton3D/BoneAttachment3D4" index="0" unique_id=871875142 instance=ExtResource("5_a23tb")]
+transform = Transform3D(-0.0100000035, -8.9407015e-10, -1.5099586e-09, 2.9802374e-10, -0.010000005, -1.7739903e-15, -1.5099573e-09, -4.4051196e-17, 0.010000003, 3.334391e-05, 0.0023225772, 0.0006500924)
 visible = false
 
 [node name="AnimationPlayer" parent="." index="1" unique_id=1319684762]

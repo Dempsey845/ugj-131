@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://nkhf6bov7c86"]
+
+[ext_resource type="PackedScene" uid="uid://dwfp6rdskwjd7" path="res://Character/IceShoe.fbx" id="1_3r0j0"]
+[ext_resource type="Shader" uid="uid://03wnq62hrxun" path="res://Character/ice_shoe.gdshader" id="2_4fywr"]
+[ext_resource type="Script" uid="uid://c8rt3vjes0jv3" path="res://Character/IceShoe/ice_shoe.gd" id="2_lofhl"]
+[ext_resource type="PackedScene" uid="uid://c3k2wf3q1n8uu" path="res://Character/IceShoe/ice_vapour_particles.tscn" id="3_4fywr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ac41a"]
+render_priority = 0
+shader = ExtResource("2_4fywr")
+shader_parameter/ice_color = Color(0.25, 0.75, 1, 1)
+shader_parameter/deep_color = Color(0.02, 0.18, 0.38, 1)
+shader_parameter/frost_color = Color(0.82, 0.96, 1, 1)
+shader_parameter/transparency = 0.72
+shader_parameter/roughness = 0.18
+shader_parameter/metallic = 0.0
+shader_parameter/specular = 0.9
+shader_parameter/fresnel_strength = 1.8
+shader_parameter/fresnel_power = 3.0
+shader_parameter/pattern_scale = 4.0
+shader_parameter/distortion_strength = 0.18
+shader_parameter/animation_speed = 0.08
+shader_parameter/frost_amount = 0.722000034295
+shader_parameter/frost_scale = 31.9890014719775
+
+[node name="IceShoe" unique_id=375161168 instance=ExtResource("1_3r0j0")]
+script = ExtResource("2_lofhl")
+
+[node name="Shoe" parent="." index="0" unique_id=2091144041]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.0033311546, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_ac41a")
+
+[node name="IceVapourParticles" parent="." index="1" unique_id=1550504511 instance=ExtResource("3_4fywr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+emitting = false
+amount = 8
+lifetime = 0.5
+local_coords = false

@@ -4,10 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://b0ltpyuyjaqj4" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="Script" uid="uid://cqeaakbdm3twu" path="res://Systems/game_manager.gd" id="1_eidgh"]
 [ext_resource type="Script" uid="uid://cpirf7hf8q8s6" path="res://Systems/Announcement/announcement_manager.gd" id="1_yf0ba"]
+[ext_resource type="Resource" uid="uid://c2cquwxmg84u7" path="res://Item/Items/SlimeBall/slime_ball.tres" id="2_5xkvv"]
 [ext_resource type="PackedScene" uid="uid://dki2wd38ewypm" path="res://NPC/npc.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://crdv0o033n1l1" path="res://Systems/Objective/objective.gd" id="2_eidgh"]
 [ext_resource type="PackedScene" uid="uid://bdrc405bmtnt1" path="res://Systems/Objective/target_item_ui.tscn" id="2_k8do8"]
-[ext_resource type="Resource" uid="uid://bv6o370jskflx" path="res://Item/Items/GoofyGoggles/goofy_goggles.tres" id="2_oeat8"]
 [ext_resource type="Script" uid="uid://ca44c4na4ctqa" path="res://NPC/npc_manager.gd" id="4_h2aik"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
@@ -58,7 +58,7 @@ albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-start_item_data = ExtResource("2_oeat8")
+start_item_data = ExtResource("2_5xkvv")
 
 [node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]
 script = ExtResource("1_yf0ba")
