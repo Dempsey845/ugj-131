@@ -8,6 +8,7 @@ signal objective_ended
 @export var player_score: Score
 @export var confetti_particles: ConfettiParticles
 @export var hot_potato_manager: HotPotatoManager
+@export var game_manager: GameManager
 
 var current_item: Item
 var current_item_data: ItemData
@@ -64,6 +65,9 @@ func stop_objective():
 		current_item.queue_free()
 		
 	current_item = null
+
+	await get_tree().create_timer(2.0).timeout
+	game_manager.start_next_round()
 
 func _reward_top_hot_potato_players(top_players: Array[Node3D]):
 	const POSITION_POINTS = [10, 5, 2]

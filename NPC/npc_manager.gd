@@ -72,9 +72,6 @@ func _ready() -> void:
 	_register_existing_npcs()
 	assign_unique_npc_names()
 
-	await get_tree().create_timer(5.0).timeout
-	spawn_npcs()
-
 
 func _register_existing_npcs() -> void:
 	npcs.clear()

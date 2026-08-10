@@ -2,15 +2,27 @@ class_name GameManager
 extends Node
 
 @export var announcement_manager: AnnouncementManager
-@export var start_item_data: ItemData
+@export var rounds: Array[ItemData]
+@export var npc_manager: NPC_Manager
 
 var is_current_round_hot_potato: bool
 var round_time: float
 var urgent_time: float = 20.0
 
+var current_round: int
+
 var current_item_data: ItemData
 
 func _ready() -> void:
-	current_item_data = start_item_data
 	await get_tree().create_timer(2.0).timeout
-	announcement_manager.start_announcement(start_item_data)
+	start_next_round()
+
+func start_next_round():
+	if current_round == rounds.size():
+		return
+
+	current_round += 1
+	current_item_data = rounds[current_round - 1]
+	announcement_manager.start_announcement(current_item_data)
+	if current_round > 1:
+		npc_manager.spawn_npcs()
