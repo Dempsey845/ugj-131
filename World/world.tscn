@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://f2cakg4cf8h3" path="res://Item/Items/GoofyGoggles/goofy_goggles_effect.gd" id="9_5xkvv"]
 [ext_resource type="PackedScene" uid="uid://bomhcqp5vmgl2" path="res://Systems/Objective/Leaderboard/leaderboard_ui.tscn" id="11_awrha"]
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
+[ext_resource type="PackedScene" uid="uid://csr8eipfti5vk" path="res://Enemy/Slime/slime.tscn" id="23_o6lw0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xrivr"]
 shader = ExtResource("8_oeat8")
@@ -292,3 +293,6 @@ transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -0.1
 
 [node name="Marker3D4" type="Marker3D" parent="NPCSpawnPoints" unique_id=7982124]
 transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -0.101989746, 0, -25.981554)
+
+[node name="Slime2" parent="." unique_id=155367976 instance=ExtResource("23_o6lw0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.482212, -2.3841858e-07, 0.96817064)
