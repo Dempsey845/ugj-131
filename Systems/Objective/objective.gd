@@ -36,9 +36,16 @@ func stop_objective():
 		if current_item.has_node("HotPotatoItemAgent"):
 			hot_potato_manager.end()
 
-		if current_item.carrier:
+		if current_item.carrier or current_item.last_carrier:
+			var is_last_carrier = current_item.carrier == null
+			var carrier = (
+				current_item.carrier
+				if current_item.carrier != null
+				else current_item.last_carrier
+			)
+
 			if current_item.is_item_hot_potato():
-				_reset_carrier_item_time(current_item.carrier)
+				_reset_carrier_item_time(carrier)
 
 				var top_players: Array[Node3D] = hot_potato_manager.get_top_three_players()
 				_reward_top_hot_potato_players(top_players)
@@ -49,13 +56,17 @@ func stop_objective():
 			else:
 				var carrier_score: Score = player_score
 
-				if current_item.carrier is NPC:
-					carrier_score = current_item.carrier.get_node("Score")
+				if carrier is NPC:
+					carrier_score = carrier.get_node("Score")
 
-				carrier_score.add_points(current_item_data.points_reward)
+				if is_last_carrier:
+					# If there was no one holding the item, give half the reward to the last carrier
+					carrier_score.add_points(int(float(current_item_data.points_reward) / 2))
+				else:
+					carrier_score.add_points(current_item_data.points_reward)
 
 				show_confetti = true
-				confetti_position = current_item.carrier.global_position
+				confetti_position = carrier.global_position
 		else:
 			if current_item.is_item_hot_potato():
 				var top_players: Array[Node3D] = hot_potato_manager.get_top_three_players()

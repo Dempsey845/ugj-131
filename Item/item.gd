@@ -23,6 +23,7 @@ enum State {
 
 var state: State = State.AVAILABLE
 var carrier: Node3D
+var last_carrier: Node3D
 var can_be_collected: bool = true
 
 func _ready() -> void:
@@ -70,6 +71,7 @@ func drop(direction: Vector3) -> void:
 	reparent(level)
 	global_transform = old_transform
 
+	last_carrier = carrier
 	carrier = null
 	state = State.DROPPED
 
