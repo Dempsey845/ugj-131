@@ -6,6 +6,7 @@ signal round_ended
 
 @export_category("Round")
 @export var round_duration: int = 30
+@export var custom_status_label: String = "Watch out!"
 
 @export_category("Announcement")
 @export_multiline var announcement_text: String
@@ -50,7 +51,7 @@ func start_round() -> void:
 	_connect_countdown()
 
 	if is_instance_valid(countdown_ui):
-		countdown_ui.start_countdown(round_duration, false)
+		countdown_ui.start_countdown(round_duration, false, custom_status_label)
 
 	round_started.emit()
 

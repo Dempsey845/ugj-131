@@ -20,6 +20,8 @@ var countdown_active: bool = false
 
 var stop_objective_on_complete: bool
 
+var currrent_status_label: String
+
 func _ready() -> void:
 	timer_card.visible = false
 
@@ -43,7 +45,7 @@ func _process(delta: float) -> void:
 		_finish_countdown(stop_objective_on_complete)
 
 
-func start_countdown(from: int, stop_objective: bool = true) -> void:
+func start_countdown(from: int, stop_objective: bool = true, custom_status_label: String = "") -> void:
 	stop_objective_on_complete = stop_objective
 	animation_player.play("show")
 	time = maxf(float(from), 0.0)
@@ -51,7 +53,9 @@ func start_countdown(from: int, stop_objective: bool = true) -> void:
 	time_progress.max_value = maxf(time, 1.0)
 	time_progress.value = time
 	timer_card.visible = countdown_active
+	currrent_status_label = custom_status_label
 	_update_display()
+
 
 
 func stop_countdown() -> void:
@@ -68,6 +72,9 @@ func _update_display() -> void:
 		time_progress.modulate = colour
 		status_label.text = "HURRY UP!" if is_urgent else "ITEM HUNT ACTIVE"
 		status_label.add_theme_color_override("font_color", colour)
+	else:
+		if currrent_status_label != "":
+			status_label.text = currrent_status_label
 
 func _finish_countdown(stop_objective: bool = true) -> void:
 	countdown_active = false
