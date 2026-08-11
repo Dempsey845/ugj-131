@@ -135,6 +135,9 @@ var default_visual_position: Vector3
 var flee_threat: Node3D
 var resume_fleeing_after_knockdown: bool = false
 
+var flee_threat_position: Vector3
+var has_flee_threat_position: bool = false
+
 var aggressive_target: Node3D
 var aggressive_retarget_remaining: float = 0.0
 
@@ -620,17 +623,20 @@ func _update_carrying(delta: float) -> void:
 
 
 func _choose_flee_point() -> void:
-	var position_to_escape_from: Vector3 = (
-		global_position
-	)
+	var position_to_escape_from: Vector3 = global_position
 
 	if (
 		state == State.FLEEING
 		and is_instance_valid(flee_threat)
 	):
-		position_to_escape_from = (
-			flee_threat.global_position
-		)
+		position_to_escape_from = flee_threat.global_position
+
+	
+	elif (
+		state == State.FLEEING
+		and has_flee_threat_position
+	):
+		position_to_escape_from = flee_threat_position
 
 	var best_position: Vector3
 	var best_distance_squared: float = -1.0
@@ -648,10 +654,8 @@ func _choose_flee_point() -> void:
 
 		var candidate: Vector3 = random_position
 
-		var distance_squared: float = (
-			candidate.distance_squared_to(
-				position_to_escape_from
-			)
+		var distance_squared: float = candidate.distance_squared_to(
+			position_to_escape_from
 		)
 
 		if distance_squared > best_distance_squared:
@@ -667,10 +671,7 @@ func _choose_flee_point() -> void:
 
 	current_search_position = best_position
 	has_search_position = true
-
-	navigation_agent.target_position = (
-		current_search_position
-	)
+	navigation_agent.target_position = current_search_position
 
 func is_carrying_target() -> bool:
 	return is_instance_valid(carried_item)
@@ -700,12 +701,30 @@ func start_fleeing(threat: Node3D = null) -> void:
 
 	_choose_flee_point()
 
+func flee_from_position(threat_position: Vector3) -> void:
+	if state == State.KNOCKED_DOWN:
+		return
+
+	_cancel_slide()
+	_stop_tracking_chased_item()
+
+	chase_target = null
+	aggressive_target = null
+
+	flee_threat = null
+	flee_threat_position = threat_position
+	has_flee_threat_position = true
+
+	state = State.FLEEING
+	_choose_flee_point()
 
 func stop_fleeing() -> void:
 	if state != State.FLEEING:
 		return
 
 	flee_threat = null
+	has_flee_threat_position = false
+
 	state = State.SEARCHING
 	_choose_search_point()
 

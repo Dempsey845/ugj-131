@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="2_k1h6f"]
 [ext_resource type="Script" uid="uid://cifc50fqn5liw" path="res://NPC/npc_item_awareness_area.gd" id="3_3etx6"]
 [ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="3_6swda"]
+[ext_resource type="Script" uid="uid://b18ywpamwulop" path="res://NPC/npc_hurtbox_agent.gd" id="3_hhshi"]
 [ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="6_rovd1"]
 [ext_resource type="PackedScene" uid="uid://ddde03colgkh1" path="res://Systems/HotPotato/time_lossed_label.tscn" id="7_m2dqh"]
 [ext_resource type="Script" uid="uid://72x6frhdyctn" path="res://Systems/HotPotato/time_lossed_label.gd" id="8_bey1f"]
@@ -19,7 +20,7 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3etx6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bey1f"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecfdr"]
 resource_local_to_scene = true
 resource_name = "Base"
 vertex_color_use_as_albedo = true
@@ -28,7 +29,7 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hhshi"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kx1mh"]
 resource_local_to_scene = true
 resource_name = "Shoe"
 vertex_color_use_as_albedo = true
@@ -58,6 +59,9 @@ maximum_chase_distance = 10.0
 script = ExtResource("2_k1h6f")
 metadata/_custom_type_script = "uid://dlkw16wmy3th6"
 
+[node name="NPC_HurtboxAgent" type="Node" parent="." unique_id=1164844765]
+script = ExtResource("3_hhshi")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1343893479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
@@ -83,24 +87,24 @@ body = NodePath("../..")
 item_manager = NodePath("../..")
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17741823, 0.14012371, -0.39314443, 0.89124954)
-bones/5/rotation = Quaternion(-0.0022564502, -0.00050905865, -0.016683053, 0.9998582)
-bones/7/scale = Vector3(1.0388821, 1.0388821, 1.0388821)
-bones/12/rotation = Quaternion(0.17796302, -0.1380677, 0.38738227, 0.8939808)
-bones/14/rotation = Quaternion(-0.0022561199, 0.0007337008, 0.024041662, 0.9997082)
+bones/3/rotation = Quaternion(0.17719784, 0.14093687, -0.39543524, 0.89015096)
+bones/5/rotation = Quaternion(-0.002256029, -0.00090679893, -0.029712064, 0.99955565)
+bones/7/scale = Vector3(1.0693222, 1.0693222, 1.0693222)
+bones/12/rotation = Quaternion(0.17761324, -0.13938329, 0.39105055, 0.8922473)
+bones/14/rotation = Quaternion(-0.002254979, 0.0013068733, 0.04281745, 0.9990795)
 
 [node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=755549810]
-surface_material_override/0 = SubResource("StandardMaterial3D_bey1f")
-surface_material_override/2 = SubResource("StandardMaterial3D_hhshi")
+surface_material_override/0 = SubResource("StandardMaterial3D_ecfdr")
+surface_material_override/2 = SubResource("StandardMaterial3D_kx1mh")
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.9747599, -0.22316743, 0.006312202, -3.019115e-06, -0.028260864, -0.9996005, 0.22325698, -0.9743701, 0.02754678, -0.006120974, 0.0013482552, 0.009697921)
+transform = Transform3D(-0.98402154, -0.17797908, 0.005032585, -4.1774474e-06, -0.028242353, -0.9996011, 0.17805031, -0.9836287, 0.027790213, -0.0060842494, 0.0013483369, 0.009677109)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=906278711]
 transform = Transform3D(0.009468984, 0.00012204486, -0.003212981, -0.0032125069, -5.715544e-05, -0.009469759, -0.00013393749, 0.00999909, -1.4913403e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0388821, -2.842171e-14, 1.568668e-07, 2.842171e-14, -1.038882, 1.2384444e-07, 1.568668e-07, -1.238444e-07, -1.038882, 6.256557e-16, -2.3060711e-09, 0.017610643)
+transform = Transform3D(1.0693222, -2.842171e-14, 1.6146312e-07, 2.842171e-14, -1.0693221, 1.2747317e-07, 1.6146313e-07, -1.2747313e-07, -1.0693221, 6.2942473e-16, -2.3187179e-09, 0.01771673)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=962650786]
 avoidance_enabled = true

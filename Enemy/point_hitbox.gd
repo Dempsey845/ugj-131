@@ -17,7 +17,7 @@ func _on_area_entered(area: Area3D):
         return
     
     var hurtbox: PointHurtbox = area
-    hurtbox.register_hit(point_damage)
+    hurtbox.register_hit(point_damage, self)
 
 func _force_area_check():
     var overlapping_areas = get_overlapping_areas()
