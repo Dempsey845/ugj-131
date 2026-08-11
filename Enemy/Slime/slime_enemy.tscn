@@ -13,7 +13,9 @@ height = 1.1148437
 radius = 0.7
 
 [node name="SlimeEnemy" unique_id=326028280 instance=ExtResource("1_1evhy")]
+detection_distance = 50.0
 attack_distance = 1.5
+lose_target_distance = 55.0
 remove_after_death = 1.0
 disable_collision_on_death = false
 
