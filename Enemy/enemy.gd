@@ -8,6 +8,7 @@ signal idle_started
 signal wander_started(target_position: Vector3)
 signal chase_started(target: Node3D)
 signal attack_started(target: Node3D)
+signal retreat_started(target_position: Vector3)
 signal death_started
 
 
@@ -16,6 +17,7 @@ enum State {
 	WANDER,
 	CHASE,
 	ATTACK,
+	RETREAT,
 	DEATH
 }
 
@@ -41,6 +43,12 @@ enum State {
 @export_category("Attacking")
 @export var attack_cooldown: float = 1.5
 
+@export_category("Retreating")
+@export var retreat_distance: float = 6.0
+@export var retreat_speed: float = 6.0
+@export var retreat_duration: float = 1.25
+@export var retreat_target_tolerance: float = 0.75
+
 @export_category("Death")
 @export var remove_after_death: float = -1.0
 @export var disable_collision_on_death: bool = true
@@ -55,6 +63,7 @@ var current_state: State = State.IDLE
 var spawn_position: Vector3
 var idle_time_remaining: float = 0.0
 var can_attack: bool = true
+var retreat_time_remaining: float = 0.0
 var is_dead: bool = false
 
 
@@ -97,6 +106,9 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK:
 			process_attack()
 
+		State.RETREAT:
+			process_retreat(delta)
+
 		State.DEATH:
 			process_death()
 
@@ -126,6 +138,9 @@ func change_state(new_state: State) -> void:
 
 		State.ATTACK:
 			enter_attack()
+
+		State.RETREAT:
+			enter_retreat()
 
 		State.DEATH:
 			enter_death()
@@ -271,6 +286,90 @@ func _on_attack_cooldown_finished() -> void:
 	can_attack = true
 
 
+# Retreat
+func _on_damage_taken() -> void:
+	if is_dead:
+		return
+
+	# Taking another hit while retreating refreshes the destination
+	if current_state == State.RETREAT:
+		enter_retreat()
+	else:
+		change_state(State.RETREAT)
+
+func enter_retreat() -> void:
+	can_attack = false
+	attack_cooldown_timer.stop()
+	retreat_time_remaining = retreat_duration
+
+	var retreat_position: Vector3 = get_retreat_position()
+	nav_agent.target_position = retreat_position
+
+	retreat_started.emit(retreat_position)
+
+
+func process_retreat(delta: float) -> void:
+	retreat_time_remaining -= delta
+
+	var reached_destination: bool = (
+		nav_agent.is_navigation_finished()
+		or global_position.distance_to(
+			nav_agent.target_position
+		) <= retreat_target_tolerance
+	)
+
+	if retreat_time_remaining <= 0.0 or reached_destination:
+		finish_retreat()
+		return
+
+	follow_navigation_path(delta, retreat_speed)
+
+
+func get_retreat_position() -> Vector3:
+	var retreat_direction: Vector3
+
+	if is_instance_valid(target):
+		retreat_direction = (
+			global_position - target.global_position
+		)
+		retreat_direction.y = 0.0
+	else:
+		var random_angle: float = randf_range(0.0, TAU)
+		retreat_direction = Vector3(
+			cos(random_angle),
+			0.0,
+			sin(random_angle)
+		)
+
+	if retreat_direction.is_zero_approx():
+		retreat_direction = global_basis.z
+
+	retreat_direction = retreat_direction.normalized()
+
+	var desired_position: Vector3 = (
+		global_position
+		+ retreat_direction * retreat_distance
+	)
+
+	var navigation_map: RID = nav_agent.get_navigation_map()
+
+	if not navigation_map.is_valid():
+		return desired_position
+
+	return NavigationServer3D.map_get_closest_point(
+		navigation_map,
+		desired_position
+	)
+
+
+func finish_retreat() -> void:
+	can_attack = true
+
+	if is_instance_valid(target):
+		change_state(State.CHASE)
+	else:
+		change_state(State.IDLE)
+
 # Death
 
 func _on_death() -> void:
@@ -404,9 +503,9 @@ func set_target(new_target: Node3D) -> void:
 func clear_target() -> void:
 	target = null
 
-	if current_state == State.CHASE or current_state == State.ATTACK:
+	if (
+		current_state == State.CHASE
+		or current_state == State.ATTACK
+		or current_state == State.RETREAT
+	):
 		change_state(State.IDLE)
-
-func _on_damage_taken():
-	# Retreat
-	pass
