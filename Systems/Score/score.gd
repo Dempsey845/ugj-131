@@ -24,4 +24,4 @@ func remove_points(amount: int):
 
     current_points -= points_to_remove  
     current_points = max(current_points, 0)      
-    points_removed.emit(points_to_remove)
+    points_removed.emit(points_to_remove, current_points)

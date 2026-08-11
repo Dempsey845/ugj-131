@@ -10,8 +10,12 @@ func _ready() -> void:
 
 	score.points_added.connect(_on_points_added)
 	score.points_changed.connect(_on_points_changed)
+	score.points_removed.connect(_on_points_removed)
 
 func _on_points_added(_amount_added, _current_points):
+	animation_player.play("points_gained")
+
+func _on_points_removed(_amount_removed, _current_points):
 	animation_player.play("points_gained")
 
 func _on_points_changed(points: int):
