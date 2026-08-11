@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://d34e58o3cew6v"]
+
+[ext_resource type="Script" uid="uid://535gwt3r7e0k" path="res://Enemy/point_hitbox.gd" id="1_na7f5"]
+
+[node name="EnemyPointHitbox" type="Area3D" unique_id=1562141603]
+collision_layer = 128
+collision_mask = 64
+script = ExtResource("1_na7f5")
+metadata/_custom_type_script = "uid://535gwt3r7e0k"

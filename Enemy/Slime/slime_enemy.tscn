@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://d1sltvf53v71e"]
+
+[ext_resource type="PackedScene" uid="uid://dgjq2d7prsmrs" path="res://Enemy/enemy.tscn" id="1_1evhy"]
+[ext_resource type="Script" uid="uid://bhn4gpqwbr2yg" path="res://Enemy/Slime/slime_enemy_agent.gd" id="2_uiirr"]
+[ext_resource type="PackedScene" uid="uid://csr8eipfti5vk" path="res://Enemy/Slime/slime_visual.tscn" id="2_w2icu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+radius = 0.55742186
+height = 1.1148437
+
+[node name="SlimeEnemy" unique_id=326028280 instance=ExtResource("1_1evhy")]
+attack_distance = 1.5
+
+[node name="SlimeEnemyAgent" type="Node" parent="." index="0" unique_id=75303229]
+script = ExtResource("2_uiirr")
+
+[node name="NavigationAgent3D" parent="." index="2" unique_id=44220149]
+target_desired_distance = 0.5
+
+[node name="SlimeVisual" parent="." index="3" unique_id=155367976 instance=ExtResource("2_w2icu")]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=2130596535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5574219, 0)
+shape = SubResource("CapsuleShape3D_xrivr")

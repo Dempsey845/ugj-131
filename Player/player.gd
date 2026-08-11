@@ -81,6 +81,8 @@ var default_visual_rotation: Vector3
 @export var ice_deceleration: float = 0.4
 @export var ice_rotation_speed: float = 3.0
 
+@onready var character_point_hurtbox: PointHurtbox = $CharacterPointHurtbox
+
 var ice_movement_enabled: bool = false
 
 var slippery_area_count: int = 0
@@ -110,6 +112,8 @@ var goofy_wobble_phase: float = 0.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+	character_point_hurtbox.score = get_tree().current_scene.get_node("%PlayerScore")
 
 	default_visual_position = visuals.position
 	default_visual_rotation = visuals.rotation

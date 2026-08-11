@@ -96,6 +96,8 @@ pickup={
 3d_physics/layer_2="Ground"
 3d_physics/layer_5="ItemArea"
 3d_physics/layer_6="CharacterCollectArea"
+3d_physics/layer_7="CharacterPointHurtbox"
+3d_physics/layer_8="EnemyPointHitbox"
 
 [physics]
 

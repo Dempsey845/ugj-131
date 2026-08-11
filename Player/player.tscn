@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="5_k53q1"]
 [ext_resource type="PackedScene" uid="uid://ddde03colgkh1" path="res://Systems/HotPotato/time_lossed_label.tscn" id="5_vtle1"]
 [ext_resource type="Script" uid="uid://72x6frhdyctn" path="res://Systems/HotPotato/time_lossed_label.gd" id="6_od3ui"]
+[ext_resource type="PackedScene" uid="uid://bg50o7e2qat47" path="res://Character/character_point_hurtbox.tscn" id="8_od3ui"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtle1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_od3ui"]
 resource_local_to_scene = true
 resource_name = "Base"
 vertex_color_use_as_albedo = true
@@ -21,7 +22,7 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_od3ui"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00tjw"]
 resource_local_to_scene = true
 resource_name = "Shoe"
 vertex_color_use_as_albedo = true
@@ -37,6 +38,8 @@ radius = 6.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13qdw"]
 radius = 0.6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_apopc"]
 
 [node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox", "name_label")]
 script = ExtResource("1_l8h54")
@@ -68,24 +71,24 @@ random_base_colour = false
 random_shoe_colour = false
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17765497, 0.13931827, -0.3907561, 0.8923783)
-bones/5/rotation = Quaternion(-0.0022546686, -0.00014302405, -0.0046925447, 0.9999865)
-bones/7/scale = Vector3(1.0108768, 1.0108768, 1.0108768)
-bones/12/rotation = Quaternion(0.17828462, -0.1369147, 0.38402888, 0.8955394)
-bones/14/rotation = Quaternion(-0.0022545375, 0.00020483634, 0.006717164, 0.99997497)
+bones/3/rotation = Quaternion(0.17721702, 0.14086784, -0.39524016, 0.8902447)
+bones/5/rotation = Quaternion(-0.0022561988, -0.000833095, -0.027297746, 0.99962455)
+bones/7/scale = Vector3(1.0636879, 1.0636879, 1.0636879)
+bones/12/rotation = Quaternion(0.17767966, -0.13912827, 0.3903538, 0.892579)
+bones/14/rotation = Quaternion(-0.0022552987, 0.0012006883, 0.039339103, 0.99922276)
 
 [node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=755549810]
-surface_material_override/0 = SubResource("StandardMaterial3D_vtle1")
-surface_material_override/2 = SubResource("StandardMaterial3D_od3ui")
+surface_material_override/0 = SubResource("StandardMaterial3D_od3ui")
+surface_material_override/2 = SubResource("StandardMaterial3D_00tjw")
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.9644092, -0.26430768, 0.0075287065, -7.021858e-05, -0.028217664, -0.9996018, 0.26441494, -0.9640252, 0.027194683, -0.006154189, 0.0013483971, 0.009717119)
+transform = Transform3D(-0.9824546, -0.18642838, 0.005266959, 2.2747554e-06, -0.028253177, -0.9996007, 0.18650298, -0.9820619, 0.027757697, -0.0060912585, 0.0013482966, 0.009681048)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=374173442]
 transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0108768, -2.842171e-14, 1.5263811e-07, 2.842171e-14, -1.0108767, 1.2050594e-07, 1.5263812e-07, -1.205059e-07, -1.0108767, 6.2218816e-16, -2.294436e-09, 0.017513039)
+transform = Transform3D(1.0636879, -2.842171e-14, 1.6061237e-07, 2.842171e-14, -1.0636878, 1.2680152e-07, 1.6061237e-07, -1.2680148e-07, -1.0636878, 6.287271e-16, -2.316377e-09, 0.017697094)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
@@ -123,6 +126,13 @@ collision_mask = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_13qdw")
 debug_color = Color(0, 0.6342056, 0.4353572, 0.41960785)
+
+[node name="CharacterPointHurtbox" parent="." unique_id=336172468 instance=ExtResource("8_od3ui")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterPointHurtbox" unique_id=1881782414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_apopc")
+debug_color = Color(0.9582965, 0, 0.53055435, 0.41960785)
 
 [node name="NameLabel" type="Label3D" parent="." unique_id=1138675415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)

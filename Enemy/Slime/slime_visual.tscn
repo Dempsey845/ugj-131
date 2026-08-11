@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://csr8eipfti5vk"]
 
 [ext_resource type="PackedScene" uid="uid://bk85tfjojk1xy" path="res://Enemy/Slime/Slime.fbx" id="1_8mbfc"]
+[ext_resource type="Script" uid="uid://dogit1ialfusy" path="res://Enemy/Slime/slime_visual.gd" id="2_qwv83"]
+[ext_resource type="PackedScene" uid="uid://d34e58o3cew6v" path="res://Enemy/enemy_point_hitbox.tscn" id="3_m2pvw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t8qkd"]
 albedo_color = Color(0.30138806, 0.99009866, 0.12834531, 1)
@@ -100,6 +102,23 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(1, 1, 1), Vector3(1.1, 1.3, 1.1), Vector3(1.1, 1.2, 1.1), Vector3(1, 1, 1)]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"enable_hitbox"
+}, {
+"args": [],
+"method": &"disable_hitbox"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_ci0vs"]
 resource_name = "death"
@@ -194,14 +213,14 @@ animation = &"hit"
 fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xrivr"]
-graph_offset = Vector2(-132.75848, 28.847336)
+graph_offset = Vector2(-110.758484, 103.847336)
 nodes/output/position = Vector2(1200, 260)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_8mbfc")
 nodes/Animation/position = Vector2(-40, 140)
 nodes/AttackShot/node = SubResource("AnimationNodeOneShot_dd8l2")
 nodes/AttackShot/position = Vector2(280, 260)
 nodes/HitShot/node = SubResource("AnimationNodeOneShot_jgbd1")
-nodes/HitShot/position = Vector2(540, 260)
+nodes/HitShot/position = Vector2(540, 240)
 nodes/DeathShot/node = SubResource("AnimationNodeOneShot_7q6gy")
 nodes/DeathShot/position = Vector2(820, 260)
 nodes/AttackAnimation/node = SubResource("AnimationNodeAnimation_24ow7")
@@ -212,9 +231,12 @@ nodes/DeathAnimation/node = SubResource("AnimationNodeAnimation_ci0vs")
 nodes/DeathAnimation/position = Vector2(640, 600)
 node_connections = [&"output", 0, &"DeathShot", &"AttackShot", 0, &"Animation", &"AttackShot", 1, &"AttackAnimation", &"HitShot", 0, &"AttackShot", &"HitShot", 1, &"HitAnimation", &"DeathShot", 0, &"HitShot", &"DeathShot", 1, &"DeathAnimation"]
 
-[node name="SlimeVisual" unique_id=155367976 instance=ExtResource("1_8mbfc")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
-[node name="Sphere" parent="." index="0" unique_id=372653603]
+[node name="SlimeVisual" unique_id=155367976 instance=ExtResource("1_8mbfc")]
+script = ExtResource("2_qwv83")
+
+[node name="Sphere" parent="." index="0" unique_id=797631908]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_t8qkd")
 
@@ -233,3 +255,10 @@ parameters/HitShot/request = 0
 parameters/DeathShot/active = false
 parameters/DeathShot/internal_active = false
 parameters/DeathShot/request = 0
+
+[node name="EnemyPointHitbox" parent="." index="3" unique_id=1562141603 instance=ExtResource("3_m2pvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyPointHitbox" index="0" unique_id=1096863916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+shape = SubResource("SphereShape3D_xrivr")
