@@ -1,6 +1,8 @@
 class_name CountdownUI
 extends Control
 
+signal countdown_finished
+
 @export var objective: Objective
 @export var game_manager: GameManager
 
@@ -36,6 +38,7 @@ func _process(delta: float) -> void:
 	_update_display()
 
 	if time <= 0.0:
+		countdown_finished.emit()
 		_finish_countdown()
 
 
@@ -49,6 +52,9 @@ func start_countdown(from: int) -> void:
 	_update_display()
 
 
+func stop_countdown() -> void:
+	_finish_countdown()
+
 func _update_display() -> void:
 	var displayed_seconds: int = ceili(time)
 	countdown_label.text = str(displayed_seconds)
@@ -59,7 +65,6 @@ func _update_display() -> void:
 	time_progress.modulate = colour
 	status_label.text = "HURRY UP!" if is_urgent else "ITEM HUNT ACTIVE"
 	status_label.add_theme_color_override("font_color", colour)
-
 
 func _finish_countdown() -> void:
 	countdown_active = false

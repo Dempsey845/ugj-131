@@ -5,7 +5,9 @@ extends Node
 @export var npc_manager: NPC_Manager
 @export var player_score: Score
 @export var player: Player
+@export var countdown_ui: CountdownUI
 
+@export var round_duration: int = 30
 @export var slime_container: Node3D
 @export var slime_spawn_points: Array[Marker3D]
 
@@ -68,6 +70,10 @@ func start_slime_round() -> void:
 	active_slimes.clear()
 	slime_state_timer = 0.0
 
+	countdown_ui.start_countdown(round_duration)
+	if not countdown_ui.countdown_finished.is_connected(_on_countdown_finished):
+		countdown_ui.countdown_finished.connect(_on_countdown_finished)
+
 	get_targets()
 	spawn_slimes()
 
@@ -75,7 +81,10 @@ func end_slime_round():
 	if !round_started:
 		return
 	
-	print("Slime round complete.")
+	if countdown_ui.countdown_finished.is_connected(_on_countdown_finished):
+		countdown_ui.countdown_finished.disconnect(_on_countdown_finished)
+
+	countdown_ui.stop_countdown()
 
 	round_started = false
 
@@ -153,3 +162,19 @@ func spawn_slimes() -> void:
 		active_slimes[slime.get_instance_id()] = weakref(slime)
 	
 	round_started = true
+
+func _on_countdown_finished() -> void:
+	if not round_started:
+		return
+
+	for slime_id: int in active_slimes.keys():
+		var slime_reference: WeakRef = active_slimes[slime_id]
+		var slime: Enemy = slime_reference.get_ref() as Enemy
+
+		if not is_instance_valid(slime):
+			active_slimes.erase(slime_id)
+			continue
+
+		_return_slime_home(slime_id, slime)
+
+	end_slime_round()

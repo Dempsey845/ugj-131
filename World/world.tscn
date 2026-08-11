@@ -107,11 +107,12 @@ leaderboard_ui = NodePath("../CanvasLayer/LeaderboardUI")
 npc_manager = NodePath("../NPCManager")
 player = NodePath("../Player")
 
-[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "slime_container", "slime_spawn_points", "slime_return_point")]
+[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "countdown_ui", "slime_container", "slime_spawn_points", "slime_return_point")]
 script = ExtResource("13_o6lw0")
 npc_manager = NodePath("../NPCManager")
 player_score = NodePath("../PlayerScore")
 player = NodePath("../Player")
+countdown_ui = NodePath("../CanvasLayer/CountdownUI")
 slime_container = NodePath("../NavigationRegion3D/SlimeContainer")
 slime_spawn_points = [NodePath("../EnemySpawnPoints/Marker3D"), NodePath("../EnemySpawnPoints/Marker3D5"), NodePath("../EnemySpawnPoints/Marker3D2"), NodePath("../EnemySpawnPoints/Marker3D3"), NodePath("../EnemySpawnPoints/Marker3D4")]
 slime_return_point = NodePath("../EnemyHomePoint")
