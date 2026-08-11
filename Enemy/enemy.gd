@@ -36,6 +36,11 @@ enum State {
 @export var rotation_speed: float = 8.0
 @export var gravity: float = 20.0
 
+@export_category("Separation")
+@export var separation_radius: float = 2.0
+@export var separation_strength: float = 6.0
+@export var separation_acceleration: float = 20.0
+
 @export_category("Wandering")
 @export var wander_radius: float = 8.0
 @export var minimum_idle_time: float = 1.0
@@ -74,7 +79,6 @@ var idle_time_remaining: float = 0.0
 var can_attack: bool = true
 var retreat_time_remaining: float = 0.0
 var is_dead: bool = false
-
 
 func _ready() -> void:
 	spawn_position = global_position
@@ -124,6 +128,8 @@ func _physics_process(delta: float) -> void:
 		State.DEATH:
 			process_death()
 
+	if current_state != State.DEATH and current_state != State.ATTACK:
+		_apply_separation(delta)
 	move_and_slide()
 
 
@@ -591,3 +597,91 @@ func clear_target() -> void:
 		or current_state == State.RETREAT
 	):
 		change_state(State.IDLE)
+
+# Seperation
+func _apply_separation(delta: float) -> void:
+	var separation_direction: Vector3 = _get_separation_direction()
+
+	if separation_direction.is_zero_approx():
+		return
+
+	var separation_velocity: Vector3 = (
+		separation_direction * separation_strength
+	)
+
+	velocity.x = move_toward(
+		velocity.x,
+		velocity.x + separation_velocity.x,
+		separation_acceleration * delta
+	)
+
+	velocity.z = move_toward(
+		velocity.z,
+		velocity.z + separation_velocity.z,
+		separation_acceleration * delta
+	)
+
+
+func _get_separation_direction() -> Vector3:
+	var separation: Vector3 = Vector3.ZERO
+
+	for node: Node in get_tree().get_nodes_in_group(
+		"separation_agents"
+	):
+		if node == self:
+			continue
+
+		if not is_instance_valid(node):
+			continue
+
+		if not node is Node3D:
+			continue
+
+		# Dead enemies should no longer influence separation.
+		if node is Enemy and node.is_dead:
+			continue
+
+		var other: Node3D = node as Node3D
+		var away_from_other: Vector3 = (
+			global_position - other.global_position
+		)
+
+		away_from_other.y = 0.0
+
+		var distance_squared: float = (
+			away_from_other.length_squared()
+		)
+
+		if distance_squared >= separation_radius * separation_radius:
+			continue
+
+		# Give perfectly overlapping characters a consistent direction.
+		if distance_squared <= 0.0001:
+			var angle: float = float(
+				get_instance_id() % 360
+			)
+
+			away_from_other = Vector3(
+				cos(deg_to_rad(angle)),
+				0.0,
+				sin(deg_to_rad(angle))
+			)
+
+			distance_squared = 0.0001
+
+		var distance: float = sqrt(distance_squared)
+		var influence: float = (
+			1.0 - distance / separation_radius
+		)
+
+		# Nearby characters have a much stronger influence.
+		separation += (
+			away_from_other.normalized()
+			* influence
+			* influence
+		)
+
+	if separation.is_zero_approx():
+		return Vector3.ZERO
+
+	return separation.normalized()
