@@ -61,6 +61,10 @@ var recovery_remaining: float = 0.0
 var knockback_direction: Vector3
 var default_visual_rotation: Vector3
 
+var tackler: Node3D
+var retain_tackler_reference_duration: float = 1.5
+var tackler_reference_remaining: float = 0.0
+
 @export_category("Camera")
 @export var mouse_sensitivity: float = 0.003
 @export var controller_look_sensitivity: float = 2.5
@@ -193,6 +197,8 @@ func _update_timers(delta: float) -> void:
 		jump_buffer_remaining - delta,
 		0.0
 	)
+
+	_update_tackler_reference(delta)
 
 
 func _update_controller_camera(delta: float) -> void:
@@ -550,10 +556,17 @@ func _on_slide_hitbox_body_entered(body: Node3D) -> void:
 
 func receive_tackle(
 	direction: Vector3,
-	_attacker: Node3D
+	attacker: Node3D
 ) -> void:
 	if is_knocked_down:
 		return
+
+	tackler = attacker if is_instance_valid(attacker) else null
+	tackler_reference_remaining = (
+		retain_tackler_reference_duration
+		if tackler != null
+		else 0.0
+	)
 
 	if is_sliding:
 		_end_slide()
@@ -576,6 +589,26 @@ func receive_tackle(
 
 	knocked_down.emit()
 
+func _update_tackler_reference(delta: float) -> void:
+	if tackler == null:
+		return
+
+	if not is_instance_valid(tackler):
+		clear_tackler()
+		return
+
+	tackler_reference_remaining = maxf(
+		tackler_reference_remaining - delta,
+		0.0
+	)
+
+	if tackler_reference_remaining <= 0.0:
+		clear_tackler()
+
+
+func clear_tackler() -> void:
+	tackler = null
+	tackler_reference_remaining = 0.0
 
 func _update_knocked_down(delta: float) -> void:
 	knocked_down_remaining -= delta

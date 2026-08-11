@@ -57,6 +57,10 @@ enum State {
 @export var collision_knockback_multiplier: float = 0.75
 @export var minimum_collision_knockback_speed: float = 0.1
 
+var tackler: Node3D
+var retain_tackler_reference_duration: float = 1.5
+var tackler_reference_remaining: float = 0.0
+
 @export_category("NPC Slide Tackle")
 @export var slide_start_speed: float = 10.0
 @export var slide_hit_delay: float = 0.2
@@ -165,6 +169,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_update_tackler_reference(delta)
+
 	tackle_cooldown_remaining = maxf(
 		tackle_cooldown_remaining - delta,
 		0.0
@@ -739,11 +745,18 @@ func _update_fleeing(delta: float) -> void:
 
 func receive_tackle(
 	direction: Vector3,
-	_attacker: Node3D,
+	attacker: Node3D,
 	strength_multiplier: float = 1.0
 ) -> void:
 	if state == State.KNOCKED_DOWN:
 		return
+
+	tackler = attacker if is_instance_valid(attacker) else null
+	tackler_reference_remaining = (
+		retain_tackler_reference_duration
+		if tackler != null
+		else 0.0
+	)
 
 	resume_fleeing_after_knockdown = (
 		state == State.FLEEING
@@ -794,6 +807,27 @@ func receive_tackle(
 	)
 
 	knocked_down.emit()
+
+func _update_tackler_reference(delta: float) -> void:
+	if tackler == null:
+		return
+
+	if not is_instance_valid(tackler):
+		clear_tackler()
+		return
+
+	tackler_reference_remaining = maxf(
+		tackler_reference_remaining - delta,
+		0.0
+	)
+
+	if tackler_reference_remaining <= 0.0:
+		clear_tackler()
+
+
+func clear_tackler() -> void:
+	tackler = null
+	tackler_reference_remaining = 0.0
 
 func _start_tackle_delay() -> void:
 	tackle_cooldown_remaining = maxf(
