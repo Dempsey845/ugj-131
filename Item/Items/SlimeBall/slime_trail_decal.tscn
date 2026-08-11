@@ -116,7 +116,7 @@ size = Vector3(2.6000001, 0.2, 2.6000001)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9802322e-08, 0)
 size = Vector3(0.001, 0.2, 0.001)
 texture_albedo = ExtResource("1_yqifw")
-modulate = Color(0.5803922, 0.9529412, 0.20784314, 1)
+modulate = Color(0.2627451, 0.8862745, 0.46666667, 1)
 normal_fade = 0.134
 upper_fade = 1.5834085
 

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dgjq2d7prsmrs" path="res://Enemy/enemy.tscn" id="1_1evhy"]
 [ext_resource type="Script" uid="uid://bhn4gpqwbr2yg" path="res://Enemy/Slime/slime_enemy_agent.gd" id="2_uiirr"]
 [ext_resource type="PackedScene" uid="uid://csr8eipfti5vk" path="res://Enemy/Slime/slime_visual.tscn" id="2_w2icu"]
+[ext_resource type="Script" uid="uid://clglffoo4cs8n" path="res://Enemy/Slime/slime_decal_spawner.gd" id="4_awjrn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 radius = 0.55742186
@@ -23,3 +24,7 @@ unique_name_in_owner = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=2130596535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5574219, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
+
+[node name="SlimeDecalSpawner" type="Node3D" parent="." index="5" unique_id=830269723 node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("4_awjrn")
+spawn_point = NodePath(".")

@@ -3,13 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bk85tfjojk1xy" path="res://Enemy/Slime/Slime.fbx" id="1_8mbfc"]
 [ext_resource type="Script" uid="uid://dogit1ialfusy" path="res://Enemy/Slime/slime_visual.gd" id="2_qwv83"]
 [ext_resource type="PackedScene" uid="uid://d34e58o3cew6v" path="res://Enemy/enemy_point_hitbox.tscn" id="3_m2pvw"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t8qkd"]
-albedo_color = Color(0.30138806, 0.99009866, 0.12834531, 1)
-roughness = 0.22
-emission_enabled = true
-emission = Color(0.15256694, 0.58674544, 0.41002595, 1)
-emission_energy_multiplier = 1.2
+[ext_resource type="Material" uid="uid://y64xaekx6n2q" path="res://Enemy/slime_material.tres" id="3_ngevq"]
 
 [sub_resource type="Animation" id="Animation_24ow7"]
 length = 0.001
@@ -233,12 +227,48 @@ node_connections = [&"output", 0, &"DeathShot", &"AttackShot", 0, &"Animation", 
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
+[sub_resource type="Curve" id="Curve_ngevq"]
+_data = [Vector2(0.0035778172, 0.017094016), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.7477639, 1), 0.0, 0.0, 0, 0, Vector2(0.9982111, 0.029914618), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7f2x3"]
+curve = SubResource("Curve_ngevq")
+
+[sub_resource type="Curve" id="Curve_lq1mj"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.25213677), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.4991055, 1.6166668), 0.0, 0.0, 0, 0, Vector2(0.7549195, 0.9957266), 0.0, 0.0, 0, 0, Vector2(0.99105555, 0.23076928), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_w0krf"]
+curve = SubResource("Curve_lq1mj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4l2gf"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.1
+emission_ring_radius = 0.5
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+scale_min = 0.19999999
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_w0krf")
+alpha_curve = SubResource("CurveTexture_7f2x3")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+collision_use_scale = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_iuvss"]
+material = ExtResource("3_ngevq")
+radial_segments = 12
+rings = 6
+
 [node name="SlimeVisual" unique_id=155367976 instance=ExtResource("1_8mbfc")]
 script = ExtResource("2_qwv83")
 
 [node name="Sphere" parent="." index="0" unique_id=797631908]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-surface_material_override/0 = SubResource("StandardMaterial3D_t8qkd")
+surface_material_override/0 = ExtResource("3_ngevq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1487996771]
 libraries/ = SubResource("AnimationLibrary_24ow7")
@@ -262,3 +292,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyPointHitbox" index="0" unique_id=1096863916]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
 shape = SubResource("SphereShape3D_xrivr")
+
+[node name="SlimeParticles" type="GPUParticles3D" parent="." index="4" unique_id=188448443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+amount = 6
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_4l2gf")
+draw_pass_1 = SubResource("SphereMesh_iuvss")

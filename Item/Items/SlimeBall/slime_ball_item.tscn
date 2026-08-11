@@ -2,16 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_4pfoe"]
 [ext_resource type="Script" uid="uid://ca04kuebfrtte" path="res://Item/Items/SlimeBall/slime_ball_item_agent.gd" id="2_rwiry"]
+[ext_resource type="Material" uid="uid://y64xaekx6n2q" path="res://Enemy/slime_material.tres" id="3_ne26k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b1lj4"]
 bounce = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njqwk"]
-albedo_color = Color(0.5808655, 0.9536702, 0.20925018, 1)
-roughness = 0.0
-
 [sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
-material = SubResource("StandardMaterial3D_njqwk")
+material = ExtResource("3_ne26k")
 radial_segments = 16
 rings = 8
 
@@ -19,7 +16,7 @@ rings = 8
 _data = [Vector2(0.0035778172, 0.017094016), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.7477639, 1), 0.0, 0.0, 0, 0, Vector2(0.9982111, 0.029914618), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_7f2x3"]
+[sub_resource type="CurveTexture" id="CurveTexture_ne26k"]
 curve = SubResource("Curve_25bs2")
 
 [sub_resource type="Curve" id="Curve_w0krf"]
@@ -27,7 +24,7 @@ _limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.25213677), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.4991055, 1.6166668), 0.0, 0.0, 0, 0, Vector2(0.7549195, 0.9957266), 0.0, 0.0, 0, 0, Vector2(0.99105555, 0.23076928), 0.0, 0.0, 0, 0]
 point_count = 6
 
-[sub_resource type="CurveTexture" id="CurveTexture_w0krf"]
+[sub_resource type="CurveTexture" id="CurveTexture_qw8wl"]
 curve = SubResource("Curve_w0krf")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xrivr"]
@@ -39,21 +36,15 @@ emission_ring_inner_radius = 0.0
 emission_ring_cone_angle = 90.0
 scale_min = 0.19999999
 scale_max = 0.39999998
-scale_curve = SubResource("CurveTexture_w0krf")
-alpha_curve = SubResource("CurveTexture_7f2x3")
+scale_curve = SubResource("CurveTexture_qw8wl")
+alpha_curve = SubResource("CurveTexture_ne26k")
 collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 1.0
 collision_use_scale = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
-transparency = 1
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.5803922, 0.9529412, 0.20784314, 1)
-roughness = 0.0
-
 [sub_resource type="SphereMesh" id="SphereMesh_13qdw"]
-material = SubResource("StandardMaterial3D_b1lj4")
+material = ExtResource("3_ne26k")
 radial_segments = 12
 rings = 6
 
@@ -67,7 +58,6 @@ upward_throw_force = 5.0
 [node name="SlimeBallItemAgent" type="Node" parent="." index="0" unique_id=1074632526 node_paths=PackedStringArray("particles")]
 script = ExtResource("2_rwiry")
 particles = NodePath("../Visuals/SlimeParticles")
-trail_spacing = 1.5
 metadata/_custom_type_script = "uid://d1fwq3pighi0q"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=425441911]

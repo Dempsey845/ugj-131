@@ -3,7 +3,7 @@ extends ItemAgent
 
 @export_category("Slime Trail")
 @export var particles: GPUParticles3D
-@export var trail_spacing: float = 0.5
+@export var trail_spacing: float = 1.5
 @export var random_rotation: bool = true
 @export var decal_height_offset: float = 0.015
 
