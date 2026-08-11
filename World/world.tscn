@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
 [ext_resource type="Script" uid="uid://co0bnll56t7ph" path="res://Systems/SpecialRounds/slime_enemy_round.gd" id="13_o6lw0"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="14_x0pyu"]
+[ext_resource type="Shader" uid="uid://cph27hhjk4qfy" path="res://World/world_sky.gdshader" id="22_koyeq"]
 [ext_resource type="Texture2D" uid="uid://cjjjqnuacjeyd" path="res://World/Textures/GroundTile.png" id="23_3sd22"]
 [ext_resource type="Texture2D" uid="uid://b4kmchgf4q25g" path="res://World/Textures/GroundTileNormal.png" id="24_s5a7k"]
 [ext_resource type="PackedScene" uid="uid://7vcsdpcqlt8v" path="res://World/shelf.tscn" id="25_dg1ng"]
@@ -45,12 +46,32 @@ shader_parameter/chromatic_aberration = 0.006
 shader_parameter/colour_shift_strength = 0.18
 shader_parameter/vignette_strength = 0.25
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a836"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ql07"]
+shader = ExtResource("22_koyeq")
+shader_parameter/zenith_color = Color(0.075, 0.29, 0.48, 1)
+shader_parameter/upper_color = Color(0.24, 0.56, 0.68, 1)
+shader_parameter/horizon_color = Color(0.72, 0.88, 0.72, 1)
+shader_parameter/lower_color = Color(0.19, 0.37, 0.31, 1)
+shader_parameter/cloud_shadow_color = Color(0.3, 0.52, 0.56, 1)
+shader_parameter/cloud_color = Color(0.86, 0.96, 0.9, 1)
+shader_parameter/cloud_highlight_color = Color(1, 0.94, 0.7, 1)
+shader_parameter/magic_color = Color(0.25, 0.9, 0.82, 1)
+shader_parameter/sparkle_color = Color(0.85, 1, 0.78, 1)
+shader_parameter/sun_color = Color(1, 0.82, 0.44, 1)
+shader_parameter/animation_speed = 0.025
+shader_parameter/cloud_scale = 5.0
+shader_parameter/cloud_coverage = 0.48
+shader_parameter/cloud_softness = 0.16
+shader_parameter/cloud_strength = 0.9
+shader_parameter/magic_strength = 0.22
+shader_parameter/sparkle_strength = 0.45
+shader_parameter/sun_size = 0.022
+shader_parameter/sun_glow_size = 0.16
+shader_parameter/sun_strength = 2.0
+shader_parameter/brightness = 1.0
 
 [sub_resource type="Sky" id="Sky_j8job"]
-sky_material = SubResource("ProceduralSkyMaterial_8a836")
+sky_material = SubResource("ShaderMaterial_3ql07")
 
 [sub_resource type="Environment" id="Environment_3f78f"]
 background_mode = 2
@@ -212,14 +233,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 6.5, 0)
 size = Vector3(3, 14, 44)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1331973818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.6571808, -23.261436)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.617073, -23.261436)
 operation = 2
-size = Vector3(3.3452148, 3.3092957, 3.7263184)
+size = Vector3(3.3452148, 3.389511, 3.7263184)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=248730613]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.6571808, 23.738564)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.6461258, 23.738564)
 operation = 2
-size = Vector3(3.3452148, 3.3092957, 3.7263184)
+size = Vector3(3.3452148, 3.3314056, 3.7263184)
 
 [node name="NPC_Container" type="Node3D" parent="NavigationRegion3D" unique_id=286122809]
 
