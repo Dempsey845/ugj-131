@@ -9,13 +9,66 @@ extends Node
 @export var slime_container: Node3D
 @export var slime_spawn_points: Array[Marker3D]
 
+@export var slime_return_point: Marker3D
+
 var targets: Array[Node3D] = []
 
+var active_slimes: Dictionary[Enemy, bool]
+
 var slime_scene: PackedScene = preload("uid://d1sltvf53v71e")
+
+var round_started: bool
+
+var check_slime_state_rate: float = 1.0
+var slime_state_timer: float = 0.0
+
+func _physics_process(delta: float) -> void:
+	if !round_started:
+		return
+	
+	slime_state_timer += delta
+
+	if slime_state_timer > check_slime_state_rate:
+		slime_state_timer = 0.0
+
+		var non_active_slime_count: int = 0
+
+		for slime: Enemy in active_slimes:
+			if !is_instance_valid(slime):
+				non_active_slime_count += 1
+				continue
+
+			if !active_slimes[slime]:
+				non_active_slime_count += 1
+				continue
+			
+			var target: Node3D = slime.target
+
+			if target is NPC:
+				var npc_score: Score = target.get_node("Score")
+				if npc_score.current_points <= 0:
+					slime.return_to_home(slime_return_point.global_position)
+					active_slimes[slime] = false
+			elif target is Player and player_score.current_points <= 0:
+				slime.return_to_home(slime_return_point.global_position)
+				active_slimes[slime] = false
+		
+		if non_active_slime_count >= active_slimes.keys().size():
+			# All slimes have died or returned home
+			end_slime_round()
+
 
 func start_slime_round():
 	get_targets()
 	spawn_slimes()
+
+func end_slime_round():
+	if !round_started:
+		return
+	
+	print("Slime round complete.")
+
+	round_started = false
 
 func get_targets() -> Array[Node3D]:
 	targets.clear()
@@ -87,3 +140,7 @@ func spawn_slimes() -> void:
 		var assigned_target: Node3D = targets[target_index]
 
 		slime.set_target(assigned_target)
+
+		active_slimes[slime] = true
+	
+	round_started = true

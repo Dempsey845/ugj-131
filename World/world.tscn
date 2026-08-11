@@ -107,13 +107,14 @@ leaderboard_ui = NodePath("../CanvasLayer/LeaderboardUI")
 npc_manager = NodePath("../NPCManager")
 player = NodePath("../Player")
 
-[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "slime_container", "slime_spawn_points")]
+[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "slime_container", "slime_spawn_points", "slime_return_point")]
 script = ExtResource("13_o6lw0")
 npc_manager = NodePath("../NPCManager")
 player_score = NodePath("../PlayerScore")
 player = NodePath("../Player")
 slime_container = NodePath("../NavigationRegion3D/SlimeContainer")
 slime_spawn_points = [NodePath("../EnemySpawnPoints/Marker3D"), NodePath("../EnemySpawnPoints/Marker3D5"), NodePath("../EnemySpawnPoints/Marker3D2"), NodePath("../EnemySpawnPoints/Marker3D3"), NodePath("../EnemySpawnPoints/Marker3D4")]
+slime_return_point = NodePath("../EnemyHomePoint")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 
@@ -332,3 +333,6 @@ transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -0.1
 
 [node name="Marker3D4" type="Marker3D" parent="EnemySpawnPoints" unique_id=1152526610]
 transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -0.101989746, 0, 33.61845)
+
+[node name="EnemyHomePoint" type="Marker3D" parent="." unique_id=149147976]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 23.6)

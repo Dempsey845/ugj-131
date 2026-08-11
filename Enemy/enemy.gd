@@ -9,6 +9,7 @@ signal wander_started(target_position: Vector3)
 signal chase_started(target: Node3D)
 signal attack_started(target: Node3D)
 signal retreat_started(target_position: Vector3)
+signal return_home_started(home_position: Vector3)
 signal death_started
 
 
@@ -18,6 +19,7 @@ enum State {
 	CHASE,
 	ATTACK,
 	RETREAT,
+	RETURNING_HOME,
 	DEATH
 }
 
@@ -48,6 +50,13 @@ enum State {
 @export var retreat_speed: float = 6.0
 @export var retreat_duration: float = 1.25
 @export var retreat_target_tolerance: float = 0.75
+
+@export_category("Returning Home")
+@export var return_home_speed: float = 6.0
+@export var home_target_tolerance: float = 0.75
+
+var home_position: Vector3
+var is_returning_home: bool = false
 
 @export_category("Death")
 @export var remove_after_death: float = -1.0
@@ -109,6 +118,9 @@ func _physics_process(delta: float) -> void:
 		State.RETREAT:
 			process_retreat(delta)
 
+		State.RETURNING_HOME:
+			process_returning_home(delta)
+
 		State.DEATH:
 			process_death()
 
@@ -118,6 +130,14 @@ func _physics_process(delta: float) -> void:
 func change_state(new_state: State) -> void:
 	# Death is terminal and cannot transition back to another state.
 	if is_dead and new_state != State.DEATH:
+		return
+
+	# Returning home can only transition into death.
+	if (
+		is_returning_home
+		and new_state != State.RETURNING_HOME
+		and new_state != State.DEATH
+	):
 		return
 
 	if current_state == new_state:
@@ -141,6 +161,9 @@ func change_state(new_state: State) -> void:
 
 		State.RETREAT:
 			enter_retreat()
+
+		State.RETURNING_HOME:
+			enter_returning_home()
 
 		State.DEATH:
 			enter_death()
@@ -288,7 +311,7 @@ func _on_attack_cooldown_finished() -> void:
 
 # Retreat
 func _on_damage_taken() -> void:
-	if is_dead:
+	if is_dead or is_returning_home:
 		return
 
 	# Taking another hit while retreating refreshes the destination
@@ -369,6 +392,65 @@ func finish_retreat() -> void:
 		change_state(State.CHASE)
 	else:
 		change_state(State.IDLE)
+
+# Returning home
+
+func return_to_home(new_home_position: Vector3) -> void:
+	if is_dead:
+		return
+
+	is_returning_home = true
+	home_position = get_closest_navigation_position(
+		new_home_position
+	)
+
+	target = null
+	can_attack = false
+	attack_cooldown_timer.stop()
+
+	if current_state == State.RETURNING_HOME:
+		enter_returning_home()
+	else:
+		change_state(State.RETURNING_HOME)
+
+
+func enter_returning_home() -> void:
+	nav_agent.target_position = home_position
+	return_home_started.emit(home_position)
+
+
+func process_returning_home(delta: float) -> void:
+	var distance_to_home: float = global_position.distance_to(
+		home_position
+	)
+
+	if (
+		distance_to_home <= home_target_tolerance
+		or nav_agent.is_navigation_finished()
+	):
+		finish_returning_home()
+		return
+
+	follow_navigation_path(delta, return_home_speed)
+
+
+func finish_returning_home() -> void:
+	stop_moving()
+	queue_free()
+
+
+func get_closest_navigation_position(
+	desired_position: Vector3
+) -> Vector3:
+	var navigation_map: RID = nav_agent.get_navigation_map()
+
+	if not navigation_map.is_valid():
+		return desired_position
+
+	return NavigationServer3D.map_get_closest_point(
+		navigation_map,
+		desired_position
+	)
 
 # Death
 
@@ -494,7 +576,7 @@ func can_detect_target() -> bool:
 
 
 func set_target(new_target: Node3D) -> void:
-	if is_dead:
+	if is_dead or is_returning_home:
 		return
 
 	target = new_target
