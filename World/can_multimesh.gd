@@ -9,6 +9,7 @@ extends MultiMeshInstance3D
 @export var row_spacing: float = 0.5
 @export var starting_offset: Vector3 = Vector3.ZERO
 @export var center_horizontally: bool = true
+@export var populate_on_ready: bool = true
 
 @export_category("Random Variation")
 @export var random_seed: int = 1
@@ -23,7 +24,8 @@ extends MultiMeshInstance3D
 
 
 func _ready() -> void:
-	populate_shelf()
+	if populate_on_ready:
+		populate_shelf()
 
 
 func populate_shelf() -> void:
