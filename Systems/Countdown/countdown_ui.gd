@@ -18,6 +18,7 @@ const URGENT_COLOUR: Color = Color(1.0, 0.32, 0.28)
 var time: float = 0.0
 var countdown_active: bool = false
 
+var stop_objective_on_complete: bool
 
 func _ready() -> void:
 	timer_card.visible = false
@@ -39,10 +40,11 @@ func _process(delta: float) -> void:
 
 	if time <= 0.0:
 		countdown_finished.emit()
-		_finish_countdown()
+		_finish_countdown(stop_objective_on_complete)
 
 
-func start_countdown(from: int) -> void:
+func start_countdown(from: int, stop_objective: bool = true) -> void:
+	stop_objective_on_complete = stop_objective
 	animation_player.play("show")
 	time = maxf(float(from), 0.0)
 	countdown_active = time > 0.0
@@ -53,20 +55,21 @@ func start_countdown(from: int) -> void:
 
 
 func stop_countdown() -> void:
-	_finish_countdown()
+	_finish_countdown(false)
 
 func _update_display() -> void:
 	var displayed_seconds: int = ceili(time)
 	countdown_label.text = str(displayed_seconds)
 
-	var is_urgent: bool = displayed_seconds <= game_manager.current_item_data.urgent_time
-	var colour: Color = URGENT_COLOUR if is_urgent else NORMAL_COLOUR
-	countdown_label.add_theme_color_override("font_color", colour)
-	time_progress.modulate = colour
-	status_label.text = "HURRY UP!" if is_urgent else "ITEM HUNT ACTIVE"
-	status_label.add_theme_color_override("font_color", colour)
+	if game_manager.current_item_data:
+		var is_urgent: bool = displayed_seconds <= game_manager.current_item_data.urgent_time
+		var colour: Color = URGENT_COLOUR if is_urgent else NORMAL_COLOUR
+		countdown_label.add_theme_color_override("font_color", colour)
+		time_progress.modulate = colour
+		status_label.text = "HURRY UP!" if is_urgent else "ITEM HUNT ACTIVE"
+		status_label.add_theme_color_override("font_color", colour)
 
-func _finish_countdown() -> void:
+func _finish_countdown(stop_objective: bool = true) -> void:
 	countdown_active = false
 	countdown_label.text = "0"
 	timer_card.visible = false

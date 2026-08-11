@@ -50,7 +50,7 @@ func start_round() -> void:
 	_connect_countdown()
 
 	if is_instance_valid(countdown_ui):
-		countdown_ui.start_countdown(round_duration)
+		countdown_ui.start_countdown(round_duration, false)
 
 	round_started.emit()
 
