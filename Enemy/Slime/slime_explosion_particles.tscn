@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://j4qtrihkj32"]
+
+[ext_resource type="Material" uid="uid://y64xaekx6n2q" path="res://Enemy/slime_material.tres" id="1_ju6or"]
+
+[sub_resource type="Curve" id="Curve_p2erd"]
+_data = [Vector2(0.0035778172, 0.017094016), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.7477639, 1), 0.0, 0.0, 0, 0, Vector2(0.9982111, 0.029914618), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7f2x3"]
+curve = SubResource("Curve_p2erd")
+
+[sub_resource type="Curve" id="Curve_t3jqp"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.25213677), 0.0, 0.0, 0, 0, Vector2(0.2450805, 1), 0.0, 0.0, 0, 0, Vector2(0.4991055, 1.6166668), 0.0, 0.0, 0, 0, Vector2(0.7549195, 0.9957266), 0.0, 0.0, 0, 0, Vector2(0.99105555, 0.23076928), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_w0krf"]
+curve = SubResource("Curve_t3jqp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aevpi"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.1
+emission_ring_radius = 0.5
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+scale_min = 0.19999999
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_w0krf")
+alpha_curve = SubResource("CurveTexture_7f2x3")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+collision_use_scale = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_fyg2b"]
+material = ExtResource("1_ju6or")
+radial_segments = 12
+rings = 6
+
+[sub_resource type="Animation" id="Animation_ju6or"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_kn61p"]
+resource_name = "start"
+length = 1.5999999999999999
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yeyen"]
+_data = {
+&"RESET": SubResource("Animation_ju6or"),
+&"start": SubResource("Animation_kn61p")
+}
+
+[node name="SlimeExplosionParticles" type="GPUParticles3D" unique_id=581444976]
+emitting = false
+amount = 12
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_aevpi")
+draw_pass_1 = SubResource("SphereMesh_fyg2b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=876155455]
+libraries/ = SubResource("AnimationLibrary_yeyen")
+autoplay = &"start"

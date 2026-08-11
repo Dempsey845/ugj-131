@@ -9,14 +9,18 @@
 radius = 0.55742186
 height = 1.1148437
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 0.7
+
 [node name="SlimeEnemy" unique_id=326028280 instance=ExtResource("1_1evhy")]
 attack_distance = 1.5
+remove_after_death = 1.0
+disable_collision_on_death = false
 
-[node name="SlimeEnemyAgent" type="Node" parent="." index="0" unique_id=75303229]
+[node name="SlimeEnemyAgent" type="Node" parent="." index="0" unique_id=75303229 node_paths=PackedStringArray("health", "death_particles_marker")]
 script = ExtResource("2_uiirr")
-
-[node name="NavigationAgent3D" parent="." index="2" unique_id=44220149]
-target_desired_distance = 0.5
+health = NodePath("../Health")
+death_particles_marker = NodePath("../DeathParticlesPoint")
 
 [node name="SlimeVisual" parent="." index="3" unique_id=155367976 instance=ExtResource("2_w2icu")]
 unique_name_in_owner = true
@@ -28,3 +32,18 @@ shape = SubResource("CapsuleShape3D_xrivr")
 [node name="SlimeDecalSpawner" type="Node3D" parent="." index="5" unique_id=830269723 node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("4_awjrn")
 spawn_point = NodePath(".")
+
+[node name="NavigationAgent3D" parent="." index="6" unique_id=44220149]
+target_desired_distance = 0.5
+
+[node name="HealthHurtbox" parent="." index="7" unique_id=1736093584]
+collision_layer = 256
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealthHurtbox" index="0" unique_id=744865130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_xrivr")
+debug_color = Color(0.95455676, 0.07789897, 0.502383, 0.41960785)
+
+[node name="DeathParticlesPoint" type="Marker3D" parent="." index="8" unique_id=983531106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

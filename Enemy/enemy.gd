@@ -8,13 +8,15 @@ signal idle_started
 signal wander_started(target_position: Vector3)
 signal chase_started(target: Node3D)
 signal attack_started(target: Node3D)
+signal death_started
 
 
 enum State {
 	IDLE,
 	WANDER,
 	CHASE,
-	ATTACK
+	ATTACK,
+	DEATH
 }
 
 
@@ -39,15 +41,21 @@ enum State {
 @export_category("Attacking")
 @export var attack_cooldown: float = 1.5
 
+@export_category("Death")
+@export var remove_after_death: float = -1.0
+@export var disable_collision_on_death: bool = true
+
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
+@onready var health: Health = $Health
 
 
 var current_state: State = State.IDLE
 var spawn_position: Vector3
 var idle_time_remaining: float = 0.0
 var can_attack: bool = true
+var is_dead: bool = false
 
 
 func _ready() -> void:
@@ -55,12 +63,22 @@ func _ready() -> void:
 
 	attack_cooldown_timer.one_shot = true
 	attack_cooldown_timer.wait_time = attack_cooldown
-	attack_cooldown_timer.timeout.connect(_on_attack_cooldown_finished)
+	attack_cooldown_timer.timeout.connect(
+		_on_attack_cooldown_finished
+	)
 
-	# Navigation data may not be ready during the first frame.
+	health.death.connect(_on_death)
+	health.damage_taken.connect(_on_damage_taken)
+
+	# Navigation data might not be ready on the first frame.
 	await get_tree().physics_frame
 
-	change_state(State.IDLE)
+	# The enemy could have died while awaiting the physics frame.
+	if is_dead:
+		return
+
+	enter_idle()
+	state_changed.emit(current_state)
 
 
 func _physics_process(delta: float) -> void:
@@ -79,10 +97,17 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK:
 			process_attack()
 
+		State.DEATH:
+			process_death()
+
 	move_and_slide()
 
 
 func change_state(new_state: State) -> void:
+	# Death is terminal and cannot transition back to another state.
+	if is_dead and new_state != State.DEATH:
+		return
+
 	if current_state == new_state:
 		return
 
@@ -101,6 +126,9 @@ func change_state(new_state: State) -> void:
 
 		State.ATTACK:
 			enter_attack()
+
+		State.DEATH:
+			enter_death()
 
 
 # Idle
@@ -228,15 +256,65 @@ func process_attack() -> void:
 
 
 func perform_attack() -> void:
+	if is_dead:
+		return
+
 	can_attack = false
-
 	attack_started.emit(target)
-
 	attack_cooldown_timer.start(attack_cooldown)
 
 
 func _on_attack_cooldown_finished() -> void:
+	if is_dead:
+		return
+
 	can_attack = true
+
+
+# Death
+
+func _on_death() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
+	change_state(State.DEATH)
+
+
+func enter_death() -> void:
+	target = null
+	can_attack = false
+
+	attack_cooldown_timer.stop()
+	nav_agent.target_position = global_position
+	nav_agent.avoidance_enabled = false
+
+	stop_moving()
+
+	if disable_collision_on_death:
+		collision_layer = 0
+		collision_mask = 0
+
+	death_started.emit()
+
+	if remove_after_death >= 0.0:
+		remove_enemy_after_delay()
+
+
+func process_death() -> void:
+	# Gravity is still applied so an enemy dying in the air can fall.
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+
+func remove_enemy_after_delay() -> void:
+	if remove_after_death > 0.0:
+		await get_tree().create_timer(
+			remove_after_death
+		).timeout
+
+	if is_instance_valid(self):
+		queue_free()
 
 
 # Movement
@@ -286,11 +364,16 @@ func rotate_towards_direction(direction: Vector3, delta: float) -> void:
 
 
 func rotate_towards_position(target_position: Vector3, delta: float) -> void:
-	var direction: Vector3 = global_position.direction_to(target_position)
+	var direction: Vector3 = global_position.direction_to(
+		target_position
+	)
 	direction.y = 0.0
 
 	if not direction.is_zero_approx():
-		rotate_towards_direction(direction.normalized(), delta)
+		rotate_towards_direction(
+			direction.normalized(),
+			delta
+		)
 
 
 func apply_gravity(delta: float) -> void:
@@ -303,7 +386,7 @@ func apply_gravity(delta: float) -> void:
 # Target detection
 
 func can_detect_target() -> bool:
-	if not is_instance_valid(target):
+	if is_dead or not is_instance_valid(target):
 		return false
 
 	return global_position.distance_to(
@@ -312,6 +395,9 @@ func can_detect_target() -> bool:
 
 
 func set_target(new_target: Node3D) -> void:
+	if is_dead:
+		return
+
 	target = new_target
 
 
@@ -320,3 +406,7 @@ func clear_target() -> void:
 
 	if current_state == State.CHASE or current_state == State.ATTACK:
 		change_state(State.IDLE)
+
+func _on_damage_taken():
+	# Retreat
+	pass

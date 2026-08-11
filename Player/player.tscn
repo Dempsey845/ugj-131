@@ -3,17 +3,19 @@
 [ext_resource type="Script" uid="uid://bdfrsdlqar3ru" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="PackedScene" uid="uid://cegpc1pqifx1g" path="res://Player/player_item_pickup_area.tscn" id="2_4ntmi"]
 [ext_resource type="PackedScene" uid="uid://cmcuvtqnnwejj" path="res://Character/character.tscn" id="2_gwnis"]
+[ext_resource type="Script" uid="uid://caiflhrn0pbx5" path="res://Player/player_hitbox_agent.gd" id="2_x3vf3"]
 [ext_resource type="Script" uid="uid://cdhxpk507m1g1" path="res://Player/player_item_awareness_area.gd" id="3_btcbx"]
 [ext_resource type="PackedScene" uid="uid://dhgtj8ldtvl25" path="res://Systems/Score/points_label.tscn" id="5_k53q1"]
 [ext_resource type="PackedScene" uid="uid://ddde03colgkh1" path="res://Systems/HotPotato/time_lossed_label.tscn" id="5_vtle1"]
 [ext_resource type="Script" uid="uid://72x6frhdyctn" path="res://Systems/HotPotato/time_lossed_label.gd" id="6_od3ui"]
 [ext_resource type="PackedScene" uid="uid://bg50o7e2qat47" path="res://Character/character_point_hurtbox.tscn" id="8_od3ui"]
+[ext_resource type="Script" uid="uid://srat2u0n4q6x" path="res://Systems/health_hitbox.gd" id="9_00tjw"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_od3ui"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3vf3"]
 resource_local_to_scene = true
 resource_name = "Base"
 vertex_color_use_as_albedo = true
@@ -22,7 +24,7 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00tjw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_apopc"]
 resource_local_to_scene = true
 resource_name = "Shoe"
 vertex_color_use_as_albedo = true
@@ -41,6 +43,9 @@ radius = 0.6
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_apopc"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 0.21469727
+
 [node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox", "name_label")]
 script = ExtResource("1_l8h54")
 camera_pivot = NodePath("CameraPivot")
@@ -48,6 +53,9 @@ visuals = NodePath("Visuals")
 standing_collision = NodePath("CollisionShape3D")
 slide_hitbox = NodePath("Visuals/SlideHitbox")
 name_label = NodePath("NameLabel")
+
+[node name="PlayerHitboxAgent" type="Node" parent="." unique_id=1636963712]
+script = ExtResource("2_x3vf3")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=146726859]
 
@@ -71,24 +79,24 @@ random_base_colour = false
 random_shoe_colour = false
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17721702, 0.14086784, -0.39524016, 0.8902447)
-bones/5/rotation = Quaternion(-0.0022561988, -0.000833095, -0.027297746, 0.99962455)
-bones/7/scale = Vector3(1.0636879, 1.0636879, 1.0636879)
-bones/12/rotation = Quaternion(0.17767966, -0.13912827, 0.3903538, 0.892579)
-bones/14/rotation = Quaternion(-0.0022552987, 0.0012006883, 0.039339103, 0.99922276)
+bones/3/rotation = Quaternion(0.17769504, 0.13914499, -0.39045894, 0.8925274)
+bones/5/rotation = Quaternion(-0.0022556852, -6.6773006e-05, -0.002195004, 0.99999505)
+bones/7/scale = Vector3(1.0051218, 1.0051218, 1.0051218)
+bones/12/rotation = Quaternion(0.17833365, -0.13669516, 0.3834005, 0.8958325)
+bones/14/rotation = Quaternion(-0.0022568598, 9.6313976e-05, 0.0031627798, 0.99999255)
 
 [node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=755549810]
-surface_material_override/0 = SubResource("StandardMaterial3D_od3ui")
-surface_material_override/2 = SubResource("StandardMaterial3D_00tjw")
+surface_material_override/0 = SubResource("StandardMaterial3D_x3vf3")
+surface_material_override/2 = SubResource("StandardMaterial3D_apopc")
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.9824546, -0.18642838, 0.005266959, 2.2747554e-06, -0.028253177, -0.9996007, 0.18650298, -0.9820619, 0.027757697, -0.0060912585, 0.0013482966, 0.009681048)
+transform = Transform3D(-0.9621077, -0.2725598, 0.0077473805, -6.174628e-05, -0.028195577, -0.9996024, 0.27267015, -0.9617253, 0.027110236, -0.006160393, 0.0013484941, 0.009720749)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=374173442]
 transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0636879, -2.842171e-14, 1.6061237e-07, 2.842171e-14, -1.0636878, 1.2680152e-07, 1.6061237e-07, -1.2680148e-07, -1.0636878, 6.287271e-16, -2.316377e-09, 0.017697094)
+transform = Transform3D(1.0051218, -2.842171e-14, 1.5176913e-07, 2.842171e-14, -1.0051217, 1.198199e-07, 1.5176914e-07, -1.1981986e-07, -1.0051217, 6.2147554e-16, -2.292045e-09, 0.017492983)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
@@ -146,5 +154,18 @@ script = ExtResource("6_od3ui")
 
 [node name="PointsLabel" parent="." unique_id=863403297 instance=ExtResource("5_k53q1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+
+[node name="HealthHitbox" type="Area3D" parent="." unique_id=1907959007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.21159935, 0)
+collision_layer = 512
+collision_mask = 256
+priority = 1
+script = ExtResource("9_00tjw")
+metadata/_custom_type_script = "uid://srat2u0n4q6x"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealthHitbox" unique_id=1495224428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12639153, 0)
+shape = SubResource("CylinderShape3D_xrivr")
+debug_color = Color(0.80585754, 0.002402687, 0.99878734, 0.41960785)
 
 [editable path="Visuals/Character"]

@@ -1,12 +1,23 @@
 [gd_scene format=3 uid="uid://dgjq2d7prsmrs"]
 
 [ext_resource type="Script" uid="uid://2gllsc0tsm3w" path="res://Enemy/enemy.gd" id="1_2pb1h"]
+[ext_resource type="Script" uid="uid://cgp1eb5m483xs" path="res://Systems/health.gd" id="2_px1sc"]
+[ext_resource type="Script" uid="uid://dc1w7a3ekaert" path="res://Systems/health_hurtbox.gd" id="3_am0pq"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=326028280]
 script = ExtResource("1_2pb1h")
 
 [node name="AttackCooldownTimer" type="Timer" parent="." unique_id=2114590435]
 
+[node name="Health" type="Node" parent="." unique_id=1830300805]
+script = ExtResource("2_px1sc")
+metadata/_custom_type_script = "uid://cgp1eb5m483xs"
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=44220149]
 avoidance_enabled = true
 radius = 1.0
+
+[node name="HealthHurtbox" type="Area3D" parent="." unique_id=1736093584 node_paths=PackedStringArray("health")]
+script = ExtResource("3_am0pq")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://dc1w7a3ekaert"
