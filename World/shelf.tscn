@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://7vcsdpcqlt8v"]
+
+[ext_resource type="PackedScene" uid="uid://naujnuf7lg4n" path="res://World/Assets/Shelf.glb" id="1_tdm6g"]
+[ext_resource type="ArrayMesh" uid="uid://b0mnw2vy6r3y1" path="res://World/Assets/Meshes/can.res" id="2_ag8pi"]
+[ext_resource type="Script" uid="uid://brijmobgkxqlo" path="res://World/can_multimesh.gd" id="3_nahbn"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_xrivr"]
+transform_format = 1
+mesh = ExtResource("2_ag8pi")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(1.2286377, 3.3744874, 3.2)
+
+[node name="Shelf" type="StaticBody3D" unique_id=1857961423]
+
+[node name="Shelf2" parent="." unique_id=883652296 instance=ExtResource("1_tdm6g")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="ShelfMultiMesh" type="MultiMeshInstance3D" parent="." unique_id=1054529183]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+multimesh = SubResource("MultiMesh_xrivr")
+script = ExtResource("3_nahbn")
+rows = 2
+metadata/_custom_type_script = "uid://brijmobgkxqlo"
+
+[node name="ShelfMultiMesh2" type="MultiMeshInstance3D" parent="." unique_id=1662928742]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.1, 0)
+multimesh = SubResource("MultiMesh_xrivr")
+script = ExtResource("3_nahbn")
+rows = 2
+metadata/_custom_type_script = "uid://brijmobgkxqlo"
+
+[node name="ShelfMultiMesh3" type="MultiMeshInstance3D" parent="." unique_id=1420158290]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.2, 0)
+multimesh = SubResource("MultiMesh_xrivr")
+script = ExtResource("3_nahbn")
+rows = 2
+metadata/_custom_type_script = "uid://brijmobgkxqlo"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=203634385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1.6, 0)
+shape = SubResource("BoxShape3D_xrivr")

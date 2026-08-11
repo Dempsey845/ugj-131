@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://5ge2ys37r2aw"]
+
+[ext_resource type="PackedScene" uid="uid://dhfrfku8c2u2o" path="res://World/crate.tscn" id="1_anf8c"]
+[ext_resource type="ArrayMesh" uid="uid://dx6bowq0t1u57" path="res://World/Assets/Meshes/apple.res" id="2_inrd7"]
+[ext_resource type="Script" uid="uid://brijmobgkxqlo" path="res://World/can_multimesh.gd" id="3_ajoys"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_xrivr"]
+transform_format = 1
+mesh = ExtResource("2_inrd7")
+
+[node name="AppleCrate" unique_id=1635344165 instance=ExtResource("1_anf8c")]
+
+[node name="ShelfMultiMesh" type="MultiMeshInstance3D" parent="." index="2" unique_id=429118756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5487055, -0.79999995)
+multimesh = SubResource("MultiMesh_xrivr")
+script = ExtResource("3_ajoys")
+rows = 4
+columns = 5
+random_position = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://brijmobgkxqlo"

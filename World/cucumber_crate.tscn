@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b4u8g4r7ghijj"]
+
+[ext_resource type="PackedScene" uid="uid://dhfrfku8c2u2o" path="res://World/crate.tscn" id="1_e4d16"]
+[ext_resource type="ArrayMesh" uid="uid://duq3kty4xtmtg" path="res://World/Assets/Meshes/cucumber.res" id="2_0s1qx"]
+[ext_resource type="Script" uid="uid://brijmobgkxqlo" path="res://World/can_multimesh.gd" id="3_ai83p"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_b4w14"]
+transform_format = 1
+mesh = ExtResource("2_0s1qx")
+
+[node name="CucumberCrate" unique_id=1635344165 instance=ExtResource("1_e4d16")]
+
+[node name="ShelfMultiMesh" type="MultiMeshInstance3D" parent="." index="2" unique_id=260369378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5487055, -0.79999995)
+multimesh = SubResource("MultiMesh_b4w14")
+script = ExtResource("3_ai83p")
+rows = 9
+columns = 3
+column_spacing = 0.6
+row_spacing = 0.2
+random_y_rotation = 9.0
+random_scale = 0.1
+metadata/_custom_type_script = "uid://brijmobgkxqlo"
