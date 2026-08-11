@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bomhcqp5vmgl2" path="res://Systems/Objective/Leaderboard/leaderboard_ui.tscn" id="11_awrha"]
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="13_0wqet"]
 [ext_resource type="Script" uid="uid://co0bnll56t7ph" path="res://Systems/SpecialRounds/slime_enemy_round.gd" id="13_o6lw0"]
+[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="14_x0pyu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xrivr"]
 shader = ExtResource("8_oeat8")
@@ -107,16 +108,18 @@ leaderboard_ui = NodePath("../CanvasLayer/LeaderboardUI")
 npc_manager = NodePath("../NPCManager")
 player = NodePath("../Player")
 
-[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "countdown_ui", "announcement_manager", "slime_container", "slime_spawn_points", "slime_return_point")]
+[node name="SlimeEnemyRound" type="Node" parent="." unique_id=361793914 node_paths=PackedStringArray("npc_manager", "player_score", "player", "slime_container", "slime_spawn_points", "slime_return_point", "countdown_ui", "announcement_manager")]
 script = ExtResource("13_o6lw0")
 npc_manager = NodePath("../NPCManager")
 player_score = NodePath("../PlayerScore")
 player = NodePath("../Player")
-countdown_ui = NodePath("../CanvasLayer/CountdownUI")
-announcement_manager = NodePath("../AnnouncementManager")
 slime_container = NodePath("../NavigationRegion3D/SlimeContainer")
 slime_spawn_points = [NodePath("../EnemySpawnPoints/Marker3D"), NodePath("../EnemySpawnPoints/Marker3D5"), NodePath("../EnemySpawnPoints/Marker3D2"), NodePath("../EnemySpawnPoints/Marker3D3"), NodePath("../EnemySpawnPoints/Marker3D4")]
 slime_return_point = NodePath("../EnemyHomePoint")
+announcement_text = "We may have acquired those slime balls… unethically. Slimes incoming, don't let them steal your points!"
+announcement_icon = ExtResource("14_x0pyu")
+countdown_ui = NodePath("../CanvasLayer/CountdownUI")
+announcement_manager = NodePath("../AnnouncementManager")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 

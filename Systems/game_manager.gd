@@ -25,7 +25,7 @@ func start_next_round():
 	current_round += 1
 
 	if current_round == 3:
-		slime_round.start_slime_round()
+		slime_round.start_round()
 		return
 
 	current_item_data = rounds[current_round - 1]
