@@ -2,6 +2,7 @@ class_name AnnouncementManager
 extends Node
 
 signal announcement_started(announcement: String, icon: Texture, duration: float)
+signal annoucement_finished
 
 @export var objective: Objective
 
@@ -16,6 +17,16 @@ func start_announcement(item_data: ItemData, duration: float = 3.0):
 	
 	current_item_data = item_data
 	
+func start_custom_announcement(announcement_text: String, icon: Texture, duration: float = 3.0):
+	announcement_started.emit(
+		announcement_text,
+		icon,
+		duration
+	)
+
+	await get_tree().create_timer(duration + 1.0).timeout
+	annoucement_finished.emit()
+
 func stop_announcement():
 	if current_item_data == null:
 		return

@@ -6,6 +6,7 @@ extends Node
 @export var player_score: Score
 @export var player: Player
 @export var countdown_ui: CountdownUI
+@export var announcement_manager: AnnouncementManager
 
 @export var round_duration: int = 30
 @export var slime_container: Node3D
@@ -69,6 +70,12 @@ func _return_slime_home(
 func start_slime_round() -> void:
 	active_slimes.clear()
 	slime_state_timer = 0.0
+
+	await announcement_manager.start_custom_announcement(
+		"We may have acquired those slime balls… unethically. Slimes incoming, don't let them steal your points!",
+		load("res://icon.svg"),
+		6.0
+	)
 
 	countdown_ui.start_countdown(round_duration)
 	if not countdown_ui.countdown_finished.is_connected(_on_countdown_finished):
