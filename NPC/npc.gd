@@ -41,6 +41,8 @@ enum State {
 
 @export_category("Searching")
 @export var search_wait_time: float = 1.0
+@export var separation_radius: float = 2.0
+@export var separation_strength: float = 1.5
 
 @export_category("Random Navigation")
 @export var random_point_attempts: int = 12
@@ -220,7 +222,7 @@ func _update_searching(delta: float) -> void:
 		_slow_down(delta)
 		return
 
-	_follow_navigation(move_speed, delta)
+	_follow_navigation(move_speed, delta, true)
 
 
 func _choose_search_point() -> void:
@@ -1030,7 +1032,8 @@ func _throw_item_at_aggressive_target() -> void:
 
 func _follow_navigation(
 	speed: float,
-	delta: float
+	delta: float,
+	apply_separation: bool = false
 ) -> void:
 	if navigation_agent.is_navigation_finished():
 		_slow_down(delta)
@@ -1052,32 +1055,34 @@ func _follow_navigation(
 
 	direction = direction.normalized()
 
-	direction = _apply_goofy_goggles_wobble(
-		direction
-	)
+	if apply_separation:
+		direction = _apply_npc_separation(direction)
+
+	direction = _apply_goofy_goggles_wobble(direction)
 
 	var current_acceleration: float = acceleration
 
 	if is_on_floor():
 		if ice_movement_enabled:
 			current_acceleration = ice_acceleration
-
 		elif is_on_slippery_surface:
 			current_acceleration = slippery_acceleration
 
+	var target_velocity: Vector3 = (
+		direction
+		* speed
+		* move_speed_multiplier
+	)
+
 	velocity.x = move_toward(
 		velocity.x,
-		direction.x
-			* speed
-			* move_speed_multiplier,
+		target_velocity.x,
 		current_acceleration * delta
 	)
 
 	velocity.z = move_toward(
 		velocity.z,
-		direction.z
-			* speed
-			* move_speed_multiplier,
+		target_velocity.z,
 		current_acceleration * delta
 	)
 
@@ -1093,6 +1098,57 @@ func _follow_navigation(
 			delta
 		)
 
+func _apply_npc_separation(
+	movement_direction: Vector3
+) -> Vector3:
+	if not is_instance_valid(npc_manager):
+		return movement_direction
+
+	var separation: Vector3 = Vector3.ZERO
+
+	for other_npc: NPC in npc_manager.npcs:
+		if not is_instance_valid(other_npc):
+			continue
+
+		if other_npc == self:
+			continue
+
+		var away_from_npc: Vector3 = (
+			global_position - other_npc.global_position
+		)
+
+		away_from_npc.y = 0.0
+
+		var distance: float = away_from_npc.length()
+
+		if distance <= 0.001:
+			away_from_npc = Vector3(
+				randf_range(-1.0, 1.0),
+				0.0,
+				randf_range(-1.0, 1.0)
+			).normalized()
+
+			distance = 0.001
+
+		if distance >= separation_radius:
+			continue
+
+		var influence: float = (
+			1.0 - distance / separation_radius
+		)
+
+		separation += (
+			away_from_npc.normalized()
+			* influence
+		)
+
+	if separation.length_squared() <= 0.001:
+		return movement_direction
+
+	return (
+		movement_direction
+		+ separation * separation_strength
+	).normalized()
 
 func _slow_down(delta: float) -> void:
 	var current_deceleration: float = acceleration

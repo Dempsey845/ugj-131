@@ -13,7 +13,7 @@ extends Node
 
 var targets: Array[Node3D] = []
 
-var active_slimes: Dictionary[Enemy, bool]
+var active_slimes: Dictionary[int, WeakRef] = {}
 
 var slime_scene: PackedScene = preload("uid://d1sltvf53v71e")
 
@@ -23,42 +23,51 @@ var check_slime_state_rate: float = 1.0
 var slime_state_timer: float = 0.0
 
 func _physics_process(delta: float) -> void:
-	if !round_started:
+	if not round_started:
 		return
-	
+
 	slime_state_timer += delta
 
-	if slime_state_timer > check_slime_state_rate:
-		slime_state_timer = 0.0
+	if slime_state_timer < check_slime_state_rate:
+		return
 
-		var non_active_slime_count: int = 0
+	slime_state_timer = 0.0
 
-		for slime: Enemy in active_slimes:
-			if !is_instance_valid(slime):
-				non_active_slime_count += 1
-				continue
+	for slime_id: int in active_slimes.keys():
+		var slime_reference: WeakRef = active_slimes[slime_id]
+		var slime: Enemy = slime_reference.get_ref() as Enemy
 
-			if !active_slimes[slime]:
-				non_active_slime_count += 1
-				continue
-			
-			var target: Node3D = slime.target
+		if not is_instance_valid(slime):
+			active_slimes.erase(slime_id)
+			continue
 
-			if target is NPC:
-				var npc_score: Score = target.get_node("Score")
-				if npc_score.current_points <= 0:
-					slime.return_to_home(slime_return_point.global_position)
-					active_slimes[slime] = false
-			elif target is Player and player_score.current_points <= 0:
-				slime.return_to_home(slime_return_point.global_position)
-				active_slimes[slime] = false
-		
-		if non_active_slime_count >= active_slimes.keys().size():
-			# All slimes have died or returned home
-			end_slime_round()
+		var target: Node3D = slime.target
+
+		if not is_instance_valid(target):
+			_return_slime_home(slime_id, slime)
+			continue
+
+		if get_target_points(target) <= 0:
+			_return_slime_home(slime_id, slime)
+
+	if active_slimes.is_empty():
+		end_slime_round()
 
 
-func start_slime_round():
+func _return_slime_home(
+	slime_id: int,
+	slime: Enemy
+) -> void:
+	active_slimes.erase(slime_id)
+
+	slime.return_to_home(
+		slime_return_point.global_position
+	)
+
+func start_slime_round() -> void:
+	active_slimes.clear()
+	slime_state_timer = 0.0
+
 	get_targets()
 	spawn_slimes()
 
@@ -141,6 +150,6 @@ func spawn_slimes() -> void:
 
 		slime.set_target(assigned_target)
 
-		active_slimes[slime] = true
+		active_slimes[slime.get_instance_id()] = weakref(slime)
 	
 	round_started = true
