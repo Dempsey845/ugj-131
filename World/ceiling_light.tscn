@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://by04gdnmu6b6y"]
+
+[ext_resource type="PackedScene" uid="uid://b7aunaikgiy2e" path="res://World/CeilingLight.fbx" id="1_k6a0t"]
+
+[node name="CeilingLight" type="Node3D" unique_id=1125195472]
+
+[node name="CeilingLight" parent="." unique_id=709700995 instance=ExtResource("1_k6a0t")]
