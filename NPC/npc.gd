@@ -167,6 +167,8 @@ func _ready() -> void:
 		_on_slide_hitbox_body_entered
 	)
 
+	game_manager.round_started.connect(_on_round_started)
+
 	call_deferred("_choose_search_point")
 
 
@@ -1364,3 +1366,7 @@ func is_hot_round_urgent():
 
 func set_ice_movement_enabled(enabled: bool) -> void:
 	ice_movement_enabled = enabled
+
+func _on_round_started():
+	stop_chasing()
+	stop_fleeing()

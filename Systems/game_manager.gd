@@ -1,6 +1,8 @@
 class_name GameManager
 extends Node
 
+signal round_started
+
 @export var announcement_manager: AnnouncementManager
 @export var item_rounds: Array[ItemData]
 @export var npc_manager: NPC_Manager
@@ -55,6 +57,9 @@ func start_next_round() -> void:
 		)
 
 		start_next_round.call_deferred()
+		return
+	
+	round_started.emit()
 
 
 func _start_item_round(item_data: ItemData) -> void:
