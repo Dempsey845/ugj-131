@@ -5,6 +5,7 @@ extends SpecialRound
 @export var npc_manager: NPC_Manager
 @export var player_score: Score
 @export var player: Player
+@export var door: Door
 
 @export_category("Slimes")
 @export var slime_container: Node3D
@@ -86,6 +87,10 @@ func _return_all_slimes_home() -> void:
 			continue
 
 		_return_slime_home(slime_id, slime)
+
+	door.open_door()
+	await get_tree().create_timer(5.0).timeout
+	door.close_door()
 
 
 func _get_active_slime(slime_id: int) -> Enemy:
@@ -186,3 +191,7 @@ func spawn_slimes() -> void:
 		slime.set_target(targets[target_index])
 
 		active_slimes[slime.get_instance_id()] = weakref(slime)
+
+	door.open_door()
+	await get_tree().create_timer(10.0).timeout
+	door.close_door()

@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cpsbrahcrid7t"]
+
+[ext_resource type="Texture2D" uid="uid://cvogi8d6kekpc" path="res://World/StaffDoor.png" id="1_e3n2d"]
+[ext_resource type="Script" uid="uid://b5wg07rcnnbd6" path="res://World/door.gd" id="1_lyvbt"]
+[ext_resource type="Texture2D" uid="uid://ci5xdn6gymofl" path="res://World/StaffDoorNormal.png" id="2_lyvbt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(1.9, 2.8, 0.26655275)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+albedo_texture = ExtResource("1_e3n2d")
+normal_enabled = true
+normal_scale = 2.0
+normal_texture = ExtResource("2_lyvbt")
+uv1_scale = Vector3(2, 2, 2)
+uv1_offset = Vector3(-0.17, 0.065, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+lightmap_size_hint = Vector2i(14, 43)
+material = SubResource("StandardMaterial3D_13qdw")
+add_uv2 = true
+size = Vector3(1.9, 2.8, 0.245)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
+albedo_color = Color(0.15686275, 0.25882354, 0.28627452, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b1lj4")
+size = Vector2(0.245, 2.8)
+
+[sub_resource type="Animation" id="Animation_e3n2d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lyvbt"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5707964, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fb8eu"]
+_data = {
+&"RESET": SubResource("Animation_e3n2d"),
+&"open": SubResource("Animation_lyvbt")
+}
+
+[node name="StaffDoor" type="StaticBody3D" unique_id=664203178]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_lyvbt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=705224901]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050000012, 1.4, -0.005883809)
+shape = SubResource("BoxShape3D_xrivr")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=99905613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot" unique_id=300050854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9499999, 1.4, 0)
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pivot" unique_id=371047408]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0.0066595078, 1.4000001, 0)
+gi_mode = 0
+mesh = SubResource("QuadMesh_xrivr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1322885379]
+libraries/ = SubResource("AnimationLibrary_fb8eu")

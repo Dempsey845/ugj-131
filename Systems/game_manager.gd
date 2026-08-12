@@ -28,7 +28,7 @@ func _build_round_list() -> void:
 	rounds.clear()
 
 	for index: int in item_rounds.size():
-		if index == 2 and is_instance_valid(slime_round):
+		if index == 1 and is_instance_valid(slime_round):
 			rounds.append(slime_round)
 
 		rounds.append(item_rounds[index])
@@ -83,6 +83,7 @@ func _start_special_round(special_round: SpecialRound) -> void:
 
 
 func _on_special_round_ended() -> void:
+	print("Special round ended")
 	await get_tree().create_timer(5.0).timeout
 	start_next_round.call_deferred()
 

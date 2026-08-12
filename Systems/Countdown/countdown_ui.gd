@@ -81,7 +81,7 @@ func _finish_countdown(stop_objective: bool = true) -> void:
 	countdown_label.text = "0"
 	timer_card.visible = false
 
-	if is_instance_valid(objective):
+	if is_instance_valid(objective) and stop_objective:
 		objective.stop_objective()
 	
 	animation_player.play_backwards("show")
