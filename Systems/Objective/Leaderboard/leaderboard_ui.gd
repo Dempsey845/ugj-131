@@ -19,12 +19,11 @@ func set_player_time(
 	player_id: StringName,
 	display_name: String,
 	seconds: float,
-	icon: Texture2D = null
+	color: Color
 ) -> void:
 	entries[player_id] = {
 		"name": display_name,
 		"seconds": maxf(seconds, 0.0),
-		"icon": icon,
 	}
 
 	if not cards.has(player_id):
@@ -35,7 +34,7 @@ func set_player_time(
 		player_id,
 		display_name,
 		entries[player_id]["seconds"],
-		icon
+		color
 	)
 	_refresh_ranking()
 
@@ -43,9 +42,9 @@ func set_player_time(
 func add_player(
 	player_id: StringName,
 	display_name: String,
-	icon: Texture2D = null
+	color: Color
 ) -> void:
-	set_player_time(player_id, display_name, 0.0, icon)
+	set_player_time(player_id, display_name, 0.0, color)
 
 
 func remove_player(player_id: StringName) -> void:

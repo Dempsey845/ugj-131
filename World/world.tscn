@@ -178,7 +178,7 @@ _surfaces = [{
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu"), ExtResource("7_dg1ng")])
+item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("7_dg1ng"), ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu")])
 npc_manager = NodePath("../NPCManager")
 slime_round = NodePath("../SlimeEnemyRound")
 
@@ -203,6 +203,7 @@ npc_manager = NodePath("../NPCManager")
 player = NodePath("../Player")
 top_left_bound = NodePath("Bounds/TopLeft")
 top_right_bound = NodePath("Bounds/BottomRight")
+spawn_vertical_tolerance = 0.5
 metadata/_custom_type_script = "uid://crdv0o033n1l1"
 
 [node name="Bounds" type="Node3D" parent="Objective" unique_id=1529121960]
@@ -467,30 +468,39 @@ affect_navigation_mesh = true
 
 [node name="CucumberCrate" parent="NavigationRegion3D/Crates" unique_id=1635344165 instance=ExtResource("26_yfuda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 15)
+collision_layer = 1
 
 [node name="AppleCrate" parent="NavigationRegion3D/Crates" unique_id=1902966038 instance=ExtResource("27_i8dl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 12)
+collision_layer = 1
 
 [node name="LemonCrate" parent="NavigationRegion3D/Crates" unique_id=1184646279 instance=ExtResource("28_jf64p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9)
+collision_layer = 1
 
 [node name="CucumberCrate2" parent="NavigationRegion3D/Crates" unique_id=380211840 instance=ExtResource("26_yfuda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 15)
+collision_layer = 1
 
 [node name="AppleCrate2" parent="NavigationRegion3D/Crates" unique_id=291356241 instance=ExtResource("27_i8dl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+collision_layer = 1
 
 [node name="LemonCrate2" parent="NavigationRegion3D/Crates" unique_id=2065401537 instance=ExtResource("28_jf64p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 9)
+collision_layer = 1
 
 [node name="CucumberCrate3" parent="NavigationRegion3D/Crates" unique_id=367951733 instance=ExtResource("26_yfuda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 15)
+collision_layer = 1
 
 [node name="AppleCrate3" parent="NavigationRegion3D/Crates" unique_id=447455472 instance=ExtResource("27_i8dl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 12)
+collision_layer = 1
 
 [node name="LemonCrate3" parent="NavigationRegion3D/Crates" unique_id=1189784909 instance=ExtResource("28_jf64p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 9)
+collision_layer = 1
 
 [node name="Shelfs" type="Node3D" parent="NavigationRegion3D" unique_id=203333753]
 

@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b0x7s4kyqb0su"]
 
 [ext_resource type="Script" uid="uid://btgphx0rb8ncg" path="res://Systems/Objective/Leaderboard/leaderboard_card.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_icon"]
+[ext_resource type="PackedScene" uid="uid://bvbyykn4jnl6j" path="res://Character/character_icon.tscn" id="3_w4q4f"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]
 bg_color = Color(0.063, 0.082, 0.118, 1)
@@ -48,7 +48,7 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
-[node name="LeaderboardCard" type="PanelContainer"]
+[node name="LeaderboardCard" type="PanelContainer" unique_id=459063957]
 custom_minimum_size = Vector2(304, 84)
 offset_right = 304.0
 offset_bottom = 84.0
@@ -56,24 +56,24 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("CardStyle")
 script = ExtResource("1_script")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1218986352]
 layout_mode = 2
 theme_override_constants/margin_left = 9
 theme_override_constants/margin_top = 9
 theme_override_constants/margin_right = 9
 theme_override_constants/margin_bottom = 9
 
-[node name="Row" type="HBoxContainer" parent="Margin"]
+[node name="Row" type="HBoxContainer" parent="Margin" unique_id=1545071095]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="RankPanel" type="PanelContainer" parent="Margin/Row"]
+[node name="RankPanel" type="PanelContainer" parent="Margin/Row" unique_id=1971400330]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(34, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("RankStyle")
 
-[node name="RankLabel" type="Label" parent="Margin/Row/RankPanel"]
+[node name="RankLabel" type="Label" parent="Margin/Row/RankPanel" unique_id=734116483]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
@@ -82,31 +82,28 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="IconPanel" type="PanelContainer" parent="Margin/Row"]
+[node name="IconPanel" type="PanelContainer" parent="Margin/Row" unique_id=1988459928]
 custom_minimum_size = Vector2(62, 62)
 layout_mode = 2
 theme_override_styles/panel = SubResource("IconStyle")
 
-[node name="IconMargin" type="MarginContainer" parent="Margin/Row/IconPanel"]
+[node name="IconMargin" type="MarginContainer" parent="Margin/Row/IconPanel" unique_id=2002474319]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="PlayerIcon" type="TextureRect" parent="Margin/Row/IconPanel/IconMargin"]
+[node name="CharacterIcon" parent="Margin/Row/IconPanel/IconMargin" unique_id=400859600 instance=ExtResource("3_w4q4f")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_icon")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="PlayerInfo" type="VBoxContainer" parent="Margin/Row"]
+[node name="PlayerInfo" type="VBoxContainer" parent="Margin/Row" unique_id=89222459]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="NameLabel" type="Label" parent="Margin/Row/PlayerInfo"]
+[node name="NameLabel" type="Label" parent="Margin/Row/PlayerInfo" unique_id=1212454332]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.94, 0.95, 0.98, 1)
@@ -114,18 +111,18 @@ theme_override_font_sizes/font_size = 17
 text = "Contestant"
 text_overrun_behavior = 3
 
-[node name="HeldLabel" type="Label" parent="Margin/Row/PlayerInfo"]
+[node name="HeldLabel" type="Label" parent="Margin/Row/PlayerInfo" unique_id=507807556]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.53, 0.58, 0.66, 1)
 theme_override_font_sizes/font_size = 10
 text = "POTATO HELD"
 
-[node name="TimePanel" type="PanelContainer" parent="Margin/Row"]
+[node name="TimePanel" type="PanelContainer" parent="Margin/Row" unique_id=1354375107]
 custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("TimeStyle")
 
-[node name="SecondsLabel" type="Label" parent="Margin/Row/TimePanel"]
+[node name="SecondsLabel" type="Label" parent="Margin/Row/TimePanel" unique_id=1035987233]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
@@ -133,4 +130,3 @@ theme_override_font_sizes/font_size = 16
 text = "0.0 s"
 horizontal_alignment = 1
 vertical_alignment = 1
-

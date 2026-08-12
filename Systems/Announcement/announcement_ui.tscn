@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d31ajfuljx0uj" path="res://Systems/Announcement/announcement_ui.gd" id="1_e18v2"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_kic27"]
+[ext_resource type="PackedScene" uid="uid://bvbyykn4jnl6j" path="res://Character/character_icon.tscn" id="3_384ps"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]
 bg_color = Color(0.105, 0.129, 0.173, 0.98)
@@ -135,11 +136,11 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -145.0
-offset_right = -408.0
-offset_bottom = -134.0
+offset_bottom = -145.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 524
 theme_override_constants/margin_bottom = 8
 
 [node name="ColorRect" type="PanelContainer" parent="Control/MarginContainer" unique_id=194415427]
@@ -175,8 +176,12 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
+[node name="CharacterIcon" parent="Control/MarginContainer/ColorRect/ContentMargin/Row/IconPanel/IconMargin" unique_id=400859600 instance=ExtResource("3_384ps")]
+layout_mode = 2
+
 [node name="IconTexture" type="TextureRect" parent="Control/MarginContainer/ColorRect/ContentMargin/Row/IconPanel/IconMargin" unique_id=1749915556]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture = ExtResource("1_kic27")
 expand_mode = 1

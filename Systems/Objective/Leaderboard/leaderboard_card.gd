@@ -9,31 +9,25 @@ const RANK_COLOURS: Array[Color] = [
 
 @onready var rank_panel: PanelContainer = %RankPanel
 @onready var rank_label: Label = %RankLabel
-@onready var player_icon: TextureRect = %PlayerIcon
 @onready var name_label: Label = %NameLabel
 @onready var seconds_label: Label = %SecondsLabel
+@onready var character_icon: CharacterIcon = %CharacterIcon
 
 var player_id: StringName
 var current_rank: int = -1
-var _default_icon: Texture2D
 var _tween: Tween
 var _is_hiding: bool = false
-
-
-func _ready() -> void:
-	_default_icon = player_icon.texture
-
 
 func set_player_data(
 	id: StringName,
 	display_name: String,
 	seconds: float,
-	icon: Texture2D = null
+	color: Color
 ) -> void:
 	player_id = id
 	name_label.text = display_name
 	seconds_label.text = "%.1f s" % seconds
-	player_icon.texture = icon if icon != null else _default_icon
+	character_icon.set_head_color(color)
 
 
 func move_to_rank(rank: int, target_position: Vector2, duration: float) -> void:

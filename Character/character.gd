@@ -33,6 +33,8 @@ var animation_prefix = "Armature|"
 
 var slide_animation_active: bool = false
 
+var color: Color
+
 func _ready() -> void:
 	playback = animation_tree.get(
 		"parameters/MovementStateMachine/playback"
@@ -75,6 +77,7 @@ func _ready() -> void:
 		) as StandardMaterial3D
 
 		base_material.albedo_color = base_colour
+		color = base_colour
 
 		character_mesh.set_surface_override_material(
 			0,

@@ -13,6 +13,10 @@ var player_id_to_name: Dictionary[StringName, String]
 
 var player_id_to_instance: Dictionary[StringName, Node3D]
 
+var player_id_to_color: Dictionary[StringName, Color] = {
+	&"player": Color.from_rgba8(233, 94, 72)
+}
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -24,7 +28,7 @@ func _ready() -> void:
 	leaderboard_ui.add_player(
 		&"player",
 		SceneManager.player_name,
-		load("res://icon.svg")
+		player_id_to_color[&"player"]
 	)
 
 	player_hold_seconds[&"player"] = 0
@@ -38,7 +42,7 @@ func set_player_hold_second(player_id: StringName, value: float):
 		player_id,
 		player_id_to_name[player_id],
 		player_hold_seconds[player_id],
-		load("res://icon.svg")
+		player_id_to_color[player_id]
 	)
 
 func reset_player_hold_second(player_id: StringName):
@@ -80,11 +84,14 @@ func get_top_three_players() -> Array[Node3D]:
 
 func register_npc(npc: NPC):
 	var npc_id: StringName = &"npc_%s" % npc.assigned_name.to_lower()
+	var character: Character = npc.get_node("%Character")
 	leaderboard_ui.add_player(
 	npc_id,
 	npc.assigned_name,
-	load("res://icon.svg")
+	character.color
 	)
+
+	player_id_to_color[npc_id] = character.color
 
 	player_hold_seconds[npc_id] = 0
 	player_id_to_name[npc_id] = npc.assigned_name

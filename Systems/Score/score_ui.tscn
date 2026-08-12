@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c33xr88s5a725" path="res://Systems/Score/score_ui.gd" id="1_xep6f"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_icon"]
+[ext_resource type="PackedScene" uid="uid://bvbyykn4jnl6j" path="res://Character/character_icon.tscn" id="3_knpk4"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]
 bg_color = Color(0.105, 0.129, 0.173, 0.98)
@@ -208,10 +209,14 @@ theme_override_constants/margin_bottom = 8
 
 [node name="PlayerIcon" type="TextureRect" parent="Container/Card/CardMargin/ProfileRow/IconPanel/IconMargin" unique_id=201657548]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture = ExtResource("2_icon")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="CharacterIcon" parent="Container/Card/CardMargin/ProfileRow/IconPanel/IconMargin" unique_id=400859600 instance=ExtResource("3_knpk4")]
+layout_mode = 2
 
 [node name="PlayerDetails" type="VBoxContainer" parent="Container/Card/CardMargin/ProfileRow" unique_id=829401804]
 layout_mode = 2
