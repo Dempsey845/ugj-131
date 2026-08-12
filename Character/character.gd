@@ -34,6 +34,7 @@ var animation_prefix = "Armature|"
 var slide_animation_active: bool = false
 
 var color: Color
+var shoe_color: Color
 
 func _ready() -> void:
 	playback = animation_tree.get(
@@ -62,6 +63,7 @@ func _ready() -> void:
 	body.slide_ended.connect(_on_body_slide_ended)
 
 	var base_colour: Color = Color("fd7352")
+	color = base_colour
 
 	if random_base_colour:
 		base_colour = Color.from_hsv(
@@ -101,6 +103,8 @@ func _ready() -> void:
 			randf_range(0.8, 1.0)
 		)
 
+		shoe_color = shoe_colour
+
 		var shoe_material := (
 			character_mesh
 			.get_surface_override_material(2)
@@ -113,6 +117,8 @@ func _ready() -> void:
 			2,
 			shoe_material
 		)
+	else:
+		shoe_color = Color.BLACK
 
 
 func _physics_process(delta: float) -> void:

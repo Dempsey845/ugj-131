@@ -1,8 +1,29 @@
 [gd_scene format=3 uid="uid://c286qeu0ni6r1"]
 
 [ext_resource type="PackedScene" uid="uid://rvq15g4ljblb" path="res://Character/Character.fbx" id="1_d7dtk"]
+[ext_resource type="Script" uid="uid://co5wqyv5q7aht" path="res://Character/victory_character.gd" id="2_g1n5t"]
 
-[node name="VictoryCharacter" unique_id=61053124 instance=ExtResource("1_d7dtk")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lrwlc"]
+resource_local_to_scene = true
+resource_name = "Base"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.9921584, 0.45097628, 0.32156613, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y765j"]
+resource_local_to_scene = true
+resource_name = "Shoe"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.34509462, 0.71372, 0.6784282, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+
+[node name="VictoryCharacter" unique_id=61053124 node_paths=PackedStringArray("character_mesh") instance=ExtResource("1_d7dtk")]
+script = ExtResource("2_g1n5t")
+character_mesh = NodePath("Armature/Skeleton3D/Sphere")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(256521520) index="0" unique_id=1001391030]
 bones/1/rotation = Quaternion(1.7117504e-08, 6.3108872e-30, 4.081131e-15, 1)
@@ -16,6 +37,10 @@ bones/18/rotation = Quaternion(5.45934e-14, -2.8421704e-14, 1.490119e-08, 1)
 bones/19/rotation = Quaternion(8.4703234e-22, -1.7378476e-36, -1.776354e-15, 1)
 bones/25/rotation = Quaternion(2.6171692e-14, 1.4210854e-14, -1.490119e-08, 1)
 bones/26/rotation = Quaternion(-2.019484e-28, -4.039923e-36, 1.7763496e-15, 1)
+
+[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=31004686]
+surface_material_override/0 = SubResource("StandardMaterial3D_lrwlc")
+surface_material_override/2 = SubResource("StandardMaterial3D_y765j")
 
 [node name="AnimationPlayer" parent="." index="1" unique_id=882593477]
 autoplay = &"Armature|Victory"

@@ -179,12 +179,14 @@ _surfaces = [{
 
 [node name="World" type="Node3D" unique_id=1526889445]
 
-[node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round")]
+[node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round", "player_score", "player")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
 item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_wm6hh"), ExtResource("6_x0pyu"), ExtResource("3_s5cut"), ExtResource("2_5xkvv"), ExtResource("3_8kjm2"), ExtResource("3_o6lw0"), ExtResource("3_it66m"), ExtResource("2_oeat8"), ExtResource("7_dg1ng")])
 npc_manager = NodePath("../NPCManager")
 slime_round = NodePath("../SlimeEnemyRound")
+player_score = NodePath("../PlayerScore")
+player = NodePath("../Player")
 
 [node name="AnnouncementManager" type="Node" parent="." unique_id=104979428 node_paths=PackedStringArray("objective")]
 script = ExtResource("1_yf0ba")

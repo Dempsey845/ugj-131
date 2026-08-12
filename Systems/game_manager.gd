@@ -7,6 +7,8 @@ signal round_started
 @export var item_rounds: Array[ItemData]
 @export var npc_manager: NPC_Manager
 @export var slime_round: SlimeEnemyRound
+@export var player_score: Score
+@export var player: Player
 
 var is_current_round_hot_potato: bool = false
 var round_time: float = 0.0
@@ -61,6 +63,64 @@ func start_next_round() -> void:
 	
 	round_started.emit()
 
+func get_top_three_players() -> Array[Node3D]:
+	var scored_players: Array[Dictionary] = []
+	var zero_point_players: Array[Node3D] = []
+
+	if is_instance_valid(player):
+		if player_score.current_points > 0:
+			scored_players.append({
+				"player": player,
+				"points": player_score.current_points
+			})
+		else:
+			zero_point_players.append(player)
+
+	for npc: NPC in npc_manager.npcs:
+		if not is_instance_valid(npc):
+			continue
+
+		var score := npc.get_node_or_null("Score") as Score
+
+		if not is_instance_valid(score):
+			push_warning(
+				"NPC %s does not have a Score node." % npc.name
+			)
+			continue
+
+		if score.current_points > 0:
+			scored_players.append({
+				"player": npc,
+				"points": score.current_points
+			})
+		else:
+			zero_point_players.append(npc)
+
+	scored_players.shuffle()
+
+	scored_players.sort_custom(
+		func(first: Dictionary, second: Dictionary) -> bool:
+			return first["points"] > second["points"]
+	)
+
+	zero_point_players.shuffle()
+
+	var top_three: Array[Node3D] = []
+
+	for entry: Dictionary in scored_players:
+		top_three.append(entry["player"] as Node3D)
+
+		if top_three.size() == 3:
+			return top_three
+
+	# Fill empty podium positions with random zero-point contestants.
+	for contestant: Node3D in zero_point_players:
+		top_three.append(contestant)
+
+		if top_three.size() == 3:
+			break
+
+	return top_three
 
 func _start_item_round(item_data: ItemData) -> void:
 	current_item_data = item_data
@@ -93,4 +153,27 @@ func _on_special_round_ended() -> void:
 
 
 func _finish_game() -> void:
+	SceneManager.top_three.clear()
+
+	var top_three_players: Array[Node3D] = get_top_three_players()
+	var top_three: Array[Dictionary]
+
+	for top in top_three_players:
+		var player_name: String = ""
+		if top is NPC:
+			player_name = top.assigned_name
+		elif top is Player:
+			player_name = SceneManager.player_name
+		
+		var character: Character = top.get_node("%Character")
+
+		top_three.append({
+			"name": player_name,
+			"base_color": character.color,
+			"shoe_color": character.shoe_color
+		})
+
+	SceneManager.top_three = top_three
+
+
 	TransitionUi.change_scene("res://Victory/victory_scene.tscn", "Let's see who won!")

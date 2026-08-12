@@ -14,9 +14,9 @@ var npc_scene: PackedScene = preload(
 )
 
 static var npc_names: Array[String] = [
-	"Bingo",
+	"Burpee",
 	"Bonk",
-	"Bubbles",
+	"Buttons",
 	"Chips",
 	"Clonk",
 	"Dippy",

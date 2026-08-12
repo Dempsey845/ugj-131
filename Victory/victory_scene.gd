@@ -19,9 +19,9 @@ extends Node3D
 @export var camera_follow_speed: float = 2.5
 @export var camera_look_at_gold: bool = true
 
-@onready var victory_character_gold: Node3D = $VictoryCharacter_Gold
-@onready var victory_character_silver: Node3D = $VictoryCharacter_Silver
-@onready var victory_character_bronze: Node3D = $VictoryCharacter_Bronze
+@onready var victory_character_gold: VictoryCharacter = $VictoryCharacter_Gold
+@onready var victory_character_silver: VictoryCharacter = $VictoryCharacter_Silver
+@onready var victory_character_bronze: VictoryCharacter = $VictoryCharacter_Bronze
 
 @onready var gold_pillar: Node3D = $GoldPillar
 @onready var silver_pillar: Node3D = $SilverPillar
@@ -49,6 +49,16 @@ var camera_intro_target: Transform3D
 
 
 func _ready() -> void:
+	if SceneManager.top_three.size() == 3:
+		victory_character_gold.set_character_name(SceneManager.top_three[0]["name"])
+		victory_character_gold.set_color(SceneManager.top_three[0]["base_color"], SceneManager.top_three[0]["shoe_color"])
+
+		victory_character_silver.set_character_name(SceneManager.top_three[1]["name"])
+		victory_character_silver.set_color(SceneManager.top_three[1]["base_color"], SceneManager.top_three[1]["shoe_color"])
+
+		victory_character_bronze.set_character_name(SceneManager.top_three[2]["name"])
+		victory_character_bronze.set_color(SceneManager.top_three[2]["base_color"], SceneManager.top_three[2]["shoe_color"])
+
 	gold_pillar.scale.y = 0.0
 	silver_pillar.scale.y = 0.0
 	bronze_pillar.scale.y = 0.0
