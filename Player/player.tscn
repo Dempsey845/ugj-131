@@ -79,25 +79,38 @@ item_manager = NodePath("../../PlayerItemPickupArea")
 random_base_colour = false
 random_shoe_colour = false
 
-[node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17753848, 0.13968734, -0.39190412, 0.89184004)
-bones/5/rotation = Quaternion(-0.0022569112, -0.0003189282, -0.010455031, 0.9999428)
-bones/7/scale = Vector3(1.024393, 1.024393, 1.024393)
-bones/12/rotation = Quaternion(0.17812364, -0.13744807, 0.3856392, 0.8947975)
-bones/14/rotation = Quaternion(-0.002256511, 0.00045970964, 0.015066525, 0.9998839)
+[node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 168065254) index="0" unique_id=1670652650]
+bones/1/rotation = Quaternion(1.7117504e-08, 6.3108872e-30, 4.081131e-15, 1)
+bones/3/rotation = Quaternion(0.17710407, 0.14128599, -0.3963965, 0.88968664)
+bones/4/rotation = Quaternion(0.08737507, 0.011402963, -0.201421, 0.9755333)
+bones/5/rotation = Quaternion(-0.002255658, -0.0011045624, -0.036190387, 0.9993418)
+bones/7/scale = Vector3(1.084444, 1.084444, 1.084444)
+bones/12/rotation = Quaternion(0.17743985, -0.14002603, 0.39284644, 0.8913919)
+bones/13/rotation = Quaternion(0.08689995, -0.01277774, 0.22570464, 0.9702281)
+bones/14/rotation = Quaternion(-0.002253979, 0.0015917287, 0.05214853, 0.99863553)
+bones/18/rotation = Quaternion(5.45934e-14, -2.8421704e-14, 1.490119e-08, 1)
+bones/19/rotation = Quaternion(8.4703234e-22, -1.7378476e-36, -1.776354e-15, 1)
+bones/25/rotation = Quaternion(2.6171692e-14, 1.4210854e-14, -1.490119e-08, 1)
+bones/26/rotation = Quaternion(-2.019484e-28, -4.039923e-36, 1.7763496e-15, 1)
 
-[node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=755549810]
+[node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=170515434]
 surface_material_override/0 = SubResource("StandardMaterial3D_x3vf3")
 surface_material_override/2 = SubResource("StandardMaterial3D_apopc")
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.96960795, -0.24456656, 0.006914937, -1.8674182e-06, -0.028256213, -0.99960065, 0.24466443, -0.9692205, 0.027396869, -0.006138319, 0.0013482791, 0.009707899)
+transform = Transform3D(-0.9878387, -0.15542166, 0.0043914905, -1.5278347e-06, -0.02823475, -0.9996013, 0.1554839, -0.9874444, 0.027891016, -0.006066181, 0.0013483757, 0.009667022)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=374173442]
 transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.024393, -2.842171e-14, 1.54679e-07, 2.842171e-14, -1.0243928, 1.2211719e-07, 1.54679e-07, -1.2211714e-07, -1.0243928, 6.238617e-16, -2.3000515e-09, 0.017560145)
+transform = Transform3D(1.084444, -2.842171e-14, 1.6374645e-07, 2.842171e-14, -1.0844439, 1.2927585e-07, 1.6374646e-07, -1.292758e-07, -1.0844439, 6.312971e-16, -2.3250004e-09, 0.017769434)
+
+[node name="BoneAttachment3D3" parent="Visuals/Character/Armature/Skeleton3D" index="3" unique_id=1178742684]
+transform = Transform3D(-0.9999997, 8.940695e-08, -1.5099577e-07, 1.5099565e-07, 1.1920924e-07, -0.9999999, -2.9802333e-08, -0.9999996, -1.1920946e-07, 0.002142993, -1.8089576e-10, 0.002322576)
+
+[node name="BoneAttachment3D4" parent="Visuals/Character/Armature/Skeleton3D" index="4" unique_id=691542133]
+transform = Transform3D(-0.9999997, -8.940695e-08, 1.5099577e-07, -1.5099575e-07, 1.1920912e-07, -0.9999999, 2.9802333e-08, -0.9999996, -1.192094e-07, -0.002142993, -1.8089703e-10, 0.002322576)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
@@ -115,6 +128,9 @@ collision_mask = 5
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]
+
+[node name="AudioListener3D" type="AudioListener3D" parent="CameraPivot/CameraSpringArm/Camera3D" unique_id=1734854629]
+current = true
 
 [node name="PlayerItemPickupArea" parent="." unique_id=833010195 node_paths=PackedStringArray("item_holder", "player", "character_check_ray") instance=ExtResource("2_4ntmi")]
 item_holder = NodePath("../Visuals/Character/Armature/Skeleton3D/BoneAttachment3D/ItemHolder")
