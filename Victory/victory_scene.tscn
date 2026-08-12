@@ -1,0 +1,192 @@
+[gd_scene format=3 uid="uid://bho23yvg4jt0q"]
+
+[ext_resource type="PackedScene" uid="uid://c286qeu0ni6r1" path="res://Character/victory_character.tscn" id="1_0b2m1"]
+[ext_resource type="Script" uid="uid://d2cbrg7xyv7di" path="res://Victory/victory_scene.gd" id="1_07tai"]
+[ext_resource type="Shader" uid="uid://cph27hhjk4qfy" path="res://World/world_sky.gdshader" id="2_qrp41"]
+[ext_resource type="Texture2D" uid="uid://cjjjqnuacjeyd" path="res://World/Textures/GroundTile.png" id="4_4ynw0"]
+[ext_resource type="Texture2D" uid="uid://b4kmchgf4q25g" path="res://World/Textures/GroundTileNormal.png" id="5_b4kqh"]
+[ext_resource type="PackedScene" uid="uid://ckjr82bhnemwf" path="res://Character/Crown.glb" id="6_phn2d"]
+[ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="7_nl2yt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_07tai"]
+shader = ExtResource("2_qrp41")
+shader_parameter/zenith_color = Color(0.075, 0.29, 0.48, 1)
+shader_parameter/upper_color = Color(0.24, 0.56, 0.68, 1)
+shader_parameter/horizon_color = Color(0.72, 0.88, 0.72, 1)
+shader_parameter/lower_color = Color(0.19, 0.37, 0.31, 1)
+shader_parameter/cloud_shadow_color = Color(0.3, 0.52, 0.56, 1)
+shader_parameter/cloud_color = Color(0.86, 0.96, 0.9, 1)
+shader_parameter/cloud_highlight_color = Color(1, 0.94, 0.7, 1)
+shader_parameter/magic_color = Color(0.25, 0.9, 0.82, 1)
+shader_parameter/sparkle_color = Color(0.85, 1, 0.78, 1)
+shader_parameter/sun_color = Color(1, 0.82, 0.44, 1)
+shader_parameter/animation_speed = 0.025
+shader_parameter/cloud_scale = 5.0
+shader_parameter/cloud_coverage = 0.48
+shader_parameter/cloud_softness = 0.16
+shader_parameter/cloud_strength = 0.9
+shader_parameter/magic_strength = 0.22
+shader_parameter/sparkle_strength = 0.45
+shader_parameter/sun_size = 0.022
+shader_parameter/sun_glow_size = 0.16
+shader_parameter/sun_strength = 2.0
+shader_parameter/brightness = 1.0
+
+[sub_resource type="Sky" id="Sky_j8job"]
+sky_material = SubResource("ShaderMaterial_07tai")
+
+[sub_resource type="Environment" id="Environment_4ynw0"]
+sky = SubResource("Sky_j8job")
+glow_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.4776737, 0.5590097, 0.6528999, 1)
+fog_sun_scatter = 1.0
+fog_density = 1.0
+fog_depth_curve = 0.25000027
+fog_depth_begin = 15.0
+fog_depth_end = 50.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phn2d"]
+resource_name = "Gold"
+cull_mode = 2
+albedo_color = Color(0.73416406, 0.6500396, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+size = Vector3(1.2, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrp41"]
+albedo_color = Color(0.6151689, 0.6386833, 0.64871454, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07tai"]
+albedo_color = Color(0.5743475, 0.34342095, 3.85046e-07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b4kqh"]
+albedo_color = Color(0.35007274, 0.40230912, 0.46931398, 1)
+albedo_texture = ExtResource("4_4ynw0")
+normal_enabled = true
+normal_scale = 2.0
+normal_texture = ExtResource("5_b4kqh")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b4kqh")
+size = Vector2(500, 500)
+
+[node name="VictoryScene" type="Node3D" unique_id=184804892]
+script = ExtResource("1_07tai")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=440528815]
+environment = SubResource("Environment_4ynw0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=709061267]
+transform = Transform3D(1, 0, 0, 0, 0.6347305, 0.77273357, 0, -0.77273357, 0.6347305, 0, 9, -42)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=166121571]
+transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.9659259, -0.058, 2.6, 2.7)
+
+[node name="VictoryCharacter_Gold" parent="." unique_id=61053124 instance=ExtResource("1_0b2m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="Skeleton3D" parent="VictoryCharacter_Gold/Armature" parent_id_path=PackedInt32Array(61053124, 256521520) index="0" unique_id=1001391030]
+bones/2/rotation = Quaternion(-0.18880585, 0.18764053, -0.67948014, 0.68370324)
+bones/2/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
+bones/3/position = Vector3(-1.7326731e-09, 0.0019930922, 1.0399472e-10)
+bones/4/position = Vector3(1.6088016e-12, 0.002764064, 6.9891724e-11)
+bones/4/scale = Vector3(1, 0.99999994, 0.99999976)
+bones/5/position = Vector3(3.0517575e-09, 0.0023289307, -5.0482667e-11)
+bones/5/scale = Vector3(1, 1.0000001, 1.0000002)
+bones/7/position = Vector3(3.3914254e-24, 0.00603823, -1.422467e-17)
+bones/8/position = Vector3(-8.443277e-31, 0.0018188965, 3.541367e-24)
+bones/8/rotation = Quaternion(4.863822e-22, 0, 1.1476674e-28, 1)
+bones/9/position = Vector3(0, 0.0016662629, 0)
+bones/9/rotation = Quaternion(0.70710677, -3.090862e-08, 1.3767877e-07, 0.70710677)
+bones/9/scale = Vector3(1, 1, 1)
+bones/11/scale = Vector3(1, 1.0000001, 1.0000001)
+bones/12/position = Vector3(-1.3755809e-09, 0.0019930918, -1.5793766e-10)
+bones/12/scale = Vector3(0.99999994, 0.99999976, 1.0000001)
+bones/13/position = Vector3(-2.8958207e-12, 0.0027640657, 1.4535914e-10)
+bones/13/scale = Vector3(1.0000001, 1, 1)
+bones/14/position = Vector3(-1.7347235e-17, 0.0023289304, -2.5604059e-11)
+bones/14/scale = Vector3(1, 1, 0.9999999)
+bones/16/rotation = Quaternion(2.9597805e-07, 1.05955735e-07, -0.79970443, 0.60039395)
+bones/17/position = Vector3(1.2310936e-10, 0.0022316442, 1.3484169e-16)
+bones/17/rotation = Quaternion(2.2285668e-07, -1.4026979e-07, -0.60039395, 0.7997044)
+bones/17/scale = Vector3(0.99999994, 1, 1)
+bones/18/position = Vector3(1.4843031e-10, 0.0014195031, 8.130893e-18)
+bones/19/position = Vector3(0, 0.0018010896, 1.1368684e-17)
+bones/20/position = Vector3(0, 0.001785827, -5.169879e-26)
+bones/20/rotation = Quaternion(4.814826e-35, -6.617445e-24, -2.711567e-24, 1)
+bones/21/position = Vector3(0, 0.0012145423, -5.169879e-26)
+bones/21/rotation = Quaternion(0.606838, 9.475069e-08, 1.6397081e-07, 0.79482555)
+bones/21/scale = Vector3(1, 1, 1.0000001)
+bones/23/rotation = Quaternion(1.0531364e-07, -2.491007e-07, 0.79970443, 0.60039395)
+bones/24/position = Vector3(-1.2310936e-10, 0.0022316442, 4.909319e-16)
+bones/24/rotation = Quaternion(2.2285661e-07, 1.402698e-07, 0.60039395, 0.7997044)
+bones/24/scale = Vector3(0.99999994, 1, 1)
+bones/25/position = Vector3(-1.4843031e-10, 0.0014195031, -2.596527e-16)
+bones/26/position = Vector3(0, 0.0018010896, -4.5474734e-17)
+bones/27/position = Vector3(0, 0.001785827, 0)
+bones/27/rotation = Quaternion(6.310911e-30, 6.617445e-24, 8.43779e-25, 1)
+bones/28/position = Vector3(0, 0.0012145423, 0)
+bones/28/rotation = Quaternion(0.606838, -9.475069e-08, -1.6397081e-07, 0.79482555)
+bones/28/scale = Vector3(1, 1, 1.0000001)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="VictoryCharacter_Gold/Armature/Skeleton3D" index="1" unique_id=680628366]
+transform = Transform3D(1, 3.5527137e-14, 2.3841856e-07, 2.384186e-07, -1.1920929e-07, -0.9999999, 1.4210854e-14, 0.9999999, -1.1920929e-07, 5.616439e-16, -2.0912831e-09, 0.01580887)
+bone_name = "Head"
+bone_idx = 8
+
+[node name="Crown2" parent="VictoryCharacter_Gold/Armature/Skeleton3D/BoneAttachment3D" unique_id=738383377 instance=ExtResource("6_phn2d")]
+transform = Transform3D(0.01, -3.5527143e-16, -2.3841862e-09, 1.4210866e-16, 0.010000003, 9.0949474e-17, 2.3841864e-09, -9.0949594e-17, 0.010000003, 1.4156097e-09, 0.002191132, -2.0671864e-10)
+
+[node name="VictoryCharacter_Silver" parent="." unique_id=1474978544 instance=ExtResource("1_0b2m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.1, 0)
+
+[node name="VictoryCharacter_Bronze" parent="." unique_id=391467995 instance=ExtResource("1_0b2m1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.1, 0)
+
+[node name="GoldPillar" type="Node3D" parent="." unique_id=135643566]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GoldPillar" unique_id=1819740375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_phn2d")
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="CharacterPoint" type="Marker3D" parent="GoldPillar" unique_id=1948980936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="SilverPillar" type="Node3D" parent="." unique_id=602378264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SilverPillar" unique_id=1635547758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_qrp41")
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="CharacterPoint" type="Marker3D" parent="SilverPillar" unique_id=1672926386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="BronzePillar" type="Node3D" parent="." unique_id=1240886757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BronzePillar" unique_id=2064129670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_07tai")
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="CharacterPoint" type="Marker3D" parent="BronzePillar" unique_id=1677940863]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=577797174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -241.88)
+mesh = SubResource("PlaneMesh_xrivr")
+
+[node name="ConfettiParticles" parent="." unique_id=1799658963 instance=ExtResource("7_nl2yt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+auto_explode = false
+free_on_finished = true
+
+[editable path="VictoryCharacter_Gold"]

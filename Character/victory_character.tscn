@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c286qeu0ni6r1"]
+
+[ext_resource type="PackedScene" uid="uid://rvq15g4ljblb" path="res://Character/Character.fbx" id="1_d7dtk"]
+
+[node name="VictoryCharacter" unique_id=61053124 instance=ExtResource("1_d7dtk")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(256521520) index="0" unique_id=1001391030]
+bones/1/rotation = Quaternion(1.7117504e-08, 6.3108872e-30, 4.081131e-15, 1)
+bones/3/rotation = Quaternion(0.19523406, 0.0010401268, -0.002918181, 0.9807518)
+bones/4/rotation = Quaternion(0.061753403, -0.040790554, 0.720513, 0.6894808)
+bones/5/rotation = Quaternion(-0.002257035, 2.3843282e-07, -2.8705798e-09, 0.9999975)
+bones/12/rotation = Quaternion(0.1952341, -0.0010401236, 0.0029181961, 0.9807518)
+bones/13/rotation = Quaternion(0.060834642, 0.04134108, -0.7302369, 0.6792232)
+bones/14/rotation = Quaternion(-0.0022570428, -2.3843876e-07, 9.896733e-09, 0.9999975)
+bones/18/rotation = Quaternion(5.45934e-14, -2.8421704e-14, 1.490119e-08, 1)
+bones/19/rotation = Quaternion(8.4703234e-22, -1.7378476e-36, -1.776354e-15, 1)
+bones/25/rotation = Quaternion(2.6171692e-14, 1.4210854e-14, -1.490119e-08, 1)
+bones/26/rotation = Quaternion(-2.019484e-28, -4.039923e-36, 1.7763496e-15, 1)
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=882593477]
+autoplay = &"Armature|Victory"
+
+[node name="NameLabel" type="Label3D" parent="." index="2" unique_id=863403297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+billboard = 1
+text = "Bob"
