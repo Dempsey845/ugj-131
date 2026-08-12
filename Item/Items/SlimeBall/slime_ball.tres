@@ -9,5 +9,6 @@ script = ExtResource("1_n52tk")
 item_name = "Slime Ball?"
 item_texture = ExtResource("2_vbis2")
 item_scene = ExtResource("1_vbis2")
-seconds_to_collect = 15
+seconds_to_collect = 30
+urgent_time = 10
 metadata/_custom_type_script = "uid://bta1n6q65gi1m"

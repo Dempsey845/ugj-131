@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://14v7brlyhmqr"]
+
+[ext_resource type="Script" uid="uid://cghwntwhuxji" path="res://Systems/Transition/transition_ui.gd" id="1_o7jjl"]
+
+[sub_resource type="Shader" id="Shader_transition"]
+code = "shader_type canvas_item;
+
+uniform float progress : hint_range(0.0, 1.0) = 0.0;
+
+uniform vec4 background_colour : source_color = vec4(0.055, 0.075, 0.12, 1.0);
+uniform vec4 stripe_colour_1 : source_color = vec4(0.99, 0.35, 0.28, 1.0);
+uniform vec4 stripe_colour_2 : source_color = vec4(1.0, 0.79, 0.24, 1.0);
+uniform vec4 stripe_colour_3 : source_color = vec4(0.22, 0.78, 0.72, 1.0);
+
+uniform float edge_softness : hint_range(0.001, 0.1) = 0.012;
+uniform float wave_amount : hint_range(0.0, 0.2) = 0.035;
+uniform float stripe_size : hint_range(0.02, 0.5) = 0.12;
+
+void fragment() {
+	vec2 uv = UV;
+
+	float wave =
+		sin(uv.y * 18.0 + TIME * 5.0) * wave_amount
+		+ sin(uv.y * 37.0 - TIME * 3.0) * wave_amount * 0.35;
+
+	float edge = progress * 1.55 - 0.25;
+	float coverage = 1.0 - smoothstep(
+		edge - edge_softness,
+		edge + edge_softness,
+		uv.x + wave
+	);
+
+	float stripe_coordinate = uv.x + uv.y * 0.42 - TIME * 0.12;
+	float stripe = fract(stripe_coordinate / stripe_size);
+
+	vec4 colour = background_colour;
+
+	if (stripe < 0.12) {
+		colour = stripe_colour_1;
+	} else if (stripe < 0.20) {
+		colour = stripe_colour_2;
+	} else if (stripe < 0.27) {
+		colour = stripe_colour_3;
+	}
+
+	float leading_edge = 1.0 - smoothstep(
+		0.0,
+		0.055,
+		abs((uv.x + wave) - edge)
+	);
+
+	colour.rgb += leading_edge * vec3(0.32, 0.38, 0.42);
+	colour.a *= coverage;
+
+	COLOR = colour;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_transition"]
+shader = SubResource("Shader_transition")
+shader_parameter/progress = 0.0
+shader_parameter/background_colour = Color(0.05490196, 0.07058824, 0.101960786, 1)
+shader_parameter/stripe_colour_1 = Color(0.99, 0.35, 0.28, 1)
+shader_parameter/stripe_colour_2 = Color(0.9843137, 0.74509805, 0.18039216, 1)
+shader_parameter/stripe_colour_3 = Color(0.22, 0.78, 0.72, 1)
+shader_parameter/edge_softness = 0.012
+shader_parameter/wave_amount = 0.035
+shader_parameter/stripe_size = 0.12
+
+[sub_resource type="LabelSettings" id="LabelSettings_message"]
+font_size = 58
+outline_size = 14
+outline_color = Color(0.02, 0.025, 0.05, 0.8)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_offset = Vector2(0, 8)
+
+[node name="TransitionUI" type="Control" unique_id=744206097]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_o7jjl")
+
+[node name="TransitionRect" type="ColorRect" parent="." unique_id=1835180168]
+material = SubResource("ShaderMaterial_transition")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MessageContainer" type="Control" parent="." unique_id=1524904917]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -90.0
+offset_right = 350.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MessageLabel" type="Label" parent="MessageContainer" unique_id=334552844]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+label_settings = SubResource("LabelSettings_message")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -9,5 +9,6 @@ script = ExtResource("1_o80h1")
 item_name = "Pair of Ice Shoes!"
 item_texture = ExtResource("2_xd0g3")
 item_scene = ExtResource("1_xd0g3")
-seconds_to_collect = 20
+seconds_to_collect = 40
+urgent_time = 12
 metadata/_custom_type_script = "uid://bta1n6q65gi1m"

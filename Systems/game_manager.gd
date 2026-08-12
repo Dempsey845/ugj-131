@@ -93,4 +93,4 @@ func _on_special_round_ended() -> void:
 
 
 func _finish_game() -> void:
-	print("All rounds complete.")
+	TransitionUi.change_scene("res://Victory/victory_scene.tscn", "Let's see who won!")

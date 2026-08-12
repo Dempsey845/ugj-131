@@ -83,12 +83,12 @@ shader_parameter/sun_glow_size = 0.16
 shader_parameter/sun_strength = 2.0
 shader_parameter/brightness = 1.0
 
-[sub_resource type="Sky" id="Sky_j8job"]
+[sub_resource type="Sky" id="Sky_84yts"]
 sky_material = SubResource("ShaderMaterial_3ql07")
 
 [sub_resource type="Environment" id="Environment_3f78f"]
 background_mode = 2
-sky = SubResource("Sky_j8job")
+sky = SubResource("Sky_84yts")
 glow_enabled = true
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_xrivr"]
@@ -182,7 +182,7 @@ _surfaces = [{
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_wm6hh"), ExtResource("6_x0pyu"), ExtResource("3_it66m"), ExtResource("3_o6lw0"), ExtResource("3_s5cut"), ExtResource("2_5xkvv"), ExtResource("3_8kjm2"), ExtResource("2_oeat8"), ExtResource("7_dg1ng")])
+item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_wm6hh"), ExtResource("6_x0pyu"), ExtResource("3_s5cut"), ExtResource("2_5xkvv"), ExtResource("3_8kjm2"), ExtResource("3_o6lw0"), ExtResource("3_it66m"), ExtResource("2_oeat8"), ExtResource("7_dg1ng")])
 npc_manager = NodePath("../NPCManager")
 slime_round = NodePath("../SlimeEnemyRound")
 
