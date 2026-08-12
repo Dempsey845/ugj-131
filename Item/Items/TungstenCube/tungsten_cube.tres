@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://x4jsrtkjjr1d"]
 
 [ext_resource type="PackedScene" uid="uid://cpafg66x8ymee" path="res://Item/Items/TungstenCube/tungsten_cube_item.tscn" id="1_7blac"]
-[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_gfv20"]
+[ext_resource type="Texture2D" uid="uid://c2sv0d46pv4s3" path="res://Item/Items/TungstenCube/tungsten_cube_icon.png" id="2_6j2r8"]
 [ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="3_htmfy"]
 
 [resource]
 script = ExtResource("3_htmfy")
 item_name = "Tungsten Cube!"
-item_texture = ExtResource("2_gfv20")
+item_texture = ExtResource("2_6j2r8")
 item_scene = ExtResource("1_7blac")
 seconds_to_collect = 15
 metadata/_custom_type_script = "uid://bta1n6q65gi1m"

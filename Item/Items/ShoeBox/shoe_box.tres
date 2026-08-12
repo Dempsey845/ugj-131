@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="1_o80h1"]
 [ext_resource type="PackedScene" uid="uid://bkhsqpwjr4o5i" path="res://Item/Items/ShoeBox/shoe_box_item.tscn" id="1_xd0g3"]
-[ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="2_8pe41"]
+[ext_resource type="Texture2D" uid="uid://bdwoa6h3h875d" path="res://Item/Items/ShoeBox/shoe_box_icon.png" id="2_xd0g3"]
 
 [resource]
 script = ExtResource("1_o80h1")
 item_name = "Pair of Ice Shoes!"
-item_texture = ExtResource("2_8pe41")
+item_texture = ExtResource("2_xd0g3")
 item_scene = ExtResource("1_xd0g3")
 seconds_to_collect = 20
 metadata/_custom_type_script = "uid://bta1n6q65gi1m"
