@@ -20,6 +20,7 @@ enum State {
 
 @onready var pickup_area: Area3D = $PickupArea
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
+@onready var input_prompt: InputPrompt = $InputPrompt
 
 var state: State = State.AVAILABLE
 var carrier: Node3D
@@ -57,6 +58,8 @@ func collect(new_carrier: Node3D, item_holder: Node3D ) -> bool:
 	reparent(item_holder)
 	transform = Transform3D.IDENTITY
 
+	input_prompt.can_be_shown = false
+
 	picked_up.emit(carrier)
 	return true
 
@@ -91,6 +94,8 @@ func drop(direction: Vector3) -> void:
 
 	dropped.emit()
 
+	input_prompt.can_be_shown = true
+
 	await get_tree().create_timer(
 		pickup_delay_after_drop
 	).timeout
@@ -101,6 +106,7 @@ func drop(direction: Vector3) -> void:
 	state = State.AVAILABLE
 	can_be_collected = true
 	pickup_area.set_deferred("monitoring", true)
+
 	became_available.emit()
 
 func _on_pickup_area_entered(area: Area3D):

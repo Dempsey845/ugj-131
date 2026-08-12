@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dxnv6pfj5ftdi"]
 
 [ext_resource type="Script" uid="uid://cwna0g6e0jdu2" path="res://Item/item.gd" id="1_gcssv"]
+[ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_h0d2h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 
@@ -24,3 +25,5 @@ collision_mask = 32
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea" unique_id=1620489395]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_13qdw")
+
+[node name="InputPrompt" parent="." unique_id=930064518 instance=ExtResource("2_h0d2h")]
