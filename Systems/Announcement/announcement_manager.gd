@@ -9,8 +9,13 @@ signal annoucement_finished
 var current_item_data: ItemData
 
 func start_announcement(item_data: ItemData, duration: float = 3.0):
+	var announcement_text: String = "A %s has been hidden! Have it when the time is up and it's yours!" % sanitize_string(item_data.item_name)
+
+	if item_data.custom_announcement != "":
+		announcement_text = item_data.custom_announcement
+
 	announcement_started.emit(
-		"A %s has been hidden! Have it when the time is up and it's yours!" % sanitize_string(item_data.item_name),
+		announcement_text,
 		item_data.item_texture,
 		duration
 	)

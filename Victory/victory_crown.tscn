@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dn1a5miqig81w"]
+
+[ext_resource type="PackedScene" uid="uid://ckjr82bhnemwf" path="res://Character/Crown.glb" id="1_ju5y6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0k0yu"]
+albedo_color = Color(0.7982448, 0.70805305, 0.09685481, 1)
+metallic = 0.3
+roughness = 0.39
+
+[node name="VictoryCrown" unique_id=421543723 instance=ExtResource("1_ju5y6")]
+
+[node name="Crown" parent="." index="0" unique_id=260048810]
+surface_material_override/0 = SubResource("StandardMaterial3D_0k0yu")
