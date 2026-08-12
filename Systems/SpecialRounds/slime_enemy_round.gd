@@ -17,6 +17,7 @@ extends SpecialRound
 
 var targets: Array[Node3D] = []
 var active_slimes: Dictionary[int, WeakRef] = {}
+var slimes_away_from_home: Dictionary[int, WeakRef] = {}
 
 var slime_state_timer: float = 0.0
 
@@ -43,6 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_round_started() -> void:
 	active_slimes.clear()
+	slimes_away_from_home.clear()
 	slime_state_timer = 0.0
 
 	get_targets()
@@ -88,8 +90,7 @@ func _return_all_slimes_home() -> void:
 
 		_return_slime_home(slime_id, slime)
 
-	await get_tree().create_timer(5.0).timeout
-	door.close_door()
+	_try_close_door()
 
 
 func _get_active_slime(slime_id: int) -> Enemy:
@@ -189,6 +190,30 @@ func spawn_slimes() -> void:
 		var target_index: int = index % targets.size()
 		slime.set_target(targets[target_index])
 
-		active_slimes[slime.get_instance_id()] = weakref(slime)
+		var slime_id: int = slime.get_instance_id()
+		var slime_reference: WeakRef = weakref(slime)
 
-	door.open_door()
+		active_slimes[slime_id] = slime_reference
+		slimes_away_from_home[slime_id] = slime_reference
+
+		slime.returned_home.connect(
+			_on_slime_returned_home.bind(slime_id),
+			CONNECT_ONE_SHOT
+		)
+
+	if not active_slimes.is_empty():
+		door.open_door()
+
+func _on_slime_returned_home(slime_id: int) -> void:
+	active_slimes.erase(slime_id)
+	slimes_away_from_home.erase(slime_id)
+
+	_try_close_door()
+
+
+func _try_close_door() -> void:
+	if not slimes_away_from_home.is_empty():
+		return
+
+	if is_instance_valid(door):
+		door.close_door()

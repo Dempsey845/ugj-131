@@ -10,6 +10,7 @@ signal chase_started(target: Node3D)
 signal attack_started(target: Node3D)
 signal retreat_started(target_position: Vector3)
 signal return_home_started(home_position: Vector3)
+signal returned_home
 signal death_started
 
 
@@ -441,8 +442,9 @@ func process_returning_home(delta: float) -> void:
 
 
 func finish_returning_home() -> void:
+	returned_home.emit()
 	stop_moving()
-	queue_free()
+	queue_free.call_deferred()
 
 
 func get_closest_navigation_position(
