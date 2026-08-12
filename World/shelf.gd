@@ -4,12 +4,12 @@ extends StaticBody3D
 
 var shelf_types: Array = [
 	{"name": "MilkCarton", "rows": 2, "columns": 6, "column_spacing": 0.5, "row_spacing": 0.5, "uid": "uid://pj41rpnndqq0"},
-	{"name": "Can", "rows": 2, "columns": 8, "column_spacing": 0.35 ,"row_spacing": 0.5, "uid": "uid://tryi53dxllik"},
-	{"name": "BigBottle", "rows": 2, "columns": 6, "column_spacing": 0.5, "row_spacing": 0.5, "uid": "uid://b7d3gfcp2a0my"},\
-	{"name": "Bottle", "rows": 2, "columns": 8, "column_spacing": 0.35, "row_spacing": 0.5, "uid": "uid://d2pdcwv1fct3o"},
+	{"name": "Can", "rows": 2, "columns": 8, "column_spacing": 0.35 ,"row_spacing": 0.5, "uid": "res://World/Assets/Meshes/can.res"},
+	{"name": "BigBottle", "rows": 2, "columns": 6, "column_spacing": 0.5, "row_spacing": 0.5, "uid": "res://World/Assets/Meshes/big_bottle.res"},\
+	{"name": "Bottle", "rows": 2, "columns": 8, "column_spacing": 0.35, "row_spacing": 0.5, "uid": "res://World/Assets/Meshes/bottle.res"},
 	{"name": "Springles", "rows": 2, "columns": 8, "column_spacing": 0.35, "row_spacing": 0.5, "uid": "uid://vl76rjusy0q6"},
 	{"name": "CerealBox", "rows": 3, "columns": 5, "column_spacing": 0.6, "row_spacing": 0.3, "uid": "uid://uk5bu5veu7ci"},
-	{"name": "Glass", "rows": 2, "columns": 8, "column_spacing": 0.35, "row_spacing": 0.5, "uid": "uid://b0n8m4cdoixvo"},
+	{"name": "Glass", "rows": 2, "columns": 8, "column_spacing": 0.35, "row_spacing": 0.5, "uid": "res://World/Assets/Meshes/glass.res"},
 	{"name": "Tin", "rows": 2, "columns": 5, "column_spacing": 0.6, "row_spacing": 0.5, "uid": "uid://dxs7u02vwd68g"},
 
 ]

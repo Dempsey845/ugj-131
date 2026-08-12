@@ -5,3 +5,31 @@
 [node name="CeilingLight" type="Node3D" unique_id=1125195472]
 
 [node name="CeilingLight" parent="." unique_id=709700995 instance=ExtResource("1_k6a0t")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=393411609]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -3.4)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 15.0
+spot_angle = 35.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=1799734184]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -10.6)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 15.0
+spot_angle = 35.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="." unique_id=1511755313]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 3.6999998)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 15.0
+spot_angle = 35.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="." unique_id=20835527]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 10.799999)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 15.0
+spot_angle = 35.0

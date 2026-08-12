@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://7vcsdpcqlt8v"]
 
 [ext_resource type="Script" uid="uid://b3dd7ny84nvoy" path="res://World/shelf.gd" id="1_ag8pi"]
-[ext_resource type="PackedScene" uid="uid://naujnuf7lg4n" path="res://World/Assets/Shelf.glb" id="1_tdm6g"]
+[ext_resource type="PackedScene" uid="uid://b74qw2o8arm7i" path="res://World/shelf_model.tscn" id="2_tdm6g"]
 [ext_resource type="Script" uid="uid://brijmobgkxqlo" path="res://World/can_multimesh.gd" id="3_nahbn"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_xrivr"]
@@ -14,7 +14,7 @@ size = Vector3(1.2286377, 3.3744874, 3.2)
 [node name="Shelf" type="StaticBody3D" unique_id=1857961423]
 script = ExtResource("1_ag8pi")
 
-[node name="Shelf2" parent="." unique_id=883652296 instance=ExtResource("1_tdm6g")]
+[node name="ShelfModel" parent="." unique_id=438550097 instance=ExtResource("2_tdm6g")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="ShelfMultiMesh" type="MultiMeshInstance3D" parent="." unique_id=1054529183]

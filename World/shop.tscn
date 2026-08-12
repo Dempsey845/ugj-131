@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cdjp1v32s86rq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8h54"]
+metallic = 0.37
+metallic_specular = 0.65
+roughness = 0.33
+
+[node name="Shop" type="CSGCombiner3D" unique_id=1433086111]
+material_override = SubResource("StandardMaterial3D_l8h54")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1657927833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 22.65)
+size = Vector3(50, 14, 1.3000001)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="." unique_id=2089805693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+size = Vector3(50, 1, 50)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1262152818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, -22.55)
+size = Vector3(50, 14, 1.1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=1400080717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 6.5, 0)
+size = Vector3(3, 14, 44)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=960187259]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 6.5, 0)
+size = Vector3(3, 14, 44)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=60094288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.617073, -23.261436)
+operation = 2
+size = Vector3(3.3452148, 3.389511, 3.7263184)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1334733718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25024414, 1.6461258, 23.738564)
+operation = 2
+size = Vector3(3.3452148, 3.3314056, 3.7263184)
