@@ -19,6 +19,7 @@ extends Node3D
 @onready var confused_particles: ConfusedParticles = $ConfusedParticles
 @onready var jump_player: AudioStreamPlayer3D = $JumpPlayer
 @onready var slide_player: AudioStreamPlayer3D = $SlidePlayer
+@onready var slide_hit_player: AudioStreamPlayer3D = $SlideHitPlayer
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
@@ -63,6 +64,7 @@ func _ready() -> void:
 
 	body.slide_started.connect(_on_body_slide_started)
 	body.slide_ended.connect(_on_body_slide_ended)
+	body.knocked_down.connect(_on_body_knocked_down)
 
 	var base_colour: Color = Color("fd7352")
 	color = base_colour
@@ -275,3 +277,6 @@ func show_shoes():
 func hide_shoes():
 	left_shoe.visible = false
 	right_shoe.visible = false
+
+func _on_body_knocked_down():
+	slide_hit_player.play()
