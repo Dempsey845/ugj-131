@@ -15,3 +15,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.31072456)
 [node name="CollisionShape3D" parent="." index="1" unique_id=250276096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6625, 0.31072456)
 shape = SubResource("CapsuleShape3D_3ytth")
+
+[node name="PickupArea" parent="." index="2" unique_id=535574247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)

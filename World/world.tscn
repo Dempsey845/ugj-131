@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://bhlnrg7t6tkxv" path="res://Item/Items/ToyRobot/toy_robot.tres" id="3_it66m"]
 [ext_resource type="Resource" uid="uid://x4jsrtkjjr1d" path="res://Item/Items/TungstenCube/tungsten_cube.tres" id="3_o6lw0"]
 [ext_resource type="Resource" uid="uid://crs16d43b7on0" path="res://Item/Items/RubberDucky/rubber_ducky.tres" id="3_s5cut"]
+[ext_resource type="Resource" uid="uid://btlme3a6nbviq" path="res://Item/Items/ToiletRoll/toilet_roll.tres" id="3_wm6hh"]
 [ext_resource type="Script" uid="uid://ca44c4na4ctqa" path="res://NPC/npc_manager.gd" id="4_h2aik"]
 [ext_resource type="Script" uid="uid://dlkw16wmy3th6" path="res://Systems/Score/score.gd" id="5_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://c4dyuc1ga0qxi" path="res://Systems/Score/score_ui.tscn" id="5_w47uh"]
@@ -180,7 +181,7 @@ _surfaces = [{
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_it66m"), ExtResource("2_5xkvv"), ExtResource("3_s5cut"), ExtResource("7_dg1ng"), ExtResource("3_o6lw0"), ExtResource("2_oeat8"), ExtResource("6_x0pyu")])
+item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_wm6hh"), ExtResource("3_it66m"), ExtResource("2_5xkvv"), ExtResource("3_s5cut"), ExtResource("7_dg1ng"), ExtResource("3_o6lw0"), ExtResource("2_oeat8"), ExtResource("6_x0pyu")])
 npc_manager = NodePath("../NPCManager")
 slime_round = NodePath("../SlimeEnemyRound")
 

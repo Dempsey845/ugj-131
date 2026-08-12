@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cx538xkuv0jcp"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_v7yq6"]
+[ext_resource type="PackedScene" uid="uid://dheplgn3wem8h" path="res://Item/Items/ToiletRoll/ToiletPaper.glb" id="2_s4g5c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7k73h"]
+size = Vector3(0.74072266, 0.81933594, 0.7350098)
+
+[node name="ToiletRollItem" unique_id=1963813499 instance=ExtResource("1_v7yq6")]
+
+[node name="ToiletPaper2" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=374589337 instance=ExtResource("2_s4g5c")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 5.9604645e-08)
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BoxShape3D_7k73h")
