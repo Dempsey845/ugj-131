@@ -6,8 +6,11 @@ extends ItemAgent
 @export var trail_spacing: float = 1.5
 @export var random_rotation: bool = true
 @export var decal_height_offset: float = 0.015
+@export var minimum_bounce_interval: float = 0.1
 
 @onready var ground_raycast: RayCast3D = %GroundRaycast
+@onready var slime_bounce_player: AudioStreamPlayer3D = %SlimeBouncePlayer
+
 
 var slime_trail_decal_scene: PackedScene = preload(
 	"uid://bd746qhugluct"
@@ -16,6 +19,12 @@ var slime_trail_decal_scene: PackedScene = preload(
 var trail_enabled: bool = false
 var last_decal_position: Vector3
 var has_placed_decal: bool = false
+
+var can_play_bounce_sound: bool = true
+
+
+func _ready() -> void:
+	get_parent().body_entered.connect(_on_body_entered)
 
 
 func _physics_process(_delta: float) -> void:
@@ -97,3 +106,16 @@ func reset_effect() -> void:
 	particles.emitting = false
 
 	super.reset_effect()
+
+func _on_body_entered(body: Node3D) -> void:
+	if not can_play_bounce_sound:
+		return
+
+	print(body.name)
+
+	can_play_bounce_sound = false
+
+	slime_bounce_player.play()
+
+	await get_tree().create_timer(minimum_bounce_interval).timeout
+	can_play_bounce_sound = true

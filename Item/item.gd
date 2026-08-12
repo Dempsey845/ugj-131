@@ -11,7 +11,6 @@ enum State {
 	DROPPED
 }
 
-
 @export var pickup_delay_after_drop: float = 1.0
 @export var throw_force: float = 5.0
 @export var upward_throw_force: float = 3.0
@@ -32,7 +31,6 @@ func _ready() -> void:
 	pickup_area.monitoring = true
 
 	pickup_area.area_entered.connect(_on_pickup_area_entered)
-
 
 func collect(new_carrier: Node3D, item_holder: Node3D ) -> bool:
 	if not can_be_collected:
