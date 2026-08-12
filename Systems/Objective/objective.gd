@@ -6,6 +6,7 @@ signal objective_ended
 
 const NEXT_ROUND_DELAY: float = 2.0
 const HOT_POTATO_POSITION_POINTS: Array[int] = [10, 5, 2]
+const NPC_POINT_MULTIPLIER: int = 3
 
 @export_category("References")
 @export var player_score: Score
@@ -218,34 +219,38 @@ func _finish_standard_objective() -> void:
 	var current_carrier: Node3D = current_item.carrier
 	var last_carrier: Node3D = current_item.last_carrier
 
-	var has_current_carrier: bool = is_instance_valid(current_carrier)
-	var has_last_carrier: bool = is_instance_valid(last_carrier)
+	var has_current_carrier: bool = is_instance_valid(
+		current_carrier
+	)
+	var has_last_carrier: bool = is_instance_valid(
+		last_carrier
+	)
 
 	if not has_current_carrier and not has_last_carrier:
 		return
 
 	var reward_recipient: Node3D
-	var reward_amount: int
+	var base_reward_amount: int
 
 	if has_current_carrier:
 		reward_recipient = current_carrier
-		reward_amount = current_item_data.points_reward
+		base_reward_amount = current_item_data.points_reward
 	else:
 		reward_recipient = _get_last_carrier_reward_recipient(
 			last_carrier
 		)
 
-		reward_amount = int(
+		base_reward_amount = int(
 			float(current_item_data.points_reward) / 2.0
 		)
 
 	if not is_instance_valid(reward_recipient):
 		return
 
-	var score: Score = _get_character_score(reward_recipient)
-
-	if is_instance_valid(score):
-		score.add_points(reward_amount)
+	_reward_character(
+		reward_recipient,
+		base_reward_amount
+	)
 
 	_play_confetti(reward_recipient.global_position)
 
@@ -316,13 +321,29 @@ func _reward_top_hot_potato_players(
 		if not is_instance_valid(character):
 			continue
 
-		var score: Score = _get_character_score(character)
+		_reward_character(
+			character,
+			HOT_POTATO_POSITION_POINTS[index]
+		)
 
-		if is_instance_valid(score):
-			score.add_points(
-				HOT_POTATO_POSITION_POINTS[index]
-			)
+func _reward_character(
+	character: Node3D,
+	base_points: int
+) -> void:
+	if not is_instance_valid(character):
+		return
 
+	var score: Score = _get_character_score(character)
+
+	if not is_instance_valid(score):
+		return
+
+	var point_multiplier: int = 1
+
+	if character is NPC:
+		point_multiplier = NPC_POINT_MULTIPLIER
+
+	score.add_points(base_points * point_multiplier)
 
 func _reset_carrier_item_time(carrier: Node3D) -> void:
 	if carrier is NPC:
