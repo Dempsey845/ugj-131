@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d0i3c1l4044b0"]
+
+[ext_resource type="PackedScene" uid="uid://duaierj1hdw43" path="res://World/Fridge/TallFridge.glb" id="1_83x3m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(1.6, 6.5, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83x3m"]
+size = Vector3(1.6, 3, 1.4)
+
+[node name="TallFridge" type="StaticBody3D" unique_id=1246589860]
+collision_layer = 8
+
+[node name="TallFridge2" parent="." unique_id=1382454958 instance=ExtResource("1_83x3m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2018544166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 3.25, -5.9604645e-08)
+shape = SubResource("BoxShape3D_xrivr")
+
+[node name="CameraCollider" type="StaticBody3D" parent="." unique_id=1749658008]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraCollider" unique_id=1480185089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 1.5, -5.9604645e-08)
+shape = SubResource("BoxShape3D_83x3m")

@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dtnc1lge6pckp"]
+
+[ext_resource type="PackedScene" uid="uid://ds6kyafgr71tj" path="res://World/Fridge/WideFridge.glb" id="1_i5il0"]
+[ext_resource type="PackedScene" uid="uid://c3k2wf3q1n8uu" path="res://Character/IceShoe/ice_vapour_particles.tscn" id="2_p0ro1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(2.6000001, 5.5, 1.4)
+
+[sub_resource type="Gradient" id="Gradient_vapour"]
+offsets = PackedFloat32Array(0, 0.12, 0.55, 1)
+colors = PackedColorArray(0.55, 0.9, 1, 0, 0.65, 0.94, 1, 0.55, 0.8, 0.97, 1, 0.3, 0.9, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_vapour"]
+gradient = SubResource("Gradient_vapour")
+
+[sub_resource type="Curve" id="Curve_scale"]
+_limits = [0.0, 1.0, 0.0, 1.5]
+_data = [Vector2(0, 0.15), 0.0, 4.0, 0, 0, Vector2(0.2, 0.65), 1.5, 1.5, 0, 0, Vector2(0.7, 1), 0.5, 0.5, 0, 0, Vector2(1, 1.25), 0.2, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_scale"]
+curve = SubResource("Curve_scale")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bcsb"]
+emission_shape_scale = Vector3(2.94, 1, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.12
+emission_ring_radius = 0.32
+emission_ring_inner_radius = 0.18
+emission_ring_cone_angle = 25.0
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_min = 0.25
+initial_velocity_max = 0.65
+angular_velocity_min = -35.0
+angular_velocity_max = 35.0
+gravity = Vector3(0, 0.35, 0)
+radial_accel_min = -0.2
+radial_accel_max = 0.1
+tangential_accel_min = 0.7
+tangential_accel_max = 1.4
+damping_min = 0.1
+damping_max = 0.3
+scale_min = 0.65
+scale_max = 1.15
+scale_curve = SubResource("CurveTexture_scale")
+color_ramp = SubResource("GradientTexture_vapour")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p0ro1"]
+size = Vector3(2.6000001, 1.7, 1.4)
+
+[node name="WideFridge" type="StaticBody3D" unique_id=848234444]
+collision_layer = 8
+
+[node name="WideFridge2" parent="." unique_id=282601999 instance=ExtResource("1_i5il0")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=836711822]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9802322e-08, 2.75, -5.9604645e-08)
+shape = SubResource("BoxShape3D_xrivr")
+
+[node name="IceVapourParticles" parent="." unique_id=1550504511 instance=ExtResource("2_p0ro1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+process_material = SubResource("ParticleProcessMaterial_8bcsb")
+
+[node name="CameraCollider" type="StaticBody3D" parent="." unique_id=1429297232]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraCollider" unique_id=2090417389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9802322e-08, 0.85, -5.9604645e-08)
+shape = SubResource("BoxShape3D_p0ro1")
