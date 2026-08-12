@@ -15,6 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://cwk768x502lqh" path="res://Audio/SoundEffects/Character/slide_sfx.mp3" id="13_ge5jf"]
 [ext_resource type="AudioStream" uid="uid://cnvxtxbfu4vv3" path="res://Audio/SoundEffects/Character/slide_hit_1.mp3" id="14_l8sad"]
 [ext_resource type="AudioStream" uid="uid://cplbiwl5n4bce" path="res://Audio/SoundEffects/Character/slide_hit_2.mp3" id="15_vs7nk"]
+[ext_resource type="AudioStream" uid="uid://djj14wytbqeah" path="res://Audio/SoundEffects/Character/pickup_sfx.mp3" id="16_vs7nk"]
+[ext_resource type="AudioStream" uid="uid://desk4ep0begbc" path="res://Audio/SoundEffects/Character/item_throw_sfx.mp3" id="17_payuw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1l6l2"]
 resource_local_to_scene = true
@@ -153,6 +155,18 @@ random_volume_offset_db = 3.0
 streams_count = 2
 stream_0/stream = ExtResource("14_l8sad")
 stream_1/stream = ExtResource("15_vs7nk")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wi6ju"]
+random_pitch = 1.1892071
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("16_vs7nk")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c5rlk"]
+random_pitch = 1.1892071
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("17_payuw")
 
 [node name="Character" unique_id=1454173267 node_paths=PackedStringArray("left_shoe", "right_shoe", "character_mesh") instance=ExtResource("1_k3002")]
 script = ExtResource("2_nwtvh")
@@ -293,5 +307,15 @@ bus = &"SFX"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 stream = SubResource("AudioStreamRandomizer_njqwk")
 volume_db = -3.0
+max_distance = 15.0
+bus = &"SFX"
+
+[node name="PickupPlayer" type="AudioStreamPlayer3D" parent="." index="8" unique_id=493630765]
+stream = SubResource("AudioStreamRandomizer_wi6ju")
+max_distance = 15.0
+bus = &"SFX"
+
+[node name="ItemThrowPlayer" type="AudioStreamPlayer3D" parent="." index="9" unique_id=58700310]
+stream = SubResource("AudioStreamRandomizer_c5rlk")
 max_distance = 15.0
 bus = &"SFX"

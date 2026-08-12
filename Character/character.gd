@@ -20,6 +20,8 @@ extends Node3D
 @onready var jump_player: AudioStreamPlayer3D = $JumpPlayer
 @onready var slide_player: AudioStreamPlayer3D = $SlidePlayer
 @onready var slide_hit_player: AudioStreamPlayer3D = $SlideHitPlayer
+@onready var pickup_player: AudioStreamPlayer3D = $PickupPlayer
+@onready var item_throw_player: AudioStreamPlayer3D = $ItemThrowPlayer
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
@@ -250,6 +252,8 @@ func _on_body_slide_ended() -> void:
 func _on_item_picked_up():
 	target_hold_blend = 1.0
 
+	pickup_player.play()
+
 	var item: Item = item_manager.get_current_item()
 
 	if !item.is_connected("tree_exited", _on_item_tree_exited):
@@ -259,6 +263,7 @@ func _on_item_tree_exited():
 	target_hold_blend = 0.0
 
 func _on_item_dropped(item):
+	item_throw_player.play()
 	target_hold_blend = 0.0
 	item.tree_exited.disconnect(_on_item_tree_exited)
 
