@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cm3vxpgod6gul"]
+
+[ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="1_4au7i"]
+[ext_resource type="PackedScene" uid="uid://b6v2y121la0sd" path="res://Item/Items/CleaningSponge/cleaning_sponge_item.tscn" id="1_c0jvi"]
+[ext_resource type="Texture2D" uid="uid://h6bm4ov0nmvm" path="res://Item/Items/CleaningSponge/cleaning_sponge_icon.png" id="1_kjdfa"]
+
+[resource]
+script = ExtResource("1_4au7i")
+item_name = "Cleaning Sponge"
+item_texture = ExtResource("1_kjdfa")
+item_scene = ExtResource("1_c0jvi")
+seconds_to_collect = 45
+urgent_time = 10
+metadata/_custom_type_script = "uid://bta1n6q65gi1m"

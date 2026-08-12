@@ -6,7 +6,7 @@ signal objective_ended
 
 const NEXT_ROUND_DELAY: float = 2.0
 const HOT_POTATO_POSITION_POINTS: Array[int] = [10, 5, 2]
-const NPC_POINT_MULTIPLIER: int = 3
+const NPC_POINT_MULTIPLIER: int = 2
 
 @export_category("References")
 @export var player_score: Score

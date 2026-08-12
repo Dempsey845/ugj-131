@@ -12,7 +12,7 @@ enum State {
 }
 
 
-@export var pickup_delay_after_drop: float = 1.5
+@export var pickup_delay_after_drop: float = 1.0
 @export var throw_force: float = 5.0
 @export var upward_throw_force: float = 3.0
 @export var force_character_to_pickup_on_collide: bool

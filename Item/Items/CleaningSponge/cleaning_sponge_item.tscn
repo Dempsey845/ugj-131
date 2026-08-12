@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b6v2y121la0sd"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_qaxxe"]
+[ext_resource type="PackedScene" uid="uid://b7awoqq4ocwec" path="res://Item/Items/CleaningSponge/CleaningSponge.glb" id="2_bpbef"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t75h1"]
+size = Vector3(0.5220337, 0.37236327, 0.77246094)
+
+[node name="CleaningSpongeItem" unique_id=1963813499 instance=ExtResource("1_qaxxe")]
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0008239746, 0.18618162, -0.00048828125)
+shape = SubResource("BoxShape3D_t75h1")
+
+[node name="CleaningSponge" parent="." index="3" unique_id=914069335 instance=ExtResource("2_bpbef")]
