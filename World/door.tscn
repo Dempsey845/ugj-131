@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://k48giegqm6cv"]
+
+[ext_resource type="PackedScene" uid="uid://06s86036r6h2" path="res://World/Door.glb" id="1_xb3ck"]
+
+[node name="Door" unique_id=862838996 instance=ExtResource("1_xb3ck")]
+
+[node name="SideFrame" parent="." index="0" unique_id=622375246]
+gi_lightmap_texel_scale = 4.0
+
+[node name="TopFrame" parent="." index="1" unique_id=694242437]
+gi_lightmap_texel_scale = 4.0
+
+[node name="LeftDoor" parent="." index="2" unique_id=1777165568]
+gi_lightmap_texel_scale = 4.0
+
+[node name="RightDoor" parent="." index="3" unique_id=1918307068]
+gi_lightmap_texel_scale = 4.0
+
+[node name="RightDoorPanels" parent="." index="4" unique_id=1545739818]
+visible = false
+gi_mode = 0
+
+[node name="LeftDoorPanels" parent="." index="5" unique_id=1745436116]
+visible = false
+gi_mode = 0
+
+[node name="SideFramePanels" parent="." index="6" unique_id=400581014]
+visible = false
+gi_mode = 0
