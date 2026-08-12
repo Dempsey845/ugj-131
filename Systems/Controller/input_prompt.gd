@@ -50,6 +50,8 @@ func _ready() -> void:
 			connected_joypads[0]
 		)
 
+		ControllerManager._set_using_controller(true, connected_joypads[0])
+
 	var icon_texture: Texture = (
 		ControllerManager.input_action_icons[input_action][start_controller_type]
 	)

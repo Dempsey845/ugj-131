@@ -32,7 +32,7 @@ func _build_round_list() -> void:
 	rounds.clear()
 
 	for index: int in item_rounds.size():
-		if index == 6 and is_instance_valid(slime_round):
+		if index == 4 and is_instance_valid(slime_round):
 			rounds.append(slime_round)
 
 		rounds.append(item_rounds[index])
