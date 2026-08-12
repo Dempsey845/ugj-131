@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bj6dgr1q21m5i"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_n2367"]
+[ext_resource type="PackedScene" uid="uid://ylvdw2tr7kuk" path="res://Item/Items/ToyRobot/RobotToy.glb" id="2_e3xqi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3ytth"]
+radius = 0.3
+height = 1.325
+
+[node name="ToyRobotItem" unique_id=1963813499 instance=ExtResource("1_n2367")]
+
+[node name="RobotToy" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=1467956977 instance=ExtResource("2_e3xqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.31072456)
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6625, 0.31072456)
+shape = SubResource("CapsuleShape3D_3ytth")

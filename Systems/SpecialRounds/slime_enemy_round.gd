@@ -88,7 +88,6 @@ func _return_all_slimes_home() -> void:
 
 		_return_slime_home(slime_id, slime)
 
-	door.open_door()
 	await get_tree().create_timer(5.0).timeout
 	door.close_door()
 
@@ -193,5 +192,3 @@ func spawn_slimes() -> void:
 		active_slimes[slime.get_instance_id()] = weakref(slime)
 
 	door.open_door()
-	await get_tree().create_timer(10.0).timeout
-	door.close_door()

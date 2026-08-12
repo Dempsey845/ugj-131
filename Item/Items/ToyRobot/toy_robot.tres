@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bhlnrg7t6tkxv"]
+
+[ext_resource type="PackedScene" uid="uid://bj6dgr1q21m5i" path="res://Item/Items/ToyRobot/toy_robot_item.tscn" id="1_3ytth"]
+[ext_resource type="Script" uid="uid://bta1n6q65gi1m" path="res://Item/item_data.gd" id="1_hed6s"]
+[ext_resource type="Texture2D" uid="uid://bism4qsdsvtwe" path="res://Item/Items/ToyRobot/toy_robot_icon.png" id="1_hfgi0"]
+
+[resource]
+script = ExtResource("1_hed6s")
+item_name = "Toy Robot"
+item_texture = ExtResource("1_hfgi0")
+item_scene = ExtResource("1_3ytth")
+seconds_to_collect = 30
+urgent_time = 10
+metadata/_custom_type_script = "uid://bta1n6q65gi1m"
