@@ -17,6 +17,8 @@ extends Node3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var goofy_goggles: Node3D = %GoofyGoggles
 @onready var confused_particles: ConfusedParticles = $ConfusedParticles
+@onready var jump_player: AudioStreamPlayer3D = $JumpPlayer
+@onready var slide_player: AudioStreamPlayer3D = $SlidePlayer
 
 var playback: AnimationNodeStateMachinePlayback
 var current_blend: float = 0.0
@@ -194,6 +196,8 @@ func _on_body_jumped() -> void:
 	if slide_animation_active:
 		return
 
+	jump_player.play()
+
 	playback.travel("Jump")
 	current_state = "Jump"
 
@@ -208,6 +212,8 @@ func _on_body_landed() -> void:
 func _on_body_slide_started() -> void:
 	slide_animation_active = true
 	current_state = "Slide"
+
+	slide_player.play()
 
 	playback.start(
 		"Slide",
