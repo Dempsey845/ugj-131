@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dr55dnydpmj8f"]
+
+[ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_5el8m"]
+[ext_resource type="PackedScene" uid="uid://nlmtebqmti1w" path="res://Item/Items/RubberDucky/RubberDucky.glb" id="2_aglc2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rcxkc"]
+size = Vector3(1, 1.1, 1.3000001)
+
+[node name="RubberDuckyItem" unique_id=1963813499 instance=ExtResource("1_5el8m")]
+
+[node name="RubberDucky" parent="Visuals" parent_id_path=PackedInt32Array(680476784) index="0" unique_id=1053801186 instance=ExtResource("2_aglc2")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="." index="1" unique_id=250276096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -0.15000004)
+shape = SubResource("BoxShape3D_rcxkc")
