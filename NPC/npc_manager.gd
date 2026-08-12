@@ -7,6 +7,7 @@ const MAX_NPCS: int = 50
 
 @export var npc_container: Node3D
 @export var npc_spawn_points: Node3D
+@export var door: Door
 
 var npc_scene: PackedScene = preload(
 	"uid://dki2wd38ewypm"
@@ -134,6 +135,11 @@ func spawn_npcs() -> void:
 	assign_unique_npc_names()
 
 	npcs_created.emit(npcs_spawned)
+
+	door.open_door()
+
+	await get_tree().create_timer(4.0).timeout
+	door.close_door()
 
 
 func assign_unique_npc_names() -> void:

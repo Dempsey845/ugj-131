@@ -47,6 +47,7 @@ radius = 0.6
 height = 0.21469727
 
 [node name="Player" type="CharacterBody3D" unique_id=70765496 node_paths=PackedStringArray("camera_pivot", "visuals", "standing_collision", "slide_hitbox", "name_label")]
+collision_mask = 5
 script = ExtResource("1_l8h54")
 camera_pivot = NodePath("CameraPivot")
 visuals = NodePath("Visuals")
@@ -79,24 +80,24 @@ random_base_colour = false
 random_shoe_colour = false
 
 [node name="Skeleton3D" parent="Visuals/Character/Armature" parent_id_path=PackedInt32Array(1454173267, 1976816315) index="0" unique_id=435503870]
-bones/3/rotation = Quaternion(0.17769504, 0.13914499, -0.39045894, 0.8925274)
-bones/5/rotation = Quaternion(-0.0022556852, -6.6773006e-05, -0.002195004, 0.99999505)
-bones/7/scale = Vector3(1.0051218, 1.0051218, 1.0051218)
-bones/12/rotation = Quaternion(0.17833365, -0.13669516, 0.3834005, 0.8958325)
-bones/14/rotation = Quaternion(-0.0022568598, 9.6313976e-05, 0.0031627798, 0.99999255)
+bones/3/rotation = Quaternion(0.17713435, 0.14117345, -0.39608654, 0.88983655)
+bones/5/rotation = Quaternion(-0.002257476, -0.0012014725, -0.03936761, 0.9992216)
+bones/7/scale = Vector3(1.0918627, 1.0918627, 1.0918627)
+bones/12/rotation = Quaternion(0.17745177, -0.13999327, 0.39274698, 0.89143854)
+bones/14/rotation = Quaternion(-0.0022532993, 0.0017593799, 0.057640318, 0.9983334)
 
 [node name="Sphere" parent="Visuals/Character/Armature/Skeleton3D" index="0" unique_id=755549810]
 surface_material_override/0 = SubResource("StandardMaterial3D_x3vf3")
 surface_material_override/2 = SubResource("StandardMaterial3D_apopc")
 
 [node name="BoneAttachment3D" parent="Visuals/Character/Armature/Skeleton3D" index="1" unique_id=1311297362]
-transform = Transform3D(-0.9621077, -0.2725598, 0.0077473805, -6.174628e-05, -0.028195577, -0.9996024, 0.27267015, -0.9617253, 0.027110236, -0.006160393, 0.0013484941, 0.009720749)
+transform = Transform3D(-0.98945653, -0.14477317, 0.004097246, -8.376548e-06, -0.028233266, -0.99960136, 0.14483145, -0.98906165, 0.027934227, -0.0060671773, 0.0013483701, 0.009667576)
 
 [node name="ItemHolder" type="Marker3D" parent="Visuals/Character/Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=374173442]
 transform = Transform3D(0.009468984, 0.000122047066, -0.0032129802, -0.0032125057, -5.715617e-05, -0.009469758, -0.00013393794, 0.00999909, -1.4913501e-05, -0.0017314008, 0.0069313743, -0.0031971373)
 
 [node name="BoneAttachment3D2" parent="Visuals/Character/Armature/Skeleton3D" index="2" unique_id=621893403]
-transform = Transform3D(1.0051218, -2.842171e-14, 1.5176913e-07, 2.842171e-14, -1.0051217, 1.198199e-07, 1.5176914e-07, -1.1981986e-07, -1.0051217, 6.2147554e-16, -2.292045e-09, 0.017492983)
+transform = Transform3D(1.0918627, -2.842171e-14, 1.6486663e-07, 2.842171e-14, -1.0918626, 1.3016022e-07, 1.6486665e-07, -1.3016017e-07, -1.0918626, 6.3221565e-16, -2.3280826e-09, 0.017795287)
 
 [node name="CharacterCheckRay" type="RayCast3D" parent="Visuals" unique_id=1995568196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
@@ -110,6 +111,7 @@ shape = SubResource("CapsuleShape3D_xrivr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="CameraSpringArm" type="SpringArm3D" parent="CameraPivot" unique_id=905085976]
+collision_mask = 5
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraSpringArm" unique_id=1497296412]

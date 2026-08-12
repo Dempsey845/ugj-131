@@ -173,7 +173,7 @@ _surfaces = [{
 [node name="GameManager" type="Node" parent="." unique_id=458954721 node_paths=PackedStringArray("announcement_manager", "npc_manager", "slime_round")]
 script = ExtResource("1_eidgh")
 announcement_manager = NodePath("../AnnouncementManager")
-item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("7_dg1ng"), ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu")])
+item_rounds = Array[ExtResource("2_dqu5g")]([ExtResource("3_o6lw0"), ExtResource("2_5xkvv"), ExtResource("2_oeat8"), ExtResource("6_x0pyu"), ExtResource("7_dg1ng")])
 npc_manager = NodePath("../NPCManager")
 slime_round = NodePath("../SlimeEnemyRound")
 
@@ -182,10 +182,11 @@ script = ExtResource("1_yf0ba")
 objective = NodePath("../Objective")
 metadata/_custom_type_script = "uid://cpirf7hf8q8s6"
 
-[node name="NPCManager" type="Node" parent="." unique_id=459181645 node_paths=PackedStringArray("npc_container", "npc_spawn_points")]
+[node name="NPCManager" type="Node" parent="." unique_id=459181645 node_paths=PackedStringArray("npc_container", "npc_spawn_points", "door")]
 script = ExtResource("4_h2aik")
 npc_container = NodePath("../NPC_Container")
 npc_spawn_points = NodePath("../NPCSpawnPoints")
+door = NodePath("../Door")
 
 [node name="Objective" type="Node" parent="." unique_id=2122103048 node_paths=PackedStringArray("item_spawn_points", "player_score", "confetti_particles", "hot_potato_manager", "game_manager")]
 script = ExtResource("2_eidgh")
@@ -543,4 +544,4 @@ interior = true
 light_data = ExtResource("33_3ql07")
 
 [node name="Door" parent="." unique_id=1990932649 instance=ExtResource("35_84yts")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22.699999)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -22.699999)
