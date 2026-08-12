@@ -83,8 +83,7 @@ func _start_special_round(special_round: SpecialRound) -> void:
 
 
 func _on_special_round_ended() -> void:
-	print("Special round ended")
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	start_next_round.call_deferred()
 
 

@@ -7,6 +7,7 @@ signal round_ended
 @export_category("Round")
 @export var round_duration: int = 30
 @export var custom_status_label: String = "Watch out!"
+@export var end_round_on_countdown_complete: bool = true
 
 @export_category("Announcement")
 @export_multiline var announcement_text: String
@@ -101,7 +102,8 @@ func _on_countdown_finished() -> void:
 		return
 
 	_on_round_timeout()
-	end_round()
+	if end_round_on_countdown_complete:
+		end_round()
 
 
 # Overrides

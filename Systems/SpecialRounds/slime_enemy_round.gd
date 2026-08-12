@@ -25,6 +25,8 @@ var slime_scene: PackedScene = preload(
 	"uid://d1sltvf53v71e"
 )
 
+func _ready() -> void:
+	end_round_on_countdown_complete = false
 
 func _physics_process(delta: float) -> void:
 	if not is_round_active:
@@ -38,9 +40,6 @@ func _physics_process(delta: float) -> void:
 	slime_state_timer = 0.0
 	_update_active_slimes()
 
-	if active_slimes.is_empty():
-		end_round()
-
 
 func _on_round_started() -> void:
 	active_slimes.clear()
@@ -52,7 +51,7 @@ func _on_round_started() -> void:
 
 	if active_slimes.is_empty():
 		push_warning("No slimes were spawned.")
-		end_round()
+		_try_close_door()
 
 
 func _on_round_timeout() -> void:
@@ -69,6 +68,8 @@ func _update_active_slimes() -> void:
 
 		if not is_instance_valid(slime):
 			active_slimes.erase(slime_id)
+			slimes_away_from_home.erase(slime_id)
+			_try_close_door()
 			continue
 
 		var target: Node3D = slime.target
@@ -86,6 +87,7 @@ func _return_all_slimes_home() -> void:
 
 		if not is_instance_valid(slime):
 			active_slimes.erase(slime_id)
+			slimes_away_from_home.erase(slime_id)
 			continue
 
 		_return_slime_home(slime_id, slime)
@@ -109,7 +111,12 @@ func _return_slime_home(
 	active_slimes.erase(slime_id)
 
 	if not is_instance_valid(slime_return_point):
-		slime.queue_free()
+		slimes_away_from_home.erase(slime_id)
+
+		if is_instance_valid(slime):
+			slime.queue_free()
+
+		_try_close_door()
 		return
 
 	slime.return_to_home(
@@ -201,6 +208,11 @@ func spawn_slimes() -> void:
 			CONNECT_ONE_SHOT
 		)
 
+		slime.tree_exited.connect(
+			_on_slime_removed.bind(slime_id),
+			CONNECT_ONE_SHOT
+		)
+
 	if not active_slimes.is_empty():
 		door.open_door()
 
@@ -210,10 +222,20 @@ func _on_slime_returned_home(slime_id: int) -> void:
 
 	_try_close_door()
 
+func _on_slime_removed(slime_id: int) -> void:
+	active_slimes.erase(slime_id)
+	slimes_away_from_home.erase(slime_id)
+
+	_try_close_door()
 
 func _try_close_door() -> void:
+	if not is_round_active:
+		return
+
 	if not slimes_away_from_home.is_empty():
 		return
 
 	if is_instance_valid(door):
 		door.close_door()
+
+	end_round()
