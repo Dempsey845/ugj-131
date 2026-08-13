@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d31ajfuljx0uj" path="res://Systems/Announcement/announcement_ui.gd" id="1_e18v2"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="1_kic27"]
 [ext_resource type="PackedScene" uid="uid://bvbyykn4jnl6j" path="res://Character/character_icon.tscn" id="3_384ps"]
+[ext_resource type="AudioStream" uid="uid://g7ecxnqimobr" path="res://Audio/SoundEffects/announcement_sfx.mp3" id="4_35whw"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]
 bg_color = Color(0.105, 0.129, 0.173, 0.98)
@@ -222,3 +223,7 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1830589439]
 libraries/ = SubResource("AnimationLibrary_384ps")
+
+[node name="AnnouncementPlayer" type="AudioStreamPlayer" parent="." unique_id=380405503]
+stream = ExtResource("4_35whw")
+bus = &"SFX"

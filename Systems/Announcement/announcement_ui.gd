@@ -6,11 +6,13 @@ extends Control
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var label: Label = %Label
 @onready var icon_texture: TextureRect = %IconTexture
+@onready var announcement_player: AudioStreamPlayer = $AnnouncementPlayer
 
 func _ready():
 	announcement_manager.announcement_started.connect(_on_announcement_started)
 
 func _on_announcement_started(announcement: String, icon: Texture, duration: float):
+	announcement_player.play()
 	_show_announcement(announcement, icon, duration)
 
 func _show_announcement(announcement: String, icon: Texture, duration: float):
