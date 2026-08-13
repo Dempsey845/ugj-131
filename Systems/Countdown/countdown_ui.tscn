@@ -103,11 +103,13 @@ mouse_filter = 2
 script = ExtResource("1_keolf")
 
 [node name="Control" type="Control" parent="." unique_id=2051740949]
-anchors_preset = 0
-offset_left = 955.0
-offset_top = 98.0
-offset_right = 955.0
-offset_bottom = 98.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 96.0
+offset_bottom = 96.0
+grow_horizontal = 2
 scale = Vector2(1e-05, 1e-05)
 
 [node name="TimerCard" type="PanelContainer" parent="Control" unique_id=935951767]
