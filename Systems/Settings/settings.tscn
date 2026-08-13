@@ -1,0 +1,449 @@
+[gd_scene format=3 uid="uid://b3w2mes5cossl"]
+
+[ext_resource type="Script" uid="uid://b0t4h8h8gugka" path="res://Systems/Settings/settings.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="Background"]
+bg_color = Color(0.055, 0.071, 0.102, 1)
+
+[sub_resource type="StyleBoxFlat" id="Glow"]
+bg_color = Color(0.984, 0.745, 0.18, 0.07)
+corner_radius_top_left = 240
+corner_radius_top_right = 240
+corner_radius_bottom_right = 240
+corner_radius_bottom_left = 240
+
+[sub_resource type="StyleBoxFlat" id="Card"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="Section"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="Slider"]
+bg_color = Color(0.18, 0.21, 0.27, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="SliderFill"]
+bg_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="ControlNormal"]
+bg_color = Color(0.098, 0.118, 0.157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ControlHover"]
+bg_color = Color(0.14, 0.169, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="Primary"]
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryHover"]
+bg_color = Color(1, 0.643, 0.208, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Settings" type="Control" unique_id=75755868]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="Panel" parent="." unique_id=503885133]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Background")
+
+[node name="TopGlow" type="Panel" parent="." unique_id=287243942]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -250.0
+offset_right = 500.0
+offset_bottom = 350.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Glow")
+
+[node name="BottomGlow" type="Panel" parent="." unique_id=925874698]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -430.0
+offset_top = -330.0
+offset_right = 170.0
+offset_bottom = 270.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Glow")
+
+[node name="PageMargin" type="MarginContainer" parent="." unique_id=1857635453]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 30
+
+[node name="Page" type="VBoxContainer" parent="PageMargin" unique_id=1229378769]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Header" type="HBoxContainer" parent="PageMargin/Page" unique_id=2072455016]
+layout_mode = 2
+
+[node name="Brand" type="Label" parent="PageMargin/Page/Header" unique_id=1048871752]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 19
+text = "SUPERMARKET SCRAMBLE"
+
+[node name="Season" type="Label" parent="PageMargin/Page/Header" unique_id=318037075]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 14
+text = "BROADCAST CONTROL  •  LIVE"
+
+[node name="Center" type="CenterContainer" parent="PageMargin/Page" unique_id=1360971410]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Card" type="PanelContainer" parent="PageMargin/Page/Center" unique_id=1878731645]
+custom_minimum_size = Vector2(940, 560)
+layout_mode = 2
+theme_override_styles/panel = SubResource("Card")
+
+[node name="Margin" type="MarginContainer" parent="PageMargin/Page/Center/Card" unique_id=717663646]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="Content" type="VBoxContainer" parent="PageMargin/Page/Center/Card/Margin" unique_id=934275888]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Eyebrow" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content" unique_id=1915390860]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+theme_override_font_sizes/font_size = 13
+text = "CONTROL ROOM"
+
+[node name="Title" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content" unique_id=1257500272]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 34
+text = "SHOW SETTINGS"
+
+[node name="Description" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content" unique_id=890714946]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.66, 0.73, 1)
+theme_override_font_sizes/font_size = 14
+text = "Tune the noise, polish the picture, then get back to the scramble."
+
+[node name="Sections" type="HBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content" unique_id=430554156]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Audio" type="PanelContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections" unique_id=160385093]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("Section")
+
+[node name="Margin" type="MarginContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio" unique_id=1523381110]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="Rows" type="VBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin" unique_id=1021602556]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="Heading" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=1388801930]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.953, 0.514, 0.157, 1)
+theme_override_font_sizes/font_size = 18
+text = "AUDIO CHANNELS"
+
+[node name="MasterLabel" type="HBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=123262023]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/MasterLabel" unique_id=121673564]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "MASTER"
+
+[node name="MasterValue" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/MasterLabel" unique_id=668044601]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+text = "100%"
+
+[node name="MasterSlider" type="HSlider" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=1102855206]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+theme_override_styles/slider = SubResource("Slider")
+theme_override_styles/grabber_area = SubResource("SliderFill")
+value = 100.0
+
+[node name="SFXLabel" type="HBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=375181734]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/SFXLabel" unique_id=291342865]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "SOUND EFFECTS"
+
+[node name="SFXValue" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/SFXLabel" unique_id=1009705916]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+text = "100%"
+
+[node name="SFXSlider" type="HSlider" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=422284025]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+theme_override_styles/slider = SubResource("Slider")
+theme_override_styles/grabber_area = SubResource("SliderFill")
+value = 100.0
+
+[node name="MusicLabel" type="HBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=1561049678]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/MusicLabel" unique_id=2026975563]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "MUSIC"
+
+[node name="MusicValue" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows/MusicLabel" unique_id=900747465]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.984, 0.745, 0.18, 1)
+text = "100%"
+
+[node name="MusicSlider" type="HSlider" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Audio/Margin/Rows" unique_id=819613767]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+theme_override_styles/slider = SubResource("Slider")
+theme_override_styles/grabber_area = SubResource("SliderFill")
+value = 100.0
+
+[node name="Graphics" type="PanelContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections" unique_id=996206249]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("Section")
+
+[node name="Margin" type="MarginContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics" unique_id=1549374269]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="Rows" type="GridContainer" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin" unique_id=746924358]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="Heading" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=116044604]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.953, 0.514, 0.157, 1)
+theme_override_font_sizes/font_size = 18
+text = "GRAPHICS"
+
+[node name="HeadingSpacer" type="Control" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1747475851]
+layout_mode = 2
+
+[node name="DisplayLabel" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=2147277451]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "DISPLAY MODE"
+
+[node name="DisplayMode" type="OptionButton" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1394025043]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+
+[node name="ResolutionLabel" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1622339023]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "RESOLUTION"
+
+[node name="Resolution" type="OptionButton" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=529095034]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+
+[node name="VSyncLabel" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1616760632]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "VERTICAL SYNC"
+
+[node name="VSync" type="CheckButton" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=888721105]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "ON"
+
+[node name="FPSLabel" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=224065558]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "FRAME LIMIT"
+
+[node name="FPSLimit" type="OptionButton" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1188780212]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+
+[node name="ScaleLabel" type="Label" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=1592883091]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+text = "3D RENDER SCALE"
+
+[node name="RenderScale" type="OptionButton" parent="PageMargin/Page/Center/Card/Margin/Content/Sections/Graphics/Margin/Rows" unique_id=2093870645]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+
+[node name="Buttons" type="HBoxContainer" parent="PageMargin/Page/Center/Card/Margin/Content" unique_id=1455720210]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="PageMargin/Page/Center/Card/Margin/Content/Buttons" unique_id=273218931]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+text = "BACK"
+
+[node name="ButtonSpacer" type="Control" parent="PageMargin/Page/Center/Card/Margin/Content/Buttons" unique_id=1108147159]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResetButton" type="Button" parent="PageMargin/Page/Center/Card/Margin/Content/Buttons" unique_id=1004432408]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_styles/normal = SubResource("ControlNormal")
+theme_override_styles/pressed = SubResource("ControlHover")
+theme_override_styles/hover = SubResource("ControlHover")
+text = "RESET DEFAULTS"
+
+[node name="ApplyButton" type="Button" parent="PageMargin/Page/Center/Card/Margin/Content/Buttons" unique_id=1556101987]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_styles/normal = SubResource("Primary")
+theme_override_styles/pressed = SubResource("PrimaryHover")
+theme_override_styles/hover = SubResource("PrimaryHover")
+text = "APPLY CHANGES"
+
+[node name="Footer" type="HBoxContainer" parent="PageMargin/Page" unique_id=1310440395]
+layout_mode = 2
+
+[node name="Copyright" type="Label" parent="PageMargin/Page/Footer" unique_id=1894962894]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.38, 0.42, 0.49, 1)
+theme_override_font_sizes/font_size = 11
+text = "© SUPERMARKET SCRAMBLE BROADCASTING"
+
+[node name="Status" type="Label" parent="PageMargin/Page/Footer" unique_id=87766709]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.42, 0.49, 1)
+theme_override_font_sizes/font_size = 11
+text = "SIGNAL CLEAR  •  LEVELS GOOD"

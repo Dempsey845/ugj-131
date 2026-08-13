@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8h72n7sqrmwe" path="res://Systems/MainMenu/main_menu.gd" id="1_inl6p"]
 [ext_resource type="PackedScene" uid="uid://cd40mh45udhto" path="res://Systems/SignUp/sign_up_ui.tscn" id="2_dhb5l"]
+[ext_resource type="PackedScene" uid="uid://b3w2mes5cossl" path="res://Systems/Settings/settings.tscn" id="3_khun4"]
 
 [sub_resource type="StyleBoxFlat" id="BackgroundStyle"]
 bg_color = Color(0.055, 0.071, 0.102, 1)
@@ -109,6 +110,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_inl6p")
 sign_up_scene = ExtResource("2_dhb5l")
+settings_scene = ExtResource("3_khun4")
 
 [node name="Background" type="Panel" parent="." unique_id=481404915]
 layout_mode = 1
