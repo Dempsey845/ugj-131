@@ -42,6 +42,8 @@ extends Node3D
 )
 @onready var camera: Camera3D = $Camera3D
 
+@onready var success_player: AudioStreamPlayer3D = $SuccessPlayer
+
 var camera_follow_enabled: bool = false
 
 var camera_intro_start: Transform3D
@@ -165,8 +167,9 @@ func _start_pillar_animation() -> void:
 
 	tween.chain().tween_callback(func():
 		confetti_particles.explode()
+		success_player.play()
 		await get_tree().create_timer(2.0).timeout
-		TransitionUi.change_scene("res://Systems/SignUp/sign_up_ui.tscn", "Thanks for playing!")
+		TransitionUi.change_scene("res://Systems/MainMenu/main_menu.tscn", "Thanks for playing!")
 	)
 
 

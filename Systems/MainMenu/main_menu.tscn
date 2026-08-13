@@ -231,7 +231,7 @@ SCRAMBLE!"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.76, 0.83, 1)
 theme_override_font_sizes/font_size = 17
-text = "Grab the goods. Dodge the trolleys.
+text = "Grab the goods. Tackle your foes.
 Become the supermarket's greatest champion."
 autowrap_mode = 2
 

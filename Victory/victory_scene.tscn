@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dn1a5miqig81w" path="res://Victory/victory_crown.tscn" id="4_nl2yt"]
 [ext_resource type="Texture2D" uid="uid://b4kmchgf4q25g" path="res://World/Textures/GroundTileNormal.png" id="5_b4kqh"]
 [ext_resource type="PackedScene" uid="uid://dpxaqysqvofy0" path="res://Systems/Objective/confetti_particles.tscn" id="7_nl2yt"]
+[ext_resource type="AudioStream" uid="uid://bss061i87a5xj" path="res://Audio/SoundEffects/applause.mp3" id="8_aqrmq"]
+[ext_resource type="AudioStream" uid="uid://b37jaikomrlvg" path="res://Audio/success.wav" id="9_8vxoo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_07tai"]
 shader = ExtResource("2_qrp41")
@@ -47,7 +49,7 @@ fog_depth_curve = 0.25000027
 fog_depth_begin = 15.0
 fog_depth_end = 50.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqrmq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vxoo"]
 resource_local_to_scene = true
 resource_name = "Base"
 vertex_color_use_as_albedo = true
@@ -56,7 +58,7 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vxoo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i62x6"]
 resource_local_to_scene = true
 resource_name = "Shoe"
 vertex_color_use_as_albedo = true
@@ -108,7 +110,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.965
 [node name="VictoryCharacter_Gold" parent="." unique_id=61053124 instance=ExtResource("1_0b2m1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 
-[node name="Skeleton3D" parent="VictoryCharacter_Gold/Armature" parent_id_path=PackedInt32Array(61053124, 256521520) index="0" unique_id=1001391030]
+[node name="Skeleton3D" parent="VictoryCharacter_Gold/Armature" parent_id_path=PackedInt32Array(61053124, 168065254) index="0" unique_id=1670652650]
 bones/2/rotation = Quaternion(-0.18880585, 0.18764053, -0.67948014, 0.68370324)
 bones/2/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
 bones/3/position = Vector3(-1.7326731e-09, 0.0019930922, 1.0399472e-10)
@@ -152,9 +154,9 @@ bones/28/position = Vector3(0, 0.0012145423, 0)
 bones/28/rotation = Quaternion(0.606838, -9.475069e-08, -1.6397081e-07, 0.79482555)
 bones/28/scale = Vector3(1, 1, 1.0000001)
 
-[node name="Sphere" parent="VictoryCharacter_Gold/Armature/Skeleton3D" index="0" unique_id=31004686]
-surface_material_override/0 = SubResource("StandardMaterial3D_aqrmq")
-surface_material_override/2 = SubResource("StandardMaterial3D_8vxoo")
+[node name="Sphere" parent="VictoryCharacter_Gold/Armature/Skeleton3D" index="0" unique_id=170515434]
+surface_material_override/0 = SubResource("StandardMaterial3D_8vxoo")
+surface_material_override/2 = SubResource("StandardMaterial3D_i62x6")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="VictoryCharacter_Gold/Armature/Skeleton3D" index="1" unique_id=680628366]
 transform = Transform3D(1, 3.5527137e-14, 2.3841856e-07, 2.384186e-07, -1.1920929e-07, -0.9999999, 1.4210854e-14, 0.9999999, -1.1920929e-07, 5.616439e-16, -2.0912831e-09, 0.01580887)
@@ -210,5 +212,16 @@ mesh = SubResource("PlaneMesh_xrivr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 auto_explode = false
 free_on_finished = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=951940873]
+stream = ExtResource("8_aqrmq")
+volume_db = -10.0
+autoplay = true
+
+[node name="SuccessPlayer" type="AudioStreamPlayer3D" parent="." unique_id=580280623]
+stream = ExtResource("9_8vxoo")
+volume_db = -5.0
+max_distance = 25.0
+bus = &"SFX"
 
 [editable path="VictoryCharacter_Gold"]

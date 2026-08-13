@@ -221,7 +221,7 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.76, 0.83, 1)
 theme_override_font_sizes/font_size = 13
-text = "DISCLAIMER: By entering Supermarket Scramble, you accept the possibility of runaway trolleys, suspiciously slippery aisles, airborne groceries, dramatic falls, mild embarrassment, and being bonked by another contestant. The producers are not responsible for bruised beans, lost dignity, or unexpected game-show confetti."
+text = "DISCLAIMER: By entering Supermarket Scramble, you accept the possibility of suspiciously slippery aisles, airborne groceries, dramatic falls, mild embarrassment, and being bonked by another contestant. The producers are not responsible for bruised beans, lost dignity, or unexpected game-show confetti."
 autowrap_mode = 2
 
 [node name="ConsentCheckBox" type="CheckBox" parent="MarginContainer/CenterContainer/Card/CardMargin/Form" unique_id=2031469823]
