@@ -2,17 +2,19 @@
 
 [ext_resource type="Script" uid="uid://cwna0g6e0jdu2" path="res://Item/item.gd" id="1_gcssv"]
 [ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_h0d2h"]
+[ext_resource type="AudioStream" uid="uid://doueuxemdqtmc" path="res://Audio/SoundEffects/Items/general_hit_sfx.mp3" id="3_e7mmn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
 radius = 1.1732446
 
-[node name="Item" type="RigidBody3D" unique_id=1963813499]
+[node name="Item" type="RigidBody3D" unique_id=1963813499 node_paths=PackedStringArray("hit_sound_player")]
 collision_mask = 13
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_gcssv")
+hit_sound_player = NodePath("GeneralHitPlayer")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=680476784]
 
@@ -29,3 +31,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_13qdw")
 
 [node name="InputPrompt" parent="." unique_id=930064518 instance=ExtResource("2_h0d2h")]
+
+[node name="GeneralHitPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1256472237]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+stream = ExtResource("3_e7mmn")
+volume_db = -5.0
+max_distance = 15.0
+max_polyphony = 4
+bus = &"SFX"
