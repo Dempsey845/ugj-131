@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dxnv6pfj5ftdi" path="res://Item/item.tscn" id="1_1bhby"]
 [ext_resource type="Script" uid="uid://72f53ugbutv3" path="res://Item/Items/TungstenCube/tungsten_cube_agent.gd" id="2_skqep"]
+[ext_resource type="AudioStream" uid="uid://bequl5k4wc0ef" path="res://Audio/SoundEffects/Items/metal_impact_sfx.mp3" id="3_trqaa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bhby"]
 albedo_color = Color(0.5850618, 0.5850621, 0.58506197, 1)
@@ -10,7 +11,8 @@ roughness = 0.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_skqep"]
 
-[node name="TungstenCubeItem" unique_id=1963813499 instance=ExtResource("1_1bhby")]
+[node name="TungstenCubeItem" unique_id=1963813499 node_paths=PackedStringArray("hit_sound_player") instance=ExtResource("1_1bhby")]
+hit_sound_player = NodePath("MetalImpactPlayer")
 
 [node name="TungstenCubeAgent" type="Node" parent="." index="0" unique_id=679195834]
 script = ExtResource("2_skqep")
@@ -19,3 +21,12 @@ script = ExtResource("2_skqep")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = SubResource("StandardMaterial3D_1bhby")
 mesh = SubResource("BoxMesh_skqep")
+
+[node name="MetalImpactPlayer" type="AudioStreamPlayer3D" parent="." index="5" unique_id=1612947888]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+stream = ExtResource("3_trqaa")
+volume_db = -5.0
+max_distance = 15.0
+max_polyphony = 4
+bus = &"SFX"

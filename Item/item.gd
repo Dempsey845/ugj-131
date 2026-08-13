@@ -16,6 +16,8 @@ enum State {
 @export var upward_throw_force: float = 3.0
 @export var force_character_to_pickup_on_collide: bool
 @export var can_only_be_thrown_if_character_in_front: bool
+@export var hit_sound_player: AudioStreamPlayer3D
+@export var minimum_hit_interval: float = 0.1
 
 @onready var pickup_area: Area3D = $PickupArea
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
@@ -26,11 +28,15 @@ var carrier: Node3D
 var last_carrier: Node3D
 var can_be_collected: bool = true
 
+var can_play_hit_sound: bool = true
+
 func _ready() -> void:
 	freeze = false
 	pickup_area.monitoring = true
 
 	pickup_area.area_entered.connect(_on_pickup_area_entered)
+
+	body_entered.connect(_on_body_entered)
 
 func collect(new_carrier: Node3D, item_holder: Node3D ) -> bool:
 	if not can_be_collected:
@@ -123,3 +129,15 @@ func _on_pickup_area_entered(area: Area3D):
 
 func is_item_hot_potato():
 	return force_character_to_pickup_on_collide and can_only_be_thrown_if_character_in_front
+
+
+func _on_body_entered(_body: Node3D) -> void:
+	if not can_play_hit_sound and hit_sound_player != null:
+		return
+
+	can_play_hit_sound = false
+
+	hit_sound_player.play()
+
+	await get_tree().create_timer(minimum_hit_interval).timeout
+	can_play_hit_sound = true

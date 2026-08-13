@@ -14,7 +14,7 @@ var is_current_round_hot_potato: bool = false
 var round_time: float = 0.0
 var urgent_time: float = 20.0
 
-var current_round: int = 0
+var current_round: int = 6
 var item_rounds_started: int = 0
 
 var current_item_data: ItemData
