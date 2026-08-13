@@ -11,6 +11,8 @@ signal countdown_finished
 @onready var time_progress: ProgressBar = %TimeProgress
 @onready var status_label: Label = %StatusLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var countdown_player: AudioStreamPlayer = $CountdownPlayer
+@onready var time_over_player: AudioStreamPlayer = $TimeOverPlayer
 
 const NORMAL_COLOUR: Color = Color(0.984, 0.745, 0.18)
 const URGENT_COLOUR: Color = Color(1.0, 0.32, 0.28)
@@ -46,6 +48,7 @@ func _process(delta: float) -> void:
 
 
 func start_countdown(from: int, stop_objective: bool = true, custom_status_label: String = "") -> void:
+	countdown_player.play()
 	stop_objective_on_complete = stop_objective
 	animation_player.play("show")
 	time = maxf(float(from), 0.0)
@@ -80,6 +83,10 @@ func _finish_countdown(stop_objective: bool = true) -> void:
 	countdown_active = false
 	countdown_label.text = "0"
 	timer_card.visible = false
+
+	time_over_player.play()
+	countdown_player.stop()
+	countdown_player.playing = false
 
 	if is_instance_valid(objective) and stop_objective:
 		objective.stop_objective()

@@ -31,6 +31,8 @@ const NPC_POINT_MULTIPLIER: int = 2
 
 @export var spawn_height_offset: float = 0.25
 
+@onready var success_player: AudioStreamPlayer3D = $SuccessPlayer
+
 var current_item: Item
 var current_item_data: ItemData
 
@@ -360,5 +362,7 @@ func _reset_carrier_item_time(carrier: Node3D) -> void:
 
 
 func _play_confetti(position: Vector3) -> void:
+	success_player.global_position = position
+	success_player.play()
 	confetti_particles.global_position = position
 	confetti_particles.explode()

@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://v2c87soka5kt"]
 
 [ext_resource type="Script" uid="uid://dntyll7shl64n" path="res://Systems/Countdown/countdown_ui.gd" id="1_keolf"]
+[ext_resource type="AudioStream" uid="uid://s8k4ye8m13e5" path="res://Audio/SoundEffects/countdown_sfx.mp3" id="2_dfyut"]
+[ext_resource type="AudioStream" uid="uid://s8sb3sfb73ii" path="res://Audio/SoundEffects/timeover_sfx.mp3" id="3_kcto6"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]
 bg_color = Color(0.105, 0.129, 0.173, 0.98)
@@ -194,3 +196,13 @@ horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284740372]
 libraries/ = SubResource("AnimationLibrary_kcto6")
+
+[node name="CountdownPlayer" type="AudioStreamPlayer" parent="." unique_id=1911832205]
+stream = ExtResource("2_dfyut")
+volume_db = -20.0
+bus = &"SFX"
+
+[node name="TimeOverPlayer" type="AudioStreamPlayer" parent="." unique_id=566081611]
+stream = ExtResource("3_kcto6")
+volume_db = -5.0
+bus = &"SFX"
