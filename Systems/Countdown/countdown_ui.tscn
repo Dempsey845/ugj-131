@@ -199,7 +199,7 @@ libraries/ = SubResource("AnimationLibrary_kcto6")
 
 [node name="CountdownPlayer" type="AudioStreamPlayer" parent="." unique_id=1911832205]
 stream = ExtResource("2_dfyut")
-volume_db = -20.0
+volume_db = -15.0
 bus = &"SFX"
 
 [node name="TimeOverPlayer" type="AudioStreamPlayer" parent="." unique_id=566081611]
