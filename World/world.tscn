@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://co0bnll56t7ph" path="res://Systems/SpecialRounds/slime_enemy_round.gd" id="13_o6lw0"]
 [ext_resource type="Texture2D" uid="uid://b63dr7dsao5a5" path="res://icon.svg" id="14_x0pyu"]
 [ext_resource type="AudioStream" uid="uid://b37jaikomrlvg" path="res://Audio/success.wav" id="15_i52kj"]
+[ext_resource type="PackedScene" uid="uid://jc1pyfnojrj" path="res://Systems/PauseMenu/pause_menu.tscn" id="20_y4tau"]
 [ext_resource type="Shader" uid="uid://cph27hhjk4qfy" path="res://World/world_sky.gdshader" id="22_koyeq"]
 [ext_resource type="Texture2D" uid="uid://cjjjqnuacjeyd" path="res://World/Textures/GroundTile.png" id="23_3sd22"]
 [ext_resource type="Texture2D" uid="uid://b4kmchgf4q25g" path="res://World/Textures/GroundTileNormal.png" id="24_s5a7k"]
@@ -252,6 +253,8 @@ announcement_text = "We may have acquired those slime balls… unethically. Slim
 announcement_icon = ExtResource("14_x0pyu")
 countdown_ui = NodePath("../CanvasLayer/CountdownUI")
 announcement_manager = NodePath("../AnnouncementManager")
+
+[node name="PauseMenu" parent="." unique_id=1542366422 instance=ExtResource("20_y4tau")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2009586997]
 

@@ -1,0 +1,236 @@
+[gd_scene format=3 uid="uid://jc1pyfnojrj"]
+
+[ext_resource type="Script" uid="uid://58wpbup73m01" path="res://Systems/PauseMenu/pause_menu.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="DimStyle"]
+bg_color = Color(0.018, 0.024, 0.039, 0.82)
+
+[sub_resource type="StyleBoxFlat" id="GlowStyle"]
+bg_color = Color(0.984, 0.745, 0.18, 0.06)
+corner_radius_top_left = 250
+corner_radius_top_right = 250
+corner_radius_bottom_right = 250
+corner_radius_bottom_left = 250
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.129, 0.173, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="BadgeStyle"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="DividerStyle"]
+bg_color = Color(0.31, 0.365, 0.455, 0.45)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="PrimaryNormal"]
+bg_color = Color(0.953, 0.514, 0.157, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryPressed"]
+bg_color = Color(0.824, 0.365, 0.102, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="PrimaryHover"]
+bg_color = Color(1, 0.643, 0.208, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SecondaryNormal"]
+bg_color = Color(0.063, 0.082, 0.118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.365, 0.455, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="SecondaryHover"]
+bg_color = Color(0.14, 0.169, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984, 0.745, 0.18, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1542366422]
+process_mode = 3
+layer = 100
+script = ExtResource("1_script")
+
+[node name="Overlay" type="Control" parent="." unique_id=1540536930]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackground" type="Panel" parent="Overlay" unique_id=844263629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("DimStyle")
+
+[node name="TopGlow" type="Panel" parent="Overlay" unique_id=1665545686]
+layout_mode = 0
+offset_left = -170.0
+offset_top = -280.0
+offset_right = 430.0
+offset_bottom = 320.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("GlowStyle")
+
+[node name="BottomGlow" type="Panel" parent="Overlay" unique_id=393299545]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -430.0
+offset_top = -320.0
+offset_right = 170.0
+offset_bottom = 280.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("GlowStyle")
+
+[node name="Center" type="CenterContainer" parent="Overlay" unique_id=688716055]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Overlay/Center" unique_id=397409515]
+custom_minimum_size = Vector2(480, 440)
+layout_mode = 2
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="Margin" type="MarginContainer" parent="Overlay/Center/Card" unique_id=1530433805]
+layout_mode = 2
+theme_override_constants/margin_left = 46
+theme_override_constants/margin_top = 42
+theme_override_constants/margin_right = 46
+theme_override_constants/margin_bottom = 38
+
+[node name="Content" type="VBoxContainer" parent="Overlay/Center/Card/Margin" unique_id=1191730315]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Badge" type="PanelContainer" parent="Overlay/Center/Card/Margin/Content" unique_id=1616736413]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("BadgeStyle")
+
+[node name="BadgeText" type="Label" parent="Overlay/Center/Card/Margin/Content/Badge" unique_id=997706366]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 13
+text = "BROADCAST INTERRUPTED"
+
+[node name="Title" type="Label" parent="Overlay/Center/Card/Margin/Content" unique_id=940849521]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 42
+text = "SHOW PAUSED"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Overlay/Center/Card/Margin/Content" unique_id=1632095661]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.66, 0.73, 1)
+theme_override_font_sizes/font_size = 15
+text = "The aisles have been temporarily frozen."
+horizontal_alignment = 1
+
+[node name="Divider" type="Panel" parent="Overlay/Center/Card/Margin/Content" unique_id=421019593]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("DividerStyle")
+
+[node name="Spacer" type="Control" parent="Overlay/Center/Card/Margin/Content" unique_id=2101787107]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ReturnToMenuButton" type="Button" parent="Overlay/Center/Card/Margin/Content" unique_id=2084000883]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.08, 0.07, 0.05, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("PrimaryNormal")
+theme_override_styles/pressed = SubResource("PrimaryPressed")
+theme_override_styles/hover = SubResource("PrimaryHover")
+theme_override_styles/focus = SubResource("PrimaryHover")
+text = "RETURN TO MENU"
+
+[node name="QuitButton" type="Button" parent="Overlay/Center/Card/Margin/Content" unique_id=1296710576]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.91, 0.93, 0.97, 1)
+theme_override_colors/font_focus_color = Color(1, 0.54, 0.49, 1)
+theme_override_colors/font_hover_color = Color(1, 0.54, 0.49, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("SecondaryNormal")
+theme_override_styles/pressed = SubResource("SecondaryHover")
+theme_override_styles/hover = SubResource("SecondaryHover")
+theme_override_styles/focus = SubResource("SecondaryHover")
+text = "QUIT SHOW"
+
+[node name="BottomSpacer" type="Control" parent="Overlay/Center/Card/Margin/Content" unique_id=1456060184]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Hint" type="Label" parent="Overlay/Center/Card/Margin/Content" unique_id=1966749800]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.46, 0.53, 1)
+theme_override_font_sizes/font_size = 12
+text = "Press P / Start to return to the scramble"
+horizontal_alignment = 1
